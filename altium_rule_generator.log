@@ -1,0 +1,220 @@
+2025-04-10 20:56:22,312 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-10 20:56:22,496 - utils.config - INFO - Default configuration loaded
+2025-04-10 20:56:22,497 - utils.config - INFO - Configuration saved successfully
+2025-04-10 20:56:22,497 - themes.theme_manager - INFO - Theme manager initialized with theme: light
+2025-04-10 20:56:22,513 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\light.qss
+2025-04-10 20:56:22,956 - gui.main_window - INFO - Initialized tabs for rule types
+2025-04-10 20:56:22,956 - gui.main_window - INFO - Main window initialized
+2025-04-10 20:56:41,439 - utils.config - INFO - Configuration saved successfully
+2025-04-10 20:56:41,440 - utils.config - INFO - Configuration saved successfully
+2025-04-10 20:56:41,441 - gui.main_window - INFO - Importing Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx
+2025-04-10 20:56:54,634 - utils.config - INFO - Configuration saved successfully
+2025-04-10 20:56:54,659 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-10 20:56:54,660 - themes.theme_manager - INFO - Theme changed to: dark
+2025-04-10 20:57:04,563 - utils.config - INFO - Configuration saved successfully
+2025-04-10 20:57:04,565 - utils.config - INFO - Configuration saved successfully
+2025-04-10 20:57:04,566 - gui.main_window - INFO - Importing RUL file: C:/code/AltiumXCEL2QueryBuilder/samples/E2703700_Board_KL.RUL
+2025-04-10 20:59:53,870 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-10 20:59:53,926 - utils.config - INFO - Configuration loaded successfully
+2025-04-10 20:59:53,926 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-10 20:59:53,927 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-10 20:59:53,964 - gui.main_window - INFO - Initialized tabs for rule types
+2025-04-10 20:59:53,964 - gui.main_window - INFO - Main window initialized
+2025-04-10 20:59:59,474 - utils.config - INFO - Configuration saved successfully
+2025-04-10 20:59:59,475 - utils.config - INFO - Configuration saved successfully
+2025-04-10 20:59:59,475 - gui.main_window - INFO - Importing Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx
+2025-04-10 21:00:19,445 - gui.main_window - INFO - Showing preferences dialog
+2025-04-10 21:09:00,905 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-10 21:09:00,961 - utils.config - INFO - Configuration loaded successfully
+2025-04-10 21:09:00,962 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-10 21:09:00,963 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-10 21:09:01,004 - gui.main_window - INFO - Initialized tabs for rule types
+2025-04-10 21:09:01,005 - gui.main_window - INFO - Main window initialized
+2025-04-10 21:09:08,621 - utils.config - INFO - Configuration saved successfully
+2025-04-10 21:09:08,622 - utils.config - INFO - Configuration saved successfully
+2025-04-10 21:09:08,623 - gui.main_window - INFO - Importing Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx
+2025-04-10 21:13:23,768 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-10 21:13:23,807 - utils.config - INFO - Configuration loaded successfully
+2025-04-10 21:13:23,807 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-10 21:13:23,808 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-10 21:13:23,844 - gui.main_window - INFO - Initialized tabs for rule types
+2025-04-10 21:13:23,844 - gui.main_window - INFO - Main window initialized
+2025-04-10 21:13:28,904 - utils.config - INFO - Configuration saved successfully
+2025-04-10 21:13:28,905 - utils.config - INFO - Configuration saved successfully
+2025-04-10 21:13:28,905 - gui.main_window - INFO - Importing Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx
+2025-04-10 21:31:41,498 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-10 21:31:41,537 - utils.config - INFO - Configuration loaded successfully
+2025-04-10 21:31:41,538 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-10 21:31:41,538 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-10 21:31:41,574 - gui.main_window - INFO - Initialized tabs for rule types
+2025-04-10 21:31:41,575 - gui.main_window - INFO - Main window initialized
+2025-04-10 21:31:47,297 - utils.config - INFO - Configuration saved successfully
+2025-04-10 21:31:47,298 - utils.config - INFO - Configuration saved successfully
+2025-04-10 21:31:47,299 - gui.main_window - INFO - Importing Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx
+2025-04-10 21:41:43,009 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-10 21:41:43,051 - utils.config - INFO - Configuration loaded successfully
+2025-04-10 21:41:43,051 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-10 21:41:43,052 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-10 21:41:43,097 - gui.main_window - INFO - Initialized tabs for rule types
+2025-04-10 21:41:43,097 - gui.main_window - INFO - Main window initialized
+2025-04-10 21:41:47,882 - utils.config - INFO - Configuration saved successfully
+2025-04-10 21:41:47,883 - utils.config - INFO - Configuration saved successfully
+2025-04-10 21:41:47,883 - gui.main_window - INFO - Importing Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx
+2025-04-10 21:43:34,146 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-10 21:43:34,183 - utils.config - INFO - Configuration loaded successfully
+2025-04-10 21:43:34,183 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-10 21:43:34,184 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-10 21:43:34,221 - gui.main_window - INFO - Initialized tabs for rule types
+2025-04-10 21:43:34,222 - gui.main_window - INFO - Main window initialized
+2025-04-10 21:43:41,864 - utils.config - INFO - Configuration saved successfully
+2025-04-10 21:43:41,865 - utils.config - INFO - Configuration saved successfully
+2025-04-10 21:43:41,866 - gui.main_window - INFO - Importing Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx
+2025-04-10 21:43:53,183 - utils.config - INFO - Configuration saved successfully
+2025-04-10 21:43:53,184 - utils.config - INFO - Configuration saved successfully
+2025-04-10 21:43:53,184 - gui.main_window - INFO - Importing RUL file: C:/code/AltiumXCEL2QueryBuilder/samples/E2703700_Board_KL.RUL
+2025-04-10 21:53:26,354 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-10 21:53:26,398 - utils.config - INFO - Configuration loaded successfully
+2025-04-10 21:53:26,399 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-10 21:53:26,400 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-10 21:53:26,445 - gui.main_window - INFO - Initialized tabs for rule types
+2025-04-10 21:53:26,445 - gui.main_window - INFO - Main window initialized
+2025-04-10 21:53:33,022 - utils.config - INFO - Configuration saved successfully
+2025-04-10 21:53:33,023 - utils.config - INFO - Configuration saved successfully
+2025-04-10 21:53:33,024 - gui.main_window - INFO - Importing Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx
+2025-04-10 21:55:32,646 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-10 21:55:32,683 - utils.config - INFO - Configuration loaded successfully
+2025-04-10 21:55:32,684 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-10 21:55:32,685 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-10 21:55:32,727 - gui.main_window - INFO - Initialized tabs for rule types
+2025-04-10 21:55:32,728 - gui.main_window - INFO - Main window initialized
+2025-04-10 21:55:38,975 - utils.config - INFO - Configuration saved successfully
+2025-04-10 21:55:38,981 - gui.main_window - ERROR - Error importing Excel file: unexpected indent (excel_importer.py, line 30)
+2025-04-10 22:00:36,542 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-10 22:00:36,577 - utils.config - INFO - Configuration loaded successfully
+2025-04-10 22:00:36,578 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-10 22:00:36,579 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-10 22:00:36,627 - gui.main_window - INFO - Initialized tabs for rule types
+2025-04-10 22:00:36,628 - gui.main_window - INFO - Main window initialized
+2025-04-10 22:00:43,712 - utils.config - INFO - Configuration saved successfully
+2025-04-10 22:00:43,716 - gui.main_window - ERROR - Error importing Excel file: unexpected indent (excel_importer.py, line 30)
+2025-04-10 22:05:52,588 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-10 22:05:52,624 - utils.config - INFO - Configuration loaded successfully
+2025-04-10 22:05:52,625 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-10 22:05:52,626 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-10 22:05:52,661 - gui.main_window - INFO - Initialized tabs for rule types
+2025-04-10 22:05:52,661 - gui.main_window - INFO - Main window initialized
+2025-04-10 22:06:03,669 - utils.config - INFO - Configuration saved successfully
+2025-04-10 22:06:10,892 - gui.main_window - ERROR - Error importing Excel file: type object 'QFileDialog' has no attribute 'getItem'
+2025-04-10 22:07:47,541 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-10 22:07:47,579 - utils.config - INFO - Configuration loaded successfully
+2025-04-10 22:07:47,580 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-10 22:07:47,581 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-10 22:07:47,633 - gui.main_window - INFO - Initialized tabs for rule types
+2025-04-10 22:07:47,633 - gui.main_window - INFO - Main window initialized
+2025-04-10 22:07:56,403 - utils.config - INFO - Configuration saved successfully
+2025-04-10 22:08:05,813 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-10 22:08:05,844 - src.gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-10 22:08:05,930 - src.gui.excel_preview_dialog - INFO - Excel data loaded in preview
+2025-04-10 22:08:05,931 - src.gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-10 22:08:19,968 - src.gui.excel_preview_dialog - INFO - Skip rows changed to: 1
+2025-04-10 22:08:20,156 - src.gui.excel_preview_dialog - INFO - Skip rows changed to: 2
+2025-04-10 22:08:22,923 - src.gui.excel_preview_dialog - INFO - Skip rows changed to: 1
+2025-04-10 22:08:23,124 - src.gui.excel_preview_dialog - INFO - Skip rows changed to: 0
+2025-04-10 22:10:51,682 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-10 22:10:51,717 - utils.config - INFO - Configuration loaded successfully
+2025-04-10 22:10:51,718 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-10 22:10:51,719 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-10 22:13:02,894 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-10 22:13:02,937 - utils.config - INFO - Configuration loaded successfully
+2025-04-10 22:13:02,938 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-10 22:13:02,939 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-10 22:13:04,406 - gui.pivot_table_widget - INFO - Pivot table widget initialized
+2025-04-10 22:13:04,428 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-10 22:13:04,429 - gui.main_window - INFO - Main window initialized
+2025-04-10 22:13:15,873 - utils.config - INFO - Configuration saved successfully
+2025-04-10 22:13:18,452 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-10 22:13:18,467 - src.gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-10 22:13:18,552 - src.gui.excel_preview_dialog - INFO - Excel data loaded in preview
+2025-04-10 22:13:18,552 - src.gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-10 22:13:22,188 - src.gui.excel_preview_dialog - INFO - Unit changed to: mm
+2025-04-10 22:26:07,096 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-10 22:26:07,135 - utils.config - INFO - Configuration loaded successfully
+2025-04-10 22:26:07,135 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-10 22:26:07,136 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-10 22:26:08,424 - gui.pivot_table_widget - INFO - Pivot table widget initialized
+2025-04-10 22:26:08,436 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-10 22:26:08,436 - gui.main_window - INFO - Main window initialized
+2025-04-10 22:26:16,798 - utils.config - INFO - Configuration saved successfully
+2025-04-10 22:26:18,940 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-10 22:26:18,958 - src.gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-10 22:26:19,048 - src.gui.excel_preview_dialog - INFO - Excel data loaded in preview
+2025-04-10 22:26:19,048 - src.gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-10 22:26:32,516 - src.gui.excel_preview_dialog - INFO - Unit changed to: mm
+2025-04-10 22:26:36,769 - src.gui.excel_preview_dialog - INFO - Skip rows changed to: 1
+2025-04-10 22:26:36,804 - src.gui.excel_preview_dialog - INFO - Skip rows changed to: 10
+2025-04-10 22:26:47,085 - src.gui.excel_preview_dialog - INFO - Excel preview model updated with 12 rows and 12 columns
+2025-04-10 22:26:47,127 - src.gui.excel_preview_dialog - INFO - Excel data loaded in preview
+2025-04-10 22:26:50,766 - src.gui.excel_preview_dialog - INFO - Skip rows changed to: 0
+2025-04-10 22:26:53,002 - src.gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-10 22:26:53,082 - src.gui.excel_preview_dialog - INFO - Excel data loaded in preview
+2025-04-10 22:26:59,276 - gui.main_window - ERROR - Error importing Excel file: 'Rule Set'
+2025-04-10 22:29:50,182 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-10 22:29:50,220 - utils.config - INFO - Configuration loaded successfully
+2025-04-10 22:29:50,221 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-10 22:29:50,222 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-10 22:29:51,570 - gui.pivot_table_widget - INFO - Pivot table widget initialized
+2025-04-10 22:29:51,581 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-10 22:29:51,582 - gui.main_window - INFO - Main window initialized
+2025-04-10 22:29:59,799 - utils.config - INFO - Configuration saved successfully
+2025-04-10 22:30:01,768 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-10 22:30:01,784 - src.gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-10 22:30:01,862 - src.gui.excel_preview_dialog - INFO - Excel data loaded in preview
+2025-04-10 22:30:01,863 - src.gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-10 22:33:29,604 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-10 22:33:29,677 - utils.config - INFO - Configuration loaded successfully
+2025-04-10 22:33:29,677 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-10 22:33:29,690 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-10 22:33:34,445 - gui.pivot_table_widget - INFO - Pivot table widget initialized
+2025-04-10 22:33:34,478 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-10 22:33:34,479 - gui.main_window - INFO - Main window initialized
+2025-04-10 22:33:44,651 - utils.config - INFO - Configuration saved successfully
+2025-04-10 22:33:46,728 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-10 22:33:46,785 - src.gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-10 22:33:46,867 - src.gui.excel_preview_dialog - INFO - Excel data loaded in preview
+2025-04-10 22:33:46,867 - src.gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-10 22:33:59,267 - src.gui.excel_preview_dialog - INFO - End row changed to: 9
+2025-04-10 22:34:01,817 - src.gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-10 22:34:01,891 - src.gui.excel_preview_dialog - INFO - Excel data loaded in preview
+2025-04-10 22:34:02,789 - src.gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-10 22:34:02,871 - src.gui.excel_preview_dialog - INFO - Excel data loaded in preview
+2025-04-10 22:34:10,474 - src.gui.excel_preview_dialog - INFO - Unit changed to: mm
+2025-04-10 22:34:11,075 - src.gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-10 22:34:11,158 - src.gui.excel_preview_dialog - INFO - Excel data loaded in preview
+2025-04-10 22:34:22,241 - gui.main_window - ERROR - Error importing Excel file: 'Rule Set'
+2025-04-10 22:37:23,645 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-10 22:37:23,684 - utils.config - INFO - Configuration loaded successfully
+2025-04-10 22:37:23,685 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-10 22:37:23,686 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-10 22:37:25,078 - gui.pivot_table_widget - INFO - Pivot table widget initialized
+2025-04-10 22:37:25,090 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-10 22:37:25,091 - gui.main_window - INFO - Main window initialized
+2025-04-10 22:37:31,788 - utils.config - INFO - Configuration saved successfully
+2025-04-10 22:37:33,929 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-10 22:37:33,949 - src.gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-10 22:37:34,044 - src.gui.excel_preview_dialog - INFO - Excel data loaded in preview
+2025-04-10 22:37:34,045 - src.gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-10 22:37:39,460 - src.gui.excel_preview_dialog - INFO - End row changed to: 9
+2025-04-10 22:37:48,170 - gui.main_window - ERROR - Error importing Excel file: 'Rule Set'
+2025-04-10 22:39:23,178 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-10 22:39:23,213 - utils.config - INFO - Configuration loaded successfully
+2025-04-10 22:39:23,214 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-10 22:39:23,215 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-10 22:39:24,558 - gui.pivot_table_widget - INFO - Pivot table widget initialized
+2025-04-10 22:39:24,575 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-10 22:39:24,576 - gui.main_window - INFO - Main window initialized
+2025-04-10 22:39:28,687 - utils.config - INFO - Configuration saved successfully
+2025-04-10 22:39:30,223 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-10 22:39:30,243 - src.gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-10 22:39:30,339 - src.gui.excel_preview_dialog - INFO - Excel data loaded in preview
+2025-04-10 22:39:30,340 - src.gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-10 22:39:40,169 - gui.main_window - ERROR - Error importing Excel file: 'Rule Set'
