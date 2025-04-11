@@ -74,6 +74,10 @@ class ExcelImporter:
                 sheet_name = xls.sheet_names[0]
                 df = pd.read_excel(file_path, sheet_name=sheet_name)
             
+            # Ensure the DataFrame is not empty before returning
+            if df.empty:
+                raise ExcelImportError("The imported Excel file contains no data.")
+            
             # Store successful import details
             self.last_file_path = file_path
             self.last_sheet_name = sheet_name

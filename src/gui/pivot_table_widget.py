@@ -321,6 +321,7 @@ class PivotTableWidget(QWidget):
             
             # Force the table to update
             self.table_view.update()
+            self.table_view.viewport().update()  # Ensure the viewport is refreshed
             
             logger.info("Pivot data set in widget")
             logger.debug(f"Pivot data matrix shape: {pivot_data.values.shape if pivot_data.values is not None else 'None'}")
@@ -349,15 +350,51 @@ class PivotTableWidget(QWidget):
         """Handle unit change"""
         unit_str = self.unit_combo.currentData()
         try:
-            self.unit = UnitType(unit_str)
-            
-            if self.pivot_data:
-                # TODO: Convert values if needed
-                self.pivot_data.unit = self.unit
+            new_unit = UnitType(unit_str)
+
+            if self.pivot_data and self.pivot_data.values is not None:
+                # Store the old unit for conversion
+                old_unit = self.pivot_data.unit
+
+                # Only convert if the unit actually changed
+                if old_unit != new_unit:
+                    # Convert all values from old unit to new unit
+                    rows, cols = self.pivot_data.values.shape
+                    for i in range(rows):
+                        for j in range(cols):
+                            if not pd.isna(self.pivot_data.values[i, j]):
+                                value = self.pivot_data.values[i, j]
+                                if isinstance(value, (int, float)):
+                                    try:
+                                        converted_value = UnitType.convert(float(value), old_unit, new_unit)
+                                        self.pivot_data.values[i, j] = round(converted_value, 3)
+                                        # Send updated unit, row, and column information
+                                        self._send_unit_update(i, j, new_unit, converted_value)
+                                    except (TypeError, ValueError) as e:
+                                        logger.warning(f"Could not convert value '{value}' at cell ({i}, {j}): {str(e)}")
+
+                    # Update the table model with the new values
+                    self.table_model.set_pivot_data(self.pivot_data)
+
+                # Update the pivot data unit
+                self.pivot_data.unit = new_unit
+                self.unit = new_unit
+
                 logger.info(f"Unit changed to: {self.unit.value}")
                 self.data_changed.emit()
+
+            # Update imported settings to reflect the selected unit
+            if self.pivot_data:
+                self.pivot_data.unit = new_unit
+
         except ValueError:
             logger.error(f"Invalid unit: {unit_str}")
+
+    def _send_unit_update(self, row, col, unit, value):
+        """Send updated unit, row, and column information"""
+        logger.info(f"Updated cell ({row}, {col}) to unit {unit.value} with value {value}")
+        # Placeholder for sending the information to the relevant component or service
+        # This could be a signal, API call, or other mechanism
     
     def _on_data_changed(self):
         """Handle data changes in the model"""
@@ -370,10 +407,150 @@ class PivotTableWidget(QWidget):
     
     def _on_add_row(self):
         """Add a new row (net class) to the table"""
-        # TODO: Implement add row functionality
-        QMessageBox.information(self, "Not Implemented", "Add row functionality not yet implemented")
+        if self.pivot_data is None or self.table_model.pivot_data is None:
+            QMessageBox.warning(self, "No Data", "No pivot data is loaded. Please import data first.")
+            return
+        
+        # Prompt user for new net class name
+        from PyQt5.QtWidgets import QInputDialog
+        net_class_name, ok = QInputDialog.getText(
+            self, 
+            "Add Net Class", 
+            "Enter net class name:",
+            QLineEdit.Normal
+        )
+        
+        if not ok or not net_class_name:
+            # User canceled or entered empty name
+            return
+        
+        # Check if name already exists
+        if net_class_name in self.table_model.index_column:
+            QMessageBox.warning(
+                self, 
+                "Duplicate Name", 
+                f"Net class '{net_class_name}' already exists. Please use a different name."
+            )
+            return
+        
+        try:
+            # Get current data dimensions
+            current_rows = len(self.table_model.index_column)
+            current_cols = len(self.table_model.headers)
+            
+            if current_cols == 0:
+                # No columns yet, let's add one with the same name as the row
+                new_data_array = np.array([[0.0]])
+                self.table_model.headers = [net_class_name]
+                self.table_model.index_column = [net_class_name]
+                self.table_model.data_array = new_data_array
+            else:
+                # Create new row with default values (0.0)
+                new_row = np.zeros((1, current_cols))
+                
+                # Append the new row to the data array
+                if current_rows == 0:
+                    # No existing rows
+                    self.table_model.data_array = new_row
+                else:
+                    # Append to existing rows
+                    self.table_model.data_array = np.vstack((self.table_model.data_array, new_row))
+                
+                # Add the net class name to the index column
+                self.table_model.index_column.append(net_class_name)
+                
+                # If this is the first row, also add this net class as a column
+                if current_rows == 0 and net_class_name not in self.table_model.headers:
+                    self.table_model.headers.append(net_class_name)
+                    # Reshape data array to add column
+                    self.table_model.data_array = np.column_stack(
+                        (self.table_model.data_array, np.zeros((1, 1)))
+                    )
+            
+            # Update the model
+            self.table_model.beginResetModel()
+            self.table_model.endResetModel()
+            
+            # Update pivot data
+            self._on_data_changed()
+            
+            logger.info(f"Added new net class row: {net_class_name}")
+            QMessageBox.information(
+                self, 
+                "Success", 
+                f"Net class '{net_class_name}' added successfully."
+            )
+            
+        except Exception as e:
+            error_msg = f"Error adding new row: {str(e)}"
+            logger.error(error_msg)
+            QMessageBox.critical(self, "Error", error_msg)
     
     def _on_remove_row(self):
         """Remove selected row (net class) from the table"""
-        # TODO: Implement remove row functionality
-        QMessageBox.information(self, "Not Implemented", "Remove row functionality not yet implemented")
+        if self.pivot_data is None or self.table_model.pivot_data is None:
+            QMessageBox.warning(self, "No Data", "No pivot data is loaded. Please import data first.")
+            return
+        
+        # Get selected rows
+        selected_rows = self.table_view.selectionModel().selectedRows()
+        
+        if not selected_rows:
+            QMessageBox.warning(self, "No Selection", "Please select at least one row to remove.")
+            return
+        
+        # Get the row indices
+        row_indices = [index.row() for index in selected_rows]
+        row_indices.sort(reverse=True)  # Sort in descending order for proper removal
+        
+        # Get row names for confirmation
+        row_names = [self.table_model.index_column[i] for i in row_indices]
+        
+        # Confirm with user
+        confirm_msg = "Are you sure you want to remove the following net classes?\n\n"
+        confirm_msg += "\n".join([f"- {name}" for name in row_names])
+        reply = QMessageBox.question(
+            self, 
+            "Confirm Removal", 
+            confirm_msg,
+            QMessageBox.Yes | QMessageBox.No, 
+            QMessageBox.No
+        )
+        
+        if reply != QMessageBox.Yes:
+            return
+        
+        try:
+            # Start with a simple case: check if all rows are being removed
+            if len(row_indices) == len(self.table_model.index_column):
+                # Special case: removing all rows
+                self.table_model.index_column = []
+                self.table_model.data_array = np.array([])
+            else:
+                # Remove rows one by one from data array
+                for row_idx in row_indices:
+                    # Remove from index column
+                    if 0 <= row_idx < len(self.table_model.index_column):
+                        # Remove the row from the data array
+                        self.table_model.data_array = np.delete(self.table_model.data_array, row_idx, axis=0)
+                        # Remove the name from the index column
+                        self.table_model.index_column.pop(row_idx)
+            
+            # Update the model
+            self.table_model.beginResetModel()
+            self.table_model.endResetModel()
+            
+            # Update pivot data
+            self._on_data_changed()
+            
+            logger.info(f"Removed {len(row_indices)} net class row(s)")
+            QMessageBox.information(
+                self, 
+                "Success", 
+                f"Successfully removed {len(row_indices)} net class(es)."
+            )
+            
+        except Exception as e:
+            error_msg = f"Error removing row(s): {str(e)}"
+            logger.error(error_msg)
+            QMessageBox.critical(self, "Error", error_msg)

@@ -9,6 +9,7 @@ Defines the data models for different Altium rule types.
 """
 
 import logging
+import re
 from enum import Enum
 from typing import Dict, List, Optional, Union, Tuple
 
@@ -329,11 +330,223 @@ class RuleManager:
         return "\n".join(rul_lines)
     
     def from_rul_content(self, rul_content: str) -> bool:
-        """Parse rules from RUL file content"""
-        # TODO: Implement RUL file parsing
-        # This requires a more complex parser to handle the RUL file format
-        logger.warning("RUL file parsing not yet implemented")
-        return False
+        """Parse rules from RUL file content
+
+        Args:
+            rul_content (str): The content of a .RUL file
+
+        Returns:
+            bool: True if parsing was successful, False otherwise
+        """
+        try:
+            # Clear existing rules
+            self.rules = []
+            
+            # Extract rule blocks
+            rule_blocks = self._extract_rule_blocks(rul_content)
+            
+            if not rule_blocks:
+                logger.warning("No rule blocks found in RUL content")
+                return False
+            
+            logger.info(f"Found {len(rule_blocks)} rule blocks in RUL content")
+            
+            # Parse each rule block
+            successful_rules = 0
+            for block in rule_blocks:
+                rule = self._parse_rule_block(block)
+                if rule:
+                    self.add_rule(rule)
+                    successful_rules += 1
+            
+            if successful_rules == 0:
+                logger.warning("No valid rules were found in the RUL content")
+                return False
+                
+            logger.info(f"Successfully parsed {successful_rules} rules from RUL content")
+            return True
+            
+        except Exception as e:
+            error_msg = f"Error parsing RUL content: {str(e)}"
+            logger.error(error_msg)
+            return False
+    
+    def _extract_rule_blocks(self, rul_content: str) -> List[str]:
+        """Extract rule blocks from RUL content"""
+        # Pattern to match a rule block: starts with "Rule" and ends with "}"
+        pattern = r'Rule\s*{[^}]*}'
+        
+        # Find all matches
+        blocks = re.findall(pattern, rul_content, re.DOTALL)
+        
+        return blocks
+    
+    def _parse_rule_block(self, block: str) -> Optional[BaseRule]:
+        """Parse a rule block into a rule object"""
+        try:
+            # Extract rule properties
+            name = self._extract_property(block, 'Name')
+            enabled_str = self._extract_property(block, 'Enabled')
+            enabled = enabled_str.lower() == 'true' if enabled_str else True
+            comment = self._extract_property(block, 'Comment')
+            priority_str = self._extract_property(block, 'Priority')
+            priority = int(priority_str) if priority_str and priority_str.isdigit() else 1
+            rule_kind = self._extract_property(block, 'RuleKind')
+            
+            if not name or not rule_kind:
+                logger.warning("Rule block missing required properties (Name or RuleKind)")
+                return None
+            
+            # Create rule object based on rule kind
+            if rule_kind == RuleType.CLEARANCE.value:
+                return self._parse_clearance_rule(
+                    block, name, enabled, comment, priority
+                )
+            elif rule_kind == RuleType.SHORT_CIRCUIT.value:
+                return self._parse_short_circuit_rule(
+                    block, name, enabled, comment, priority
+                )
+            elif rule_kind == RuleType.UNROUTED_NET.value:
+                return self._parse_unrouted_net_rule(
+                    block, name, enabled, comment, priority
+                )
+            else:
+                logger.warning(f"Unsupported rule kind: {rule_kind}")
+                return None
+        
+        except Exception as e:
+            logger.error(f"Error parsing rule block: {str(e)}")
+            return None
+    
+    def _parse_clearance_rule(self, block: str, name: str, enabled: bool, 
+                            comment: str, priority: int) -> Optional[ClearanceRule]:
+        """Parse a clearance rule block"""
+        try:
+            # Extract clearance properties
+            min_clearance_str = self._extract_property(block, 'MinimumClearance')
+            min_clearance_type = self._extract_property(block, 'MinimumClearanceType')
+            source_scope_str = self._extract_property(block, 'SourceScope')
+            target_scope_str = self._extract_property(block, 'TargetScope')
+            
+            if not min_clearance_str:
+                logger.warning("Clearance rule missing MinimumClearance property")
+                return None
+            
+            # Parse min clearance
+            try:
+                min_clearance = float(min_clearance_str)
+            except ValueError:
+                logger.warning(f"Invalid MinimumClearance value: {min_clearance_str}")
+                min_clearance = 10.0
+            
+            # Parse unit type
+            try:
+                unit = UnitType.from_string(min_clearance_type) if min_clearance_type else UnitType.MIL
+            except ValueError:
+                logger.warning(f"Invalid MinimumClearanceType: {min_clearance_type}, using MIL")
+                unit = UnitType.MIL
+            
+            # Parse scopes
+            source_scope = self._parse_scope(source_scope_str) if source_scope_str else RuleScope("All")
+            target_scope = self._parse_scope(target_scope_str) if target_scope_str else RuleScope("All")
+            
+            # Create rule
+            return ClearanceRule(
+                name=name,
+                enabled=enabled,
+                comment=comment,
+                priority=priority,
+                min_clearance=min_clearance,
+                unit=unit,
+                source_scope=source_scope,
+                target_scope=target_scope
+            )
+        
+        except Exception as e:
+            logger.error(f"Error parsing clearance rule: {str(e)}")
+            return None
+    
+    def _parse_short_circuit_rule(self, block: str, name: str, enabled: bool, 
+                                comment: str, priority: int) -> Optional[ShortCircuitRule]:
+        """Parse a short circuit rule block"""
+        try:
+            # Extract scope
+            scope_str = self._extract_property(block, 'Scope')
+            
+            # Parse scope
+            scope = self._parse_scope(scope_str) if scope_str else RuleScope("All")
+            
+            # Create rule
+            return ShortCircuitRule(
+                name=name,
+                enabled=enabled,
+                comment=comment,
+                priority=priority,
+                scope=scope
+            )
+        
+        except Exception as e:
+            logger.error(f"Error parsing short circuit rule: {str(e)}")
+            return None
+    
+    def _parse_unrouted_net_rule(self, block: str, name: str, enabled: bool, 
+                               comment: str, priority: int) -> Optional[UnRoutedNetRule]:
+        """Parse an unrouted net rule block"""
+        try:
+            # Extract scope
+            scope_str = self._extract_property(block, 'Scope')
+            
+            # Parse scope
+            scope = self._parse_scope(scope_str) if scope_str else RuleScope("All")
+            
+            # Create rule
+            return UnRoutedNetRule(
+                name=name,
+                enabled=enabled,
+                comment=comment,
+                priority=priority,
+                scope=scope
+            )
+        
+        except Exception as e:
+            logger.error(f"Error parsing unrouted net rule: {str(e)}")
+            return None
+    
+    def _extract_property(self, block: str, property_name: str) -> str:
+        """Extract a property value from a rule block"""
+        # Pattern to match property: "PropertyName = 'Value'" or "PropertyName = Value"
+        pattern = r'\s+' + re.escape(property_name) + r'\s*=\s*[\'"]?([^\'"\n}]*)[\'"]?\s*'
+        
+        match = re.search(pattern, block)
+        if match:
+            return match.group(1).strip()
+        return ""
+    
+    def _parse_scope(self, scope_str: str) -> RuleScope:
+        """Parse a scope string into a RuleScope object"""
+        if not scope_str or scope_str == "All":
+            return RuleScope("All")
+        
+        # Check for InNetClass pattern
+        net_class_match = re.match(r'InNetClass\([\'"]([^\'"]*)[\'"]', scope_str)
+        if net_class_match:
+            return RuleScope("NetClass", [net_class_match.group(1)])
+        
+        # Check for InNetClasses pattern
+        net_classes_match = re.match(r'InNetClasses\([\'"]([^\'"]*)[\'"]', scope_str)
+        if net_classes_match:
+            classes = net_classes_match.group(1).split(';')
+            return RuleScope("NetClasses", classes)
+        
+        # Check for simple quoted string (custom scope)
+        quoted_match = re.match(r'[\'"]([^\'"]*)[\'"]', scope_str)
+        if quoted_match:
+            items = quoted_match.group(1).split(';')
+            return RuleScope("Custom", items)
+        
+        # Default to All
+        logger.warning(f"Could not parse scope: {scope_str}, using All")
+        return RuleScope("All")
     
     def to_dict(self) -> List[Dict]:
         """Convert all rules to dictionary format"""

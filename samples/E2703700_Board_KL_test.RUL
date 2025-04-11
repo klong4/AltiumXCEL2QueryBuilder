@@ -1,0 +1,861 @@
+# Altium Designer Rules
+#
+# Auto-generated file
+
+Rule
+{
+    Name = 'Clearance_MAINS_Line_MAINS_Line'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_Line and MAINS_Line'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 0.295
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_Line')
+    TargetScope = InNetClass('MAINS_Line')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_Neutral_MAINS_Line'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_Neutral and MAINS_Line'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_Neutral')
+    TargetScope = InNetClass('MAINS_Line')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_Neutral_MAINS_Neutral'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_Neutral and MAINS_Neutral'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 0.295
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_Neutral')
+    TargetScope = InNetClass('MAINS_Neutral')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_BoostSwNode_MAINS_Line'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_BoostSwNode and MAINS_Line'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_BoostSwNode')
+    TargetScope = InNetClass('MAINS_Line')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_BoostSwNode_MAINS_Neutral'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_BoostSwNode and MAINS_Neutral'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_BoostSwNode')
+    TargetScope = InNetClass('MAINS_Neutral')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_BoostSwNode_MAINS_BoostSwNode'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_BoostSwNode and MAINS_BoostSwNode'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 0.295
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_BoostSwNode')
+    TargetScope = InNetClass('MAINS_BoostSwNode')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_BUS_MAINS_Line'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_BUS and MAINS_Line'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_BUS')
+    TargetScope = InNetClass('MAINS_Line')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_BUS_MAINS_Neutral'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_BUS and MAINS_Neutral'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_BUS')
+    TargetScope = InNetClass('MAINS_Neutral')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_BUS_MAINS_BoostSwNode'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_BUS and MAINS_BoostSwNode'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_BUS')
+    TargetScope = InNetClass('MAINS_BoostSwNode')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_BUS_MAINS_BUS'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_BUS and MAINS_BUS'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 0.295
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_BUS')
+    TargetScope = InNetClass('MAINS_BUS')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_LowVoltage_MAINS_Line'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_LowVoltage and MAINS_Line'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_LowVoltage')
+    TargetScope = InNetClass('MAINS_Line')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_LowVoltage_MAINS_Neutral'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_LowVoltage and MAINS_Neutral'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_LowVoltage')
+    TargetScope = InNetClass('MAINS_Neutral')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_LowVoltage_MAINS_BoostSwNode'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_LowVoltage and MAINS_BoostSwNode'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_LowVoltage')
+    TargetScope = InNetClass('MAINS_BoostSwNode')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_LowVoltage_MAINS_BUS'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_LowVoltage and MAINS_BUS'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_LowVoltage')
+    TargetScope = InNetClass('MAINS_BUS')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_LowVoltage_MAINS_LowVoltage'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_LowVoltage and MAINS_LowVoltage'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 0.295
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_LowVoltage')
+    TargetScope = InNetClass('MAINS_LowVoltage')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_HB_A_MAINS_Line'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_HB_A and MAINS_Line'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_HB_A')
+    TargetScope = InNetClass('MAINS_Line')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_HB_A_MAINS_Neutral'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_HB_A and MAINS_Neutral'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_HB_A')
+    TargetScope = InNetClass('MAINS_Neutral')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_HB_A_MAINS_BoostSwNode'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_HB_A and MAINS_BoostSwNode'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_HB_A')
+    TargetScope = InNetClass('MAINS_BoostSwNode')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_HB_A_MAINS_BUS'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_HB_A and MAINS_BUS'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_HB_A')
+    TargetScope = InNetClass('MAINS_BUS')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_HB_A_MAINS_LowVoltage'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_HB_A and MAINS_LowVoltage'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_HB_A')
+    TargetScope = InNetClass('MAINS_LowVoltage')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_HB_A_MAINS_HB_A'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_HB_A and MAINS_HB_A'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 0.295
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_HB_A')
+    TargetScope = InNetClass('MAINS_HB_A')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_HB_B_MAINS_Line'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_HB_B and MAINS_Line'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_HB_B')
+    TargetScope = InNetClass('MAINS_Line')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_HB_B_MAINS_Neutral'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_HB_B and MAINS_Neutral'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_HB_B')
+    TargetScope = InNetClass('MAINS_Neutral')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_HB_B_MAINS_BoostSwNode'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_HB_B and MAINS_BoostSwNode'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_HB_B')
+    TargetScope = InNetClass('MAINS_BoostSwNode')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_HB_B_MAINS_BUS'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_HB_B and MAINS_BUS'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_HB_B')
+    TargetScope = InNetClass('MAINS_BUS')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_HB_B_MAINS_LowVoltage'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_HB_B and MAINS_LowVoltage'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_HB_B')
+    TargetScope = InNetClass('MAINS_LowVoltage')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_HB_B_MAINS_HB_A'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_HB_B and MAINS_HB_A'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_HB_B')
+    TargetScope = InNetClass('MAINS_HB_A')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_HB_B_MAINS_HB_B'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_HB_B and MAINS_HB_B'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 0.295
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_HB_B')
+    TargetScope = InNetClass('MAINS_HB_B')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_FlyBackSwNode_MAINS_Line'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_FlyBackSwNode and MAINS_Line'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_FlyBackSwNode')
+    TargetScope = InNetClass('MAINS_Line')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_FlyBackSwNode_MAINS_Neutral'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_FlyBackSwNode and MAINS_Neutral'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_FlyBackSwNode')
+    TargetScope = InNetClass('MAINS_Neutral')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_FlyBackSwNode_MAINS_BoostSwNode'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_FlyBackSwNode and MAINS_BoostSwNode'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_FlyBackSwNode')
+    TargetScope = InNetClass('MAINS_BoostSwNode')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_FlyBackSwNode_MAINS_BUS'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_FlyBackSwNode and MAINS_BUS'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_FlyBackSwNode')
+    TargetScope = InNetClass('MAINS_BUS')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_FlyBackSwNode_MAINS_LowVoltage'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_FlyBackSwNode and MAINS_LowVoltage'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_FlyBackSwNode')
+    TargetScope = InNetClass('MAINS_LowVoltage')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_FlyBackSwNode_MAINS_HB_A'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_FlyBackSwNode and MAINS_HB_A'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_FlyBackSwNode')
+    TargetScope = InNetClass('MAINS_HB_A')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_FlyBackSwNode_MAINS_HB_B'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_FlyBackSwNode and MAINS_HB_B'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_FlyBackSwNode')
+    TargetScope = InNetClass('MAINS_HB_B')
+}
+
+Rule
+{
+    Name = 'Clearance_MAINS_FlyBackSwNode_MAINS_FlyBackSwNode'
+    Enabled = 'true'
+    Comment = 'Clearance between MAINS_FlyBackSwNode and MAINS_FlyBackSwNode'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 0.295
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('MAINS_FlyBackSwNode')
+    TargetScope = InNetClass('MAINS_FlyBackSwNode')
+}
+
+Rule
+{
+    Name = 'Clearance_CHSGND_MAINS_Line'
+    Enabled = 'true'
+    Comment = 'Clearance between CHSGND and MAINS_Line'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('CHSGND')
+    TargetScope = InNetClass('MAINS_Line')
+}
+
+Rule
+{
+    Name = 'Clearance_CHSGND_MAINS_Neutral'
+    Enabled = 'true'
+    Comment = 'Clearance between CHSGND and MAINS_Neutral'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('CHSGND')
+    TargetScope = InNetClass('MAINS_Neutral')
+}
+
+Rule
+{
+    Name = 'Clearance_CHSGND_MAINS_BoostSwNode'
+    Enabled = 'true'
+    Comment = 'Clearance between CHSGND and MAINS_BoostSwNode'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('CHSGND')
+    TargetScope = InNetClass('MAINS_BoostSwNode')
+}
+
+Rule
+{
+    Name = 'Clearance_CHSGND_MAINS_BUS'
+    Enabled = 'true'
+    Comment = 'Clearance between CHSGND and MAINS_BUS'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('CHSGND')
+    TargetScope = InNetClass('MAINS_BUS')
+}
+
+Rule
+{
+    Name = 'Clearance_CHSGND_MAINS_LowVoltage'
+    Enabled = 'true'
+    Comment = 'Clearance between CHSGND and MAINS_LowVoltage'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('CHSGND')
+    TargetScope = InNetClass('MAINS_LowVoltage')
+}
+
+Rule
+{
+    Name = 'Clearance_CHSGND_MAINS_HB_A'
+    Enabled = 'true'
+    Comment = 'Clearance between CHSGND and MAINS_HB_A'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('CHSGND')
+    TargetScope = InNetClass('MAINS_HB_A')
+}
+
+Rule
+{
+    Name = 'Clearance_CHSGND_MAINS_HB_B'
+    Enabled = 'true'
+    Comment = 'Clearance between CHSGND and MAINS_HB_B'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('CHSGND')
+    TargetScope = InNetClass('MAINS_HB_B')
+}
+
+Rule
+{
+    Name = 'Clearance_CHSGND_MAINS_FlyBackSwNode'
+    Enabled = 'true'
+    Comment = 'Clearance between CHSGND and MAINS_FlyBackSwNode'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 2.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('CHSGND')
+    TargetScope = InNetClass('MAINS_FlyBackSwNode')
+}
+
+Rule
+{
+    Name = 'Clearance_CHSGND_CHSGND'
+    Enabled = 'true'
+    Comment = 'Clearance between CHSGND and CHSGND'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 0.295
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('CHSGND')
+    TargetScope = InNetClass('CHSGND')
+}
+
+Rule
+{
+    Name = 'Clearance_ISO_LowVoltage_MAINS_Line'
+    Enabled = 'true'
+    Comment = 'Clearance between ISO_LowVoltage and MAINS_Line'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 4.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('ISO_LowVoltage')
+    TargetScope = InNetClass('MAINS_Line')
+}
+
+Rule
+{
+    Name = 'Clearance_ISO_LowVoltage_MAINS_Neutral'
+    Enabled = 'true'
+    Comment = 'Clearance between ISO_LowVoltage and MAINS_Neutral'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 4.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('ISO_LowVoltage')
+    TargetScope = InNetClass('MAINS_Neutral')
+}
+
+Rule
+{
+    Name = 'Clearance_ISO_LowVoltage_MAINS_BoostSwNode'
+    Enabled = 'true'
+    Comment = 'Clearance between ISO_LowVoltage and MAINS_BoostSwNode'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 4.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('ISO_LowVoltage')
+    TargetScope = InNetClass('MAINS_BoostSwNode')
+}
+
+Rule
+{
+    Name = 'Clearance_ISO_LowVoltage_MAINS_BUS'
+    Enabled = 'true'
+    Comment = 'Clearance between ISO_LowVoltage and MAINS_BUS'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 4.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('ISO_LowVoltage')
+    TargetScope = InNetClass('MAINS_BUS')
+}
+
+Rule
+{
+    Name = 'Clearance_ISO_LowVoltage_MAINS_LowVoltage'
+    Enabled = 'true'
+    Comment = 'Clearance between ISO_LowVoltage and MAINS_LowVoltage'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 4.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('ISO_LowVoltage')
+    TargetScope = InNetClass('MAINS_LowVoltage')
+}
+
+Rule
+{
+    Name = 'Clearance_ISO_LowVoltage_MAINS_HB_A'
+    Enabled = 'true'
+    Comment = 'Clearance between ISO_LowVoltage and MAINS_HB_A'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 4.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('ISO_LowVoltage')
+    TargetScope = InNetClass('MAINS_HB_A')
+}
+
+Rule
+{
+    Name = 'Clearance_ISO_LowVoltage_MAINS_HB_B'
+    Enabled = 'true'
+    Comment = 'Clearance between ISO_LowVoltage and MAINS_HB_B'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 4.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('ISO_LowVoltage')
+    TargetScope = InNetClass('MAINS_HB_B')
+}
+
+Rule
+{
+    Name = 'Clearance_ISO_LowVoltage_MAINS_FlyBackSwNode'
+    Enabled = 'true'
+    Comment = 'Clearance between ISO_LowVoltage and MAINS_FlyBackSwNode'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 4.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('ISO_LowVoltage')
+    TargetScope = InNetClass('MAINS_FlyBackSwNode')
+}
+
+Rule
+{
+    Name = 'Clearance_ISO_LowVoltage_CHSGND'
+    Enabled = 'true'
+    Comment = 'Clearance between ISO_LowVoltage and CHSGND'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 4.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('ISO_LowVoltage')
+    TargetScope = InNetClass('CHSGND')
+}
+
+Rule
+{
+    Name = 'Clearance_ISO_LowVoltage_ISO_LowVoltage'
+    Enabled = 'true'
+    Comment = 'Clearance between ISO_LowVoltage and ISO_LowVoltage'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 0.295
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('ISO_LowVoltage')
+    TargetScope = InNetClass('ISO_LowVoltage')
+}
+
+Rule
+{
+    Name = 'Clearance_Other Net Classes_MAINS_Line'
+    Enabled = 'true'
+    Comment = 'Clearance between Other Net Classes and MAINS_Line'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 4.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('Other Net Classes')
+    TargetScope = InNetClass('MAINS_Line')
+}
+
+Rule
+{
+    Name = 'Clearance_Other Net Classes_MAINS_Neutral'
+    Enabled = 'true'
+    Comment = 'Clearance between Other Net Classes and MAINS_Neutral'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 4.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('Other Net Classes')
+    TargetScope = InNetClass('MAINS_Neutral')
+}
+
+Rule
+{
+    Name = 'Clearance_Other Net Classes_MAINS_BoostSwNode'
+    Enabled = 'true'
+    Comment = 'Clearance between Other Net Classes and MAINS_BoostSwNode'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 4.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('Other Net Classes')
+    TargetScope = InNetClass('MAINS_BoostSwNode')
+}
+
+Rule
+{
+    Name = 'Clearance_Other Net Classes_MAINS_BUS'
+    Enabled = 'true'
+    Comment = 'Clearance between Other Net Classes and MAINS_BUS'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 4.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('Other Net Classes')
+    TargetScope = InNetClass('MAINS_BUS')
+}
+
+Rule
+{
+    Name = 'Clearance_Other Net Classes_MAINS_LowVoltage'
+    Enabled = 'true'
+    Comment = 'Clearance between Other Net Classes and MAINS_LowVoltage'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 4.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('Other Net Classes')
+    TargetScope = InNetClass('MAINS_LowVoltage')
+}
+
+Rule
+{
+    Name = 'Clearance_Other Net Classes_MAINS_HB_A'
+    Enabled = 'true'
+    Comment = 'Clearance between Other Net Classes and MAINS_HB_A'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 4.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('Other Net Classes')
+    TargetScope = InNetClass('MAINS_HB_A')
+}
+
+Rule
+{
+    Name = 'Clearance_Other Net Classes_MAINS_HB_B'
+    Enabled = 'true'
+    Comment = 'Clearance between Other Net Classes and MAINS_HB_B'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 4.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('Other Net Classes')
+    TargetScope = InNetClass('MAINS_HB_B')
+}
+
+Rule
+{
+    Name = 'Clearance_Other Net Classes_MAINS_FlyBackSwNode'
+    Enabled = 'true'
+    Comment = 'Clearance between Other Net Classes and MAINS_FlyBackSwNode'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 4.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('Other Net Classes')
+    TargetScope = InNetClass('MAINS_FlyBackSwNode')
+}
+
+Rule
+{
+    Name = 'Clearance_Other Net Classes_CHSGND'
+    Enabled = 'true'
+    Comment = 'Clearance between Other Net Classes and CHSGND'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 4.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('Other Net Classes')
+    TargetScope = InNetClass('CHSGND')
+}
+
+Rule
+{
+    Name = 'Clearance_Other Net Classes_ISO_LowVoltage'
+    Enabled = 'true'
+    Comment = 'Clearance between Other Net Classes and ISO_LowVoltage'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 4.0
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('Other Net Classes')
+    TargetScope = InNetClass('ISO_LowVoltage')
+}
+
+Rule
+{
+    Name = 'Clearance_Other Net Classes_Other Net Class'
+    Enabled = 'true'
+    Comment = 'Clearance between Other Net Classes and Other Net Class'
+    Priority = 1
+    RuleKind = 'Clearance'
+    MinimumClearance = 0.295
+    MinimumClearanceType = 'mil'
+    SourceScope = InNetClass('Other Net Classes')
+    TargetScope = InNetClass('Other Net Class')
+}

@@ -150,7 +150,8 @@ class ExcelPreviewModel(QAbstractTableModel):
     
     def get_dataframe(self) -> pd.DataFrame:
         """Get the current dataframe"""
-        return self.df.copy() if self.df is not None else None
+        # Return an empty DataFrame if self.df is None
+        return self.df.copy() if self.df is not None else pd.DataFrame()
 
 
 class ExcelPreviewDialog(QDialog):
@@ -261,6 +262,10 @@ class ExcelPreviewDialog(QDialog):
         self.button_box.rejected.connect(self.reject)
         main_layout.addWidget(self.button_box)
 
+        # Update the preview when start and stop positions are changed
+        self.start_row_spin.valueChanged.connect(self._update_preview)
+        self.end_row_spin.valueChanged.connect(self._update_preview)
+
     def _load_data(self):
         """Load data into the preview table"""
         try:
@@ -273,8 +278,12 @@ class ExcelPreviewDialog(QDialog):
             
             # Use first row as header if needed
             if self.use_first_row_as_header and len(processed_df) > 0:
-                processed_df.columns = processed_df.iloc[0]
+                # Get the first row as headers
+                headers = processed_df.iloc[0].values
+                # Remove the first row (now used as headers)
                 processed_df = processed_df.iloc[1:].reset_index(drop=True)
+                # Set the column names
+                processed_df.columns = headers
             
             # Update model
             self.table_model.set_dataframe(processed_df)
@@ -294,21 +303,27 @@ class ExcelPreviewDialog(QDialog):
         """Handle skip rows change"""
         self.skip_rows = value
         logger.info(f"Skip rows changed to: {value}")
+        # Automatically refresh the preview
+        self._load_data()
     
     def _on_header_option_changed(self, checked):
         """Handle header option change"""
         self.use_first_row_as_header = checked
         logger.info(f"Use first row as header changed to: {checked}")
+        # Automatically refresh the preview
+        self._load_data()
     
     def _on_start_row_changed(self, value):
         """Handle start row change"""
         self.start_row = value
         logger.info(f"Start row changed to: {value}")
+        # We don't refresh here as this is used during import, not preview
 
     def _on_end_row_changed(self, value):
         """Handle end row change"""
         self.end_row = value
         logger.info(f"End row changed to: {value}")
+        # We don't refresh here as this is used during import, not preview
 
     def _on_unit_changed(self, index):
         """Handle unit change"""
@@ -318,6 +333,32 @@ class ExcelPreviewDialog(QDialog):
             logger.info(f"Unit changed to: {self.unit.value}")
         except ValueError:
             logger.error(f"Invalid unit: {unit_str}")
+
+    def _update_preview(self):
+        """Update the preview table based on start and stop rows."""
+        try:
+            # Adjust the dataframe based on start and stop rows
+            start_row = self.start_row_spin.value() - 1  # Convert to 0-based index
+            end_row = self.end_row_spin.value()
+
+            # Ensure valid range
+            if start_row < 0 or end_row > len(self.df) or start_row >= end_row:
+                logger.warning("Invalid start or end row range for preview update.")
+                return
+
+            # Slice the dataframe
+            preview_df = self.df.iloc[start_row:end_row]
+
+            # Update the model with the sliced dataframe
+            self.table_model.set_dataframe(preview_df)
+
+            # Resize columns for better visibility
+            self.table_view.resizeColumnsToContents()
+            self.table_view.resizeRowsToContents()
+
+            logger.info("Preview updated with selected row range.")
+        except Exception as e:
+            logger.error(f"Error updating preview: {str(e)}")
     
     def get_processed_dataframe(self) -> pd.DataFrame:
         """Get the processed dataframe"""

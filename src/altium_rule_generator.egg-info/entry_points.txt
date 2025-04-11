@@ -1,0 +1,2 @@
+[console_scripts]
+altium-rule-generator = main:main
