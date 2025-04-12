@@ -44,8 +44,8 @@ class PivotTableModel(QAbstractTableModel):
         """Set the pivot data to display"""
         self.beginResetModel()
         self.pivot_data = pivot_data
-        
-        if pivot_data and pivot_data.pivot_df is not None:
+
+        if pivot_data is not None and pivot_data.pivot_df is not None:
             self.headers = pivot_data.column_index
             self.index_column = pivot_data.row_index
             self.data_array = pivot_data.values
@@ -155,27 +155,70 @@ class PivotTableModel(QAbstractTableModel):
         if col == 0:
             return False
         
-        # Convert input to proper type
-        try:
-            # Try to convert to float
-            if value == "":
-                # Empty string becomes NaN
-                value = np.nan
-            else:
-                value = float(value)
-            
-            # Update the data array
-            data_col = col - 1
-            self.data_array[row, data_col] = value
-            
-            # Emit signal
+        # Update the data array
+        data_col = col - 1
+        original_value = self.data_array[row, data_col]
+        
+        # Keep string variables as strings, try converting others to float
+        if isinstance(value, str) and value.strip().upper() in ['D', 'F']:
+             new_value = value.strip().upper()
+        else:
+            try:
+                if value == "":
+                    new_value = np.nan
+                else:
+                    new_value = float(value)
+            except (ValueError, TypeError):
+                logger.warning(f"Invalid value for cell ({row}, {col}): {value}, keeping original.")
+                # Optionally show a message to the user or revert
+                # For now, just don't update if conversion fails
+                return False 
+
+        if new_value != original_value:
+            self.data_array[row, data_col] = new_value
             self.dataChanged.emit(index, index)
-            self.data_changed.emit()
+            self.data_changed.emit() # Emit custom signal if needed elsewhere
             return True
-        except (ValueError, TypeError) as e:
-            logger.warning(f"Invalid value for cell ({row}, {col}): {value}, error: {str(e)}")
-            return False
-    
+        return False
+
+    def replace_variables_in_data(self, variables: Dict[str, float]) -> bool:
+        """Replace string variables ('D', 'F') in the data array with numeric values."""
+        modified = False
+        rows, cols = self.data_array.shape
+        
+        # Create lists of QModelIndex for changed cells
+        top_left_list = []
+        bottom_right_list = []
+
+        for r in range(rows):
+            for c in range(cols):
+                current_value = self.data_array[r, c]
+                if isinstance(current_value, str):
+                    var_upper = current_value.strip().upper()
+                    if var_upper in variables:
+                        new_value = variables[var_upper]
+                        if self.data_array[r, c] != new_value: # Check if value actually changes
+                            self.data_array[r, c] = new_value
+                            modified = True
+                            # Store index for dataChanged signal (column needs +1 for view)
+                            model_index = self.index(r, c + 1)
+                            top_left_list.append(model_index)
+                            bottom_right_list.append(model_index)
+
+        if modified:
+            # Emit dataChanged for all modified cells efficiently
+            # It's often simpler and sometimes more efficient to just reset the model
+            # if many cells change, but let's try emitting specific signals first.
+            # self.dataChanged.emit(min_index, max_index) # This requires finding min/max row/col
+            # For simplicity, let's emit for each cell or reset.
+            # Resetting the model is easiest if many cells might change:
+            self.beginResetModel()
+            self.endResetModel()
+            self.data_changed.emit() # Emit custom signal
+            logger.info(f"Replaced variables {list(variables.keys())} in pivot data model.")
+
+        return modified
+
     def get_updated_pivot_data(self) -> ExcelPivotData:
         """Get updated pivot data from the model"""
         if self.pivot_data is None:
@@ -202,355 +245,153 @@ class PivotTableModel(QAbstractTableModel):
 
 
 class PivotTableWidget(QWidget):
-    """Widget for displaying and editing pivot table data"""
+    """Widget to display and edit pivot table data"""
     
-    data_changed = pyqtSignal()
+    rules_generated = pyqtSignal(list)
     
     def __init__(self, parent=None):
         """Initialize pivot table widget"""
         super().__init__(parent)
-        self.pivot_data = None
-        self.rule_type = RuleType.CLEARANCE
-        self.unit = UnitType.MIL
         
-        # Initialize UI
+        self.pivot_data = None
+        self.model = PivotTableModel(self)
+        self.model.data_changed.connect(self._on_model_data_changed)
+        
         self._init_ui()
         
-        logger.info("Pivot table widget initialized")
-    
     def _init_ui(self):
-        """Initialize the UI components"""
-        # Main layout
-        main_layout = QVBoxLayout()
-        self.setLayout(main_layout)
+        """Initialize the user interface"""
+        layout = QVBoxLayout(self)
         
-        # Controls layout
-        controls_layout = QHBoxLayout()
-        main_layout.addLayout(controls_layout)
+        # --- Table View --- 
+        self.table_view = QTableView()
+        self.table_view.setModel(self.model)
+        self.table_view.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.table_view.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
+        layout.addWidget(self.table_view)
         
-        # Rule type selection
-        rule_type_group = QGroupBox("Rule Type")
-        rule_type_layout = QFormLayout()
-        rule_type_group.setLayout(rule_type_layout)
+        # --- Options Group --- 
+        options_group = QGroupBox("Rule Generation Options")
+        options_layout = QFormLayout()
         
         self.rule_type_combo = QComboBox()
-        self.rule_type_combo.addItem("Electrical Clearance", RuleType.CLEARANCE.value)
-        self.rule_type_combo.addItem("Short Circuit", RuleType.SHORT_CIRCUIT.value)
-        self.rule_type_combo.addItem("Un-Routed Net", RuleType.UNROUTED_NET.value)
-        self.rule_type_combo.addItem("Un-Connected Pin", RuleType.UNCONNECTED_PIN.value)
-        self.rule_type_combo.addItem("Modified Polygon", RuleType.MODIFIED_POLYGON.value)
-        self.rule_type_combo.addItem("Creepage Distance", RuleType.CREEPAGE_DISTANCE.value)
-        self.rule_type_combo.currentIndexChanged.connect(self._on_rule_type_changed)
-        
-        rule_type_layout.addRow("Rule Type:", self.rule_type_combo)
-        controls_layout.addWidget(rule_type_group)
-        
-        # Unit selection
-        unit_group = QGroupBox("Unit")
-        unit_layout = QFormLayout()
-        unit_group.setLayout(unit_layout)
+        # Populate with RuleType enum values
+        for rule_type in RuleType:
+            self.rule_type_combo.addItem(rule_type.value, rule_type)
+        options_layout.addRow("Rule Type:", self.rule_type_combo)
         
         self.unit_combo = QComboBox()
-        self.unit_combo.addItem("mil", UnitType.MIL.value)
-        self.unit_combo.addItem("mm", UnitType.MM.value)
-        self.unit_combo.addItem("inch", UnitType.INCH.value)
-        self.unit_combo.currentIndexChanged.connect(self._on_unit_changed)
+        # Populate with UnitType enum values
+        for unit_type in UnitType:
+            self.unit_combo.addItem(unit_type.value, unit_type)
+        options_layout.addRow("Units:", self.unit_combo)
         
-        unit_layout.addRow("Unit:", self.unit_combo)
-        controls_layout.addWidget(unit_group)
+        self.rule_prefix_input = QLineEdit("Rule_")
+        options_layout.addRow("Rule Name Prefix:", self.rule_prefix_input)
         
-        # Table actions
-        actions_group = QGroupBox("Actions")
-        actions_layout = QVBoxLayout()
-        actions_group.setLayout(actions_layout)
+        options_group.setLayout(options_layout)
+        layout.addWidget(options_group)
         
-        self.add_row_button = QPushButton("Add Net Class")
-        self.add_row_button.clicked.connect(self._on_add_row)
-        actions_layout.addWidget(self.add_row_button)
+        # --- Action Buttons --- 
+        button_layout = QHBoxLayout()
+        self.generate_button = QPushButton("Generate Rules")
+        self.generate_button.clicked.connect(self._generate_rules)
+        button_layout.addWidget(self.generate_button)
         
-        self.remove_row_button = QPushButton("Remove Net Class")
-        self.remove_row_button.clicked.connect(self._on_remove_row)
-        actions_layout.addWidget(self.remove_row_button)
+        self.export_button = QPushButton("Export to Excel")
+        self.export_button.clicked.connect(self._export_to_excel)
+        button_layout.addWidget(self.export_button)
         
-        controls_layout.addWidget(actions_group)
+        layout.addLayout(button_layout)
         
-        # Add stretcher to push controls to the left
-        controls_layout.addStretch(1)
-        
-        # Table view
-        self.table_view = QTableView()
-        self.table_model = PivotTableModel()
-        self.table_view.setModel(self.table_model)
-        
-        # Configure table view
-        self.table_view.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.table_view.verticalHeader().setVisible(False)
-        self.table_view.setAlternatingRowColors(True)
-        
-        # Connect signals
-        self.table_model.data_changed.connect(self._on_data_changed)
-        
-        main_layout.addWidget(self.table_view)
-    
+        self.setLayout(layout)
+
     def set_pivot_data(self, pivot_data: ExcelPivotData):
-        """Set the pivot data to display"""
-        if pivot_data is None:
-            logger.warning("Attempted to set None pivot data")
-            return
-        
+        """Set the pivot data and update the view"""
         self.pivot_data = pivot_data
+        self.model.set_pivot_data(pivot_data)
         
-        if pivot_data:
-            # Update rule type and unit combos
-            if pivot_data.rule_type:
-                index = self.rule_type_combo.findData(pivot_data.rule_type.value)
-                if index >= 0:
-                    self.rule_type_combo.setCurrentIndex(index)
-            
-            if pivot_data.unit:
-                index = self.unit_combo.findData(pivot_data.unit.value)
-                if index >= 0:
-                    self.unit_combo.setCurrentIndex(index)
-            
-            # Set model data
-            self.table_model.set_pivot_data(pivot_data)
-            
-            # Resize columns for better visibility
-            self.table_view.resizeColumnsToContents()
-            self.table_view.resizeRowsToContents()
-            
-            # Force the table to update
-            self.table_view.update()
-            self.table_view.viewport().update()  # Ensure the viewport is refreshed
-            
-            logger.info("Pivot data set in widget")
-            logger.debug(f"Pivot data matrix shape: {pivot_data.values.shape if pivot_data.values is not None else 'None'}")
-        else:
-            self.table_model.set_pivot_data(None)
-            logger.warning("Empty pivot data provided")
-    
-    def get_pivot_data(self) -> ExcelPivotData:
-        """Get the current pivot data from the model"""
-        return self.table_model.get_updated_pivot_data()
-    
-    def _on_rule_type_changed(self, index):
-        """Handle rule type change"""
-        rule_type_str = self.rule_type_combo.currentData()
-        try:
-            self.rule_type = RuleType(rule_type_str)
-            
-            if self.pivot_data:
-                self.pivot_data.rule_type = self.rule_type
-                logger.info(f"Rule type changed to: {self.rule_type.value}")
-                self.data_changed.emit()
-        except ValueError:
-            logger.error(f"Invalid rule type: {rule_type_str}")
-    
-    def _on_unit_changed(self, index):
-        """Handle unit change"""
-        unit_str = self.unit_combo.currentData()
-        try:
-            new_unit = UnitType(unit_str)
+        # Update unit combo based on loaded data
+        if pivot_data and pivot_data.unit:
+            index = self.unit_combo.findData(pivot_data.unit)
+            if index >= 0:
+                self.unit_combo.setCurrentIndex(index)
+        
+        # Update rule type combo based on loaded data
+        if pivot_data and pivot_data.rule_type:
+            index = self.rule_type_combo.findData(pivot_data.rule_type)
+            if index >= 0:
+                self.rule_type_combo.setCurrentIndex(index)
+                # Set default prefix based on rule type
+                self.rule_prefix_input.setText(f"{pivot_data.rule_type.value}_")
 
-            if self.pivot_data and self.pivot_data.values is not None:
-                # Store the old unit for conversion
-                old_unit = self.pivot_data.unit
-
-                # Only convert if the unit actually changed
-                if old_unit != new_unit:
-                    # Convert all values from old unit to new unit
-                    rows, cols = self.pivot_data.values.shape
-                    for i in range(rows):
-                        for j in range(cols):
-                            if not pd.isna(self.pivot_data.values[i, j]):
-                                value = self.pivot_data.values[i, j]
-                                if isinstance(value, (int, float)):
-                                    try:
-                                        converted_value = UnitType.convert(float(value), old_unit, new_unit)
-                                        self.pivot_data.values[i, j] = round(converted_value, 3)
-                                        # Send updated unit, row, and column information
-                                        self._send_unit_update(i, j, new_unit, converted_value)
-                                    except (TypeError, ValueError) as e:
-                                        logger.warning(f"Could not convert value '{value}' at cell ({i}, {j}): {str(e)}")
-
-                    # Update the table model with the new values
-                    self.table_model.set_pivot_data(self.pivot_data)
-
-                # Update the pivot data unit
-                self.pivot_data.unit = new_unit
-                self.unit = new_unit
-
-                logger.info(f"Unit changed to: {self.unit.value}")
-                self.data_changed.emit()
-
-            # Update imported settings to reflect the selected unit
-            if self.pivot_data:
-                self.pivot_data.unit = new_unit
-
-        except ValueError:
-            logger.error(f"Invalid unit: {unit_str}")
-
-    def _send_unit_update(self, row, col, unit, value):
-        """Send updated unit, row, and column information"""
-        logger.info(f"Updated cell ({row}, {col}) to unit {unit.value} with value {value}")
-        # Placeholder for sending the information to the relevant component or service
-        # This could be a signal, API call, or other mechanism
-    
-    def _on_data_changed(self):
+    def _on_model_data_changed(self):
         """Handle data changes in the model"""
-        # Update pivot data with changes from model
-        self.pivot_data = self.table_model.get_updated_pivot_data()
+        # Potentially update internal state or trigger validation if needed
+        pass
+
+    def _generate_rules(self):
+        """Generate rules based on the current pivot table data and options"""
+        logger.info("Generate Rules button clicked.")
         
-        # Emit signal
-        self.data_changed.emit()
-        logger.debug("Pivot data changed in widget")
-    
-    def _on_add_row(self):
-        """Add a new row (net class) to the table"""
-        if self.pivot_data is None or self.table_model.pivot_data is None:
-            QMessageBox.warning(self, "No Data", "No pivot data is loaded. Please import data first.")
+        # 1. Get updated pivot data from the model
+        updated_pivot_data = self.model.get_updated_pivot_data()
+        if updated_pivot_data is None or updated_pivot_data.values is None:
+            QMessageBox.warning(self, "Generation Error", "No valid pivot data available to generate rules.")
+            logger.warning("Rule generation attempted with no valid pivot data.")
             return
-        
-        # Prompt user for new net class name
-        from PyQt5.QtWidgets import QInputDialog
-        net_class_name, ok = QInputDialog.getText(
-            self, 
-            "Add Net Class", 
-            "Enter net class name:",
-            QLineEdit.Normal
-        )
-        
-        if not ok or not net_class_name:
-            # User canceled or entered empty name
+
+        # 2. Get selected options
+        selected_rule_type: RuleType = self.rule_type_combo.currentData()
+        selected_unit: UnitType = self.unit_combo.currentData()
+        rule_prefix = self.rule_prefix_input.text().strip()
+
+        if not selected_rule_type:
+            QMessageBox.warning(self, "Generation Error", "Please select a valid Rule Type.")
+            logger.warning("Rule generation attempted without a selected rule type.")
             return
-        
-        # Check if name already exists
-        if net_class_name in self.table_model.index_column:
-            QMessageBox.warning(
-                self, 
-                "Duplicate Name", 
-                f"Net class '{net_class_name}' already exists. Please use a different name."
-            )
-            return
-        
+            
+        # Update the pivot_data object with current selections (important for conversion)
+        updated_pivot_data.rule_type = selected_rule_type
+        updated_pivot_data.unit = selected_unit
+
+        logger.info(f"Generating rules of type: {selected_rule_type.value}, Unit: {selected_unit.value}, Prefix: '{rule_prefix}'")
+
+        # 3. Generate rules based on type
+        generated_rules = []
         try:
-            # Get current data dimensions
-            current_rows = len(self.table_model.index_column)
-            current_cols = len(self.table_model.headers)
-            
-            if current_cols == 0:
-                # No columns yet, let's add one with the same name as the row
-                new_data_array = np.array([[0.0]])
-                self.table_model.headers = [net_class_name]
-                self.table_model.index_column = [net_class_name]
-                self.table_model.data_array = new_data_array
+            if selected_rule_type == RuleType.CLEARANCE:
+                generated_rules = updated_pivot_data.to_clearance_rules(rule_name_prefix=rule_prefix)
+            # Add elif blocks for other rule types as they are implemented
+            # elif selected_rule_type == RuleType.WIDTH:
+            #     generated_rules = updated_pivot_data.to_width_rules(rule_name_prefix=rule_prefix)
             else:
-                # Create new row with default values (0.0)
-                new_row = np.zeros((1, current_cols))
-                
-                # Append the new row to the data array
-                if current_rows == 0:
-                    # No existing rows
-                    self.table_model.data_array = new_row
-                else:
-                    # Append to existing rows
-                    self.table_model.data_array = np.vstack((self.table_model.data_array, new_row))
-                
-                # Add the net class name to the index column
-                self.table_model.index_column.append(net_class_name)
-                
-                # If this is the first row, also add this net class as a column
-                if current_rows == 0 and net_class_name not in self.table_model.headers:
-                    self.table_model.headers.append(net_class_name)
-                    # Reshape data array to add column
-                    self.table_model.data_array = np.column_stack(
-                        (self.table_model.data_array, np.zeros((1, 1)))
-                    )
+                QMessageBox.warning(self, "Not Implemented", f"Rule generation for '{selected_rule_type.value}' is not yet implemented.")
+                logger.warning(f"Rule generation not implemented for type: {selected_rule_type.value}")
+                return
+
+            if not generated_rules:
+                 # Check if None was returned due to an issue during conversion vs just no rules generated
+                 if generated_rules is None: # Explicit check for None which might indicate an error state in conversion
+                     QMessageBox.warning(self, "Generation Warning", "Rule generation resulted in an unexpected state. Check logs.")
+                     logger.warning("Rule generation function returned None unexpectedly.")
+                 else: # Empty list means no rules applicable
+                     QMessageBox.information(self, "Generation Info", "No applicable rules were generated based on the current data and options.")
+                     logger.info("Rule generation completed, but no rules were applicable.")
+                 # Don't emit signal if no rules or error
+                 return
+                 
+            logger.info(f"Successfully generated {len(generated_rules)} rules.")
             
-            # Update the model
-            self.table_model.beginResetModel()
-            self.table_model.endResetModel()
-            
-            # Update pivot data
-            self._on_data_changed()
-            
-            logger.info(f"Added new net class row: {net_class_name}")
-            QMessageBox.information(
-                self, 
-                "Success", 
-                f"Net class '{net_class_name}' added successfully."
-            )
-            
+            # 4. Emit the signal
+            self.rules_generated.emit(generated_rules)
+            QMessageBox.information(self, "Generation Successful", f"Successfully generated {len(generated_rules)} rules. Check the 'Rule Editor' tab.")
+
         except Exception as e:
-            error_msg = f"Error adding new row: {str(e)}"
-            logger.error(error_msg)
-            QMessageBox.critical(self, "Error", error_msg)
-    
-    def _on_remove_row(self):
-        """Remove selected row (net class) from the table"""
-        if self.pivot_data is None or self.table_model.pivot_data is None:
-            QMessageBox.warning(self, "No Data", "No pivot data is loaded. Please import data first.")
-            return
-        
-        # Get selected rows
-        selected_rows = self.table_view.selectionModel().selectedRows()
-        
-        if not selected_rows:
-            QMessageBox.warning(self, "No Selection", "Please select at least one row to remove.")
-            return
-        
-        # Get the row indices
-        row_indices = [index.row() for index in selected_rows]
-        row_indices.sort(reverse=True)  # Sort in descending order for proper removal
-        
-        # Get row names for confirmation
-        row_names = [self.table_model.index_column[i] for i in row_indices]
-        
-        # Confirm with user
-        confirm_msg = "Are you sure you want to remove the following net classes?\n\n"
-        confirm_msg += "\n".join([f"- {name}" for name in row_names])
-        reply = QMessageBox.question(
-            self, 
-            "Confirm Removal", 
-            confirm_msg,
-            QMessageBox.Yes | QMessageBox.No, 
-            QMessageBox.No
-        )
-        
-        if reply != QMessageBox.Yes:
-            return
-        
-        try:
-            # Start with a simple case: check if all rows are being removed
-            if len(row_indices) == len(self.table_model.index_column):
-                # Special case: removing all rows
-                self.table_model.index_column = []
-                self.table_model.data_array = np.array([])
-            else:
-                # Remove rows one by one from data array
-                for row_idx in row_indices:
-                    # Remove from index column
-                    if 0 <= row_idx < len(self.table_model.index_column):
-                        # Remove the row from the data array
-                        self.table_model.data_array = np.delete(self.table_model.data_array, row_idx, axis=0)
-                        # Remove the name from the index column
-                        self.table_model.index_column.pop(row_idx)
-            
-            # Update the model
-            self.table_model.beginResetModel()
-            self.table_model.endResetModel()
-            
-            # Update pivot data
-            self._on_data_changed()
-            
-            logger.info(f"Removed {len(row_indices)} net class row(s)")
-            QMessageBox.information(
-                self, 
-                "Success", 
-                f"Successfully removed {len(row_indices)} net class(es)."
-            )
-            
-        except Exception as e:
-            error_msg = f"Error removing row(s): {str(e)}"
-            logger.error(error_msg)
-            QMessageBox.critical(self, "Error", error_msg)
+            error_msg = f"An error occurred during rule generation: {str(e)}"
+            logger.error(error_msg, exc_info=True)
+            QMessageBox.critical(self, "Generation Error", error_msg)
+
+    def _export_to_excel(self):
+        """Export the current pivot table data to an Excel file"""
+        # ... existing code ...

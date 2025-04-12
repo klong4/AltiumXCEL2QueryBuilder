@@ -21,7 +21,9 @@ from PyQt5.QtGui import QColor, QBrush
 
 from models.rule_model import (
     UnitType, RuleType, RuleScope, BaseRule,
-    ClearanceRule, ShortCircuitRule, UnRoutedNetRule
+    ClearanceRule, ShortCircuitRule, UnRoutedNetRule,
+    # Add other specific rule types if they exist, e.g.:
+    # PowerPlaneConnectRule, PolygonConnectRule, etc.
 )
 
 logger = logging.getLogger(__name__)
@@ -74,18 +76,18 @@ class RuleEditorWidget(QWidget):
         self.comment_edit = QLineEdit()
         self.comment_edit.textChanged.connect(self._on_property_changed)
         common_layout.addRow("Comment:", self.comment_edit)
-        
+
         self.main_layout.addWidget(common_group)
-        
-        # Placeholder for rule-specific properties
+
+        # GroupBox for rule-specific properties (layout cleared/populated dynamically)
         self.rule_specific_group = QGroupBox("Rule Specific Properties")
-        self.rule_specific_layout = QFormLayout()
+        self.rule_specific_layout = QFormLayout() # Use QFormLayout for consistency
         self.rule_specific_group.setLayout(self.rule_specific_layout)
         self.main_layout.addWidget(self.rule_specific_group)
-        
+
         # Add stretch to push widgets to the top
         self.main_layout.addStretch(1)
-    
+
     def set_rule(self, rule: BaseRule):
         """Set the rule to edit"""
         self.rule = rule
@@ -99,50 +101,132 @@ class RuleEditorWidget(QWidget):
             
             # Update rule-specific properties
             self._update_rule_specific_properties()
-            
+
+            # Ensure the specific properties group is visible AFTER updating
+            self.rule_specific_group.setVisible(True) # <-- Add this line
+
             logger.info(f"Rule set in editor: {rule.name} ({rule.rule_type.value})")
         else:
-            # Clear properties
+            # Clear fields if no rule is selected
             self.name_edit.clear()
             self.enabled_checkbox.setChecked(True)
             self.priority_spin.setValue(1)
             self.comment_edit.clear()
-            
-            logger.warning("Attempted to set None rule")
-    
-    def get_rule(self) -> BaseRule:
-        """Get the edited rule"""
-        if not self.rule:
-            return None
-        
-        # Update common properties
-        self.rule.name = self.name_edit.text()
-        self.rule.enabled = self.enabled_checkbox.isChecked()
-        self.rule.priority = self.priority_spin.value()
-        self.rule.comment = self.comment_edit.text()
-        
-        # Update rule-specific properties
-        self._update_rule_from_ui()
-        
-        return self.rule
-    
+            self._clear_layout(self.rule_specific_layout)
+            self.rule_specific_group.setVisible(False)
+
+    def _clear_layout(self, layout):
+        """Removes all widgets from a layout."""
+        if layout is not None:
+            while layout.count():
+                item = layout.takeAt(0)
+                widget = item.widget()
+                if widget is not None:
+                    widget.deleteLater()
+                else:
+                    # Recursively clear nested layouts if necessary
+                    sub_layout = item.layout()
+                    if sub_layout is not None:
+                        self._clear_layout(sub_layout)
+
     def _update_rule_specific_properties(self):
-        """Update UI with rule-specific properties (to be overridden by subclasses)"""
-        pass
-    
-    def _update_rule_from_ui(self):
-        """Update rule with values from UI (to be overridden by subclasses)"""
-        pass
-    
-    def _on_property_changed(self):
-        """Handle property changes in the UI"""
-        if self.rule:
-            # Update rule with current values
-            rule = self.get_rule()
-            
-            # Emit signal
-            self.rule_changed.emit(rule)
-            logger.debug(f"Rule '{rule.name}' properties changed")
+        """Dynamically populate the rule-specific properties section based on rule type.
+        NOTE: This is primarily a fallback for unknown rule types where a specific
+        editor subclass wasn't created. Subclasses override this method.
+        """
+        # If this instance is actually a specific subclass, let its override handle this.
+        if type(self) is not RuleEditorWidget:
+            return
+
+        self._clear_layout(self.rule_specific_layout)
+        self.rule_specific_group.setVisible(True)
+
+        if not self.rule:
+            self.rule_specific_group.setVisible(False)
+            return
+
+        # --- Clearance Rule --- 
+        if isinstance(self.rule, ClearanceRule):
+            self.rule_specific_group.setTitle("Clearance Rule Properties")
+
+            # Min Clearance
+            self.min_clearance_spin = QDoubleSpinBox()
+            self.min_clearance_spin.setSuffix(f" {self.rule.unit.value}")
+            self.min_clearance_spin.setDecimals(3) # Adjust precision as needed
+            self.min_clearance_spin.setRange(0, 10000) # Set appropriate range
+            self.min_clearance_spin.setValue(self.rule.min_clearance)
+            self.min_clearance_spin.valueChanged.connect(self._on_property_changed)
+            self.rule_specific_layout.addRow("Minimum Clearance:", self.min_clearance_spin)
+
+            # Scope 1
+            self.scope1_combo = QComboBox()
+            self.scope1_combo.addItems([scope.value for scope in RuleScope])
+            self.scope1_combo.setCurrentText(self.rule.scope1.value)
+            self.scope1_combo.currentTextChanged.connect(self._on_property_changed)
+            self.rule_specific_layout.addRow("Scope 1:", self.scope1_combo)
+
+            # Scope 2
+            self.scope2_combo = QComboBox()
+            self.scope2_combo.addItems([scope.value for scope in RuleScope])
+            self.scope2_combo.setCurrentText(self.rule.scope2.value)
+            self.scope2_combo.currentTextChanged.connect(self._on_property_changed)
+            self.rule_specific_layout.addRow("Scope 2:", self.scope2_combo)
+
+        # --- Short Circuit Rule --- 
+        elif isinstance(self.rule, ShortCircuitRule):
+            self.rule_specific_group.setTitle("Short Circuit Rule Properties")
+            # Short circuit rules often just need scope (handled by common props?) or might have specific flags
+            # Add specific widgets if ShortCircuitRule has unique properties
+            # Example: self.allow_short_circuit_checkbox = QCheckBox("Allow Short Circuit")
+            # self.allow_short_circuit_checkbox.setChecked(self.rule.allow_short_circuit) # Assuming property exists
+            # self.allow_short_circuit_checkbox.stateChanged.connect(self._on_property_changed)
+            # self.rule_specific_layout.addRow("Options:", self.allow_short_circuit_checkbox)
+            pass # No specific properties defined in model yet
+
+        # --- Un-Routed Net Rule --- 
+        elif isinstance(self.rule, UnRoutedNetRule):
+            self.rule_specific_group.setTitle("Un-Routed Net Rule Properties")
+            # Un-routed net rules typically just need scope (handled by common props?)
+            # Add specific widgets if UnRoutedNetRule has unique properties
+            pass # No specific properties defined in model yet
+
+        # --- Add other rule types here --- 
+        # elif isinstance(self.rule, PowerPlaneConnectRule):
+        #    # ... add widgets for PowerPlaneConnectRule ...
+        # elif isinstance(self.rule, PolygonConnectRule):
+        #    # ... add widgets for PolygonConnectRule ...
+
+        else:
+            # Handle unknown or base rule type (maybe show nothing specific)
+            self.rule_specific_group.setTitle("Rule Specific Properties (N/A)")
+            self.rule_specific_group.setVisible(False)
+
+    def _on_property_changed(self, value=None):
+        """Update the internal rule object when a property changes in the UI."""
+        if not self.rule:
+            return
+
+        sender = self.sender()
+
+        try:
+            # Update common properties
+            if sender == self.name_edit:
+                self.rule.name = self.name_edit.text()
+            elif sender == self.enabled_checkbox:
+                self.rule.enabled = self.enabled_checkbox.isChecked()
+            elif sender == self.priority_spin:
+                self.rule.priority = self.priority_spin.value()
+            elif sender == self.comment_edit:
+                self.rule.comment = self.comment_edit.text()
+
+            # Emit signal that the rule has changed
+            self.rule_changed.emit(self.rule)
+            logger.debug(f"Rule property changed (Common): {self.rule.name}")
+
+        except Exception as e:
+            logger.error(f"Error updating rule property: {e}", exc_info=True)
+            # Optionally show an error to the user
+            # QMessageBox.warning(self, "Error", f"Failed to update property: {e}")
 
 
 class ClearanceRuleEditor(RuleEditorWidget):
@@ -261,45 +345,62 @@ class ClearanceRuleEditor(RuleEditorWidget):
         else:
             self.target_scope_edit.setEnabled(False)
             self.target_scope_edit.clear()
-    
-    def _update_rule_from_ui(self):
-        """Update rule with values from UI"""
-        if not isinstance(self.rule, ClearanceRule):
-            logger.error(f"Expected ClearanceRule, got {type(self.rule).__name__}")
+
+    def _on_property_changed(self, value=None):
+        """Handle property changes from UI elements."""
+        if not self.rule or not isinstance(self.rule, ClearanceRule):
+            # Let base class handle if rule type is wrong or null
+            super()._on_property_changed(value)
             return
-        
-        # Update minimum clearance
-        self.rule.min_clearance = self.clearance_spin.value()
-        
-        # Update unit
-        unit_str = self.unit_combo.currentData()
-        try:
-            self.rule.unit = UnitType(unit_str)
-        except ValueError:
-            logger.error(f"Invalid unit: {unit_str}")
-        
-        # Update source scope
-        source_scope_type = self.source_scope_combo.currentData()
-        source_items = []
-        
-        if source_scope_type != "All":
-            source_items_str = self.source_scope_edit.text()
-            if source_items_str:
-                source_items = source_items_str.split(";")
-        
-        self.rule.source_scope = RuleScope(source_scope_type, source_items)
-        
-        # Update target scope
-        target_scope_type = self.target_scope_combo.currentData()
-        target_items = []
-        
-        if target_scope_type != "All":
-            target_items_str = self.target_scope_edit.text()
-            if target_items_str:
-                target_items = target_items_str.split(";")
-        
-        self.rule.target_scope = RuleScope(target_scope_type, target_items)
-    
+
+        sender = self.sender()
+        rule_modified = False
+
+        # Handle specific properties
+        if sender == self.clearance_spin:
+            if self.rule.min_clearance != self.clearance_spin.value():
+                self.rule.min_clearance = self.clearance_spin.value()
+                rule_modified = True
+        elif sender == self.unit_combo:
+            unit_val = self.unit_combo.currentData()
+            if self.rule.unit.value != unit_val:
+                try:
+                    self.rule.unit = UnitType(unit_val)
+                    rule_modified = True
+                except ValueError:
+                    logger.error(f"Invalid unit selected: {unit_val}")
+        elif sender == self.source_scope_combo or sender == self.source_scope_edit:
+            scope_type = self.source_scope_combo.currentData()
+            items = []
+            if scope_type != "All":
+                items_str = self.source_scope_edit.text()
+                items = items_str.split(";") if items_str else []
+            new_scope = RuleScope(scope_type, items)
+            # Use __dict__ comparison for RuleScope if __eq__ is not defined
+            if self.rule.source_scope.__dict__ != new_scope.__dict__:
+                self.rule.source_scope = new_scope
+                rule_modified = True
+        elif sender == self.target_scope_combo or sender == self.target_scope_edit:
+            scope_type = self.target_scope_combo.currentData()
+            items = []
+            if scope_type != "All":
+                items_str = self.target_scope_edit.text()
+                items = items_str.split(";") if items_str else []
+            new_scope = RuleScope(scope_type, items)
+            # Use __dict__ comparison for RuleScope if __eq__ is not defined
+            if self.rule.target_scope.__dict__ != new_scope.__dict__:
+                self.rule.target_scope = new_scope
+                rule_modified = True
+        else:
+            # Not a specific property, let the base class handle common properties
+            super()._on_property_changed(value)
+            return # Base class emits signal
+
+        # If a specific property was modified, emit the signal
+        if rule_modified:
+            logger.debug(f"Rule property changed (Clearance Specific): {self.rule.name}")
+            self.rule_changed.emit(self.rule)
+
     def _on_source_scope_type_changed(self, index):
         """Handle source scope type changes"""
         scope_type = self.source_scope_combo.currentData()
@@ -385,23 +486,38 @@ class ShortCircuitRuleEditor(RuleEditorWidget):
             self.scope_edit.setEnabled(False)
             self.scope_edit.clear()
     
-    def _update_rule_from_ui(self):
-        """Update rule with values from UI"""
-        if not isinstance(self.rule, ShortCircuitRule):
-            logger.error(f"Expected ShortCircuitRule, got {type(self.rule).__name__}")
+    def _on_property_changed(self, value=None):
+        """Handle property changes from UI elements."""
+        if not self.rule or not isinstance(self.rule, ShortCircuitRule):
+             # Let base class handle if rule type is wrong or null
+            super()._on_property_changed(value)
             return
-        
-        # Update scope
-        scope_type = self.scope_combo.currentData()
-        scope_items = []
-        
-        if scope_type != "All":
-            scope_items_str = self.scope_edit.text()
-            if scope_items_str:
-                scope_items = scope_items_str.split(";")
-        
-        self.rule.scope = RuleScope(scope_type, scope_items)
-    
+
+        sender = self.sender()
+        rule_modified = False
+
+        # Handle specific properties (Scope)
+        if sender == self.scope_combo or sender == self.scope_edit:
+            scope_type = self.scope_combo.currentData()
+            items = []
+            if scope_type != "All":
+                items_str = self.scope_edit.text()
+                items = items_str.split(";") if items_str else []
+            new_scope = RuleScope(scope_type, items)
+            # Use __dict__ comparison for RuleScope if __eq__ is not defined
+            if self.rule.scope.__dict__ != new_scope.__dict__:
+                self.rule.scope = new_scope
+                rule_modified = True
+        else:
+            # Not a specific property, let the base class handle common properties
+            super()._on_property_changed(value)
+            return # Base class emits signal
+
+        # If a specific property was modified, emit the signal
+        if rule_modified:
+            logger.debug(f"Rule property changed (ShortCircuit Specific): {self.rule.name}")
+            self.rule_changed.emit(self.rule)
+
     def _on_scope_type_changed(self, index):
         """Handle scope type changes"""
         scope_type = self.scope_combo.currentData()
@@ -474,24 +590,39 @@ class UnRoutedNetRuleEditor(RuleEditorWidget):
         else:
             self.scope_edit.setEnabled(False)
             self.scope_edit.clear()
-    
-    def _update_rule_from_ui(self):
-        """Update rule with values from UI"""
-        if not isinstance(self.rule, UnRoutedNetRule):
-            logger.error(f"Expected UnRoutedNetRule, got {type(self.rule).__name__}")
+
+    def _on_property_changed(self, value=None):
+        """Handle property changes from UI elements."""
+        if not self.rule or not isinstance(self.rule, UnRoutedNetRule):
+             # Let base class handle if rule type is wrong or null
+            super()._on_property_changed(value)
             return
-        
-        # Update scope
-        scope_type = self.scope_combo.currentData()
-        scope_items = []
-        
-        if scope_type != "All":
-            scope_items_str = self.scope_edit.text()
-            if scope_items_str:
-                scope_items = scope_items_str.split(";")
-        
-        self.rule.scope = RuleScope(scope_type, scope_items)
-    
+
+        sender = self.sender()
+        rule_modified = False
+
+        # Handle specific properties (Scope)
+        if sender == self.scope_combo or sender == self.scope_edit:
+            scope_type = self.scope_combo.currentData()
+            items = []
+            if scope_type != "All":
+                items_str = self.scope_edit.text()
+                items = items_str.split(";") if items_str else []
+            new_scope = RuleScope(scope_type, items)
+            # Use __dict__ comparison for RuleScope if __eq__ is not defined
+            if self.rule.scope.__dict__ != new_scope.__dict__:
+                self.rule.scope = new_scope
+                rule_modified = True
+        else:
+            # Not a specific property, let the base class handle common properties
+            super()._on_property_changed(value)
+            return # Base class emits signal
+
+        # If a specific property was modified, emit the signal
+        if rule_modified:
+            logger.debug(f"Rule property changed (UnRoutedNet Specific): {self.rule.name}")
+            self.rule_changed.emit(self.rule)
+
     def _on_scope_type_changed(self, index):
         """Handle scope type changes"""
         scope_type = self.scope_combo.currentData()
@@ -597,7 +728,18 @@ class RulesManagerWidget(QWidget):
         self.set_rule_manager(None)
         
         logger.info("Rules manager widget initialized")
-    
+
+    def add_rules(self, new_rules: List[BaseRule]):
+        """Appends new rules to the existing list in the table model."""
+        if not self.rule_model: # Check rule_model instead of table_model
+            logger.warning("Rule table model not initialized. Cannot add rules.")
+            return
+
+        current_rules = self.rule_model.rules # Get rules from rule_model
+        combined_rules = current_rules + new_rules
+        self.rule_model.set_rules(combined_rules) # Set rules on rule_model
+        logger.info(f"Appended {len(new_rules)} rules. Total rules: {len(combined_rules)}")
+
     def _init_ui(self):
         """Initialize the UI components"""
         # Main layout

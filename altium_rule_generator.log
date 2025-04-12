@@ -1483,3 +1483,1347 @@
 2025-04-11 15:35:18,030 - utils.config - INFO - Configuration saved successfully
 2025-04-11 15:35:18,031 - utils.config - INFO - Configuration saved successfully
 2025-04-11 15:35:18,031 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 16:06:09,815 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 16:06:09,875 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 16:06:09,876 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 16:06:09,878 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-11 16:06:10,583 - gui.pivot_table_widget - INFO - Pivot table widget initialized
+2025-04-11 16:06:10,639 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 16:06:10,641 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 16:06:10,642 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 16:06:10,660 - gui.main_window - ERROR - Error restoring window geometry: 'ConfigManager' object has no attribute 'contains'
+2025-04-11 16:06:10,663 - gui.main_window - INFO - Main window initialized
+2025-04-11 16:07:14,075 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 16:07:14,091 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 16:07:14,173 - gui.excel_preview_dialog - INFO - Excel data loaded in preview
+2025-04-11 16:07:14,174 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 16:07:31,436 - gui.excel_preview_dialog - INFO - End row changed to: 9
+2025-04-11 16:07:31,438 - gui.excel_preview_dialog - INFO - Excel preview model updated with 9 rows and 12 columns
+2025-04-11 16:07:31,479 - gui.excel_preview_dialog - INFO - Preview updated with selected row range.
+2025-04-11 16:07:32,464 - gui.excel_preview_dialog - INFO - End row changed to: 1
+2025-04-11 16:07:32,465 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 16:07:32,472 - gui.excel_preview_dialog - INFO - Preview updated with selected row range.
+2025-04-11 16:07:32,555 - gui.excel_preview_dialog - INFO - End row changed to: 13
+2025-04-11 16:07:32,556 - gui.excel_preview_dialog - INFO - Excel preview model updated with 13 rows and 12 columns
+2025-04-11 16:07:32,607 - gui.excel_preview_dialog - INFO - Preview updated with selected row range.
+2025-04-11 16:07:36,469 - gui.excel_preview_dialog - INFO - End row changed to: 1
+2025-04-11 16:07:36,470 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 16:07:36,477 - gui.excel_preview_dialog - INFO - Preview updated with selected row range.
+2025-04-11 16:07:36,536 - gui.excel_preview_dialog - INFO - End row changed to: 10
+2025-04-11 16:07:36,537 - gui.excel_preview_dialog - INFO - Excel preview model updated with 10 rows and 12 columns
+2025-04-11 16:07:36,577 - gui.excel_preview_dialog - INFO - Preview updated with selected row range.
+2025-04-11 16:07:38,202 - gui.excel_preview_dialog - INFO - Use first row as header changed to: False
+2025-04-11 16:07:38,202 - gui.excel_preview_dialog - INFO - Excel preview model updated with 23 rows and 12 columns
+2025-04-11 16:07:38,292 - gui.excel_preview_dialog - INFO - Excel data loaded in preview
+2025-04-11 16:07:41,813 - gui.excel_preview_dialog - INFO - End row changed to: 1
+2025-04-11 16:07:41,814 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 16:07:41,820 - gui.excel_preview_dialog - INFO - Preview updated with selected row range.
+2025-04-11 16:07:41,927 - gui.excel_preview_dialog - INFO - End row changed to: 11
+2025-04-11 16:07:41,927 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 16:07:41,971 - gui.excel_preview_dialog - INFO - Preview updated with selected row range.
+2025-04-11 16:07:47,214 - gui.excel_preview_dialog - INFO - Unit changed to: mm
+2025-04-11 16:07:48,028 - gui.main_window - WARNING - No 'Rule Set' column found in imported data. Creating a default rule set.
+2025-04-11 16:07:48,042 - gui.pivot_table_widget - INFO - Pivot table widget initialized
+2025-04-11 16:07:48,043 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 12 columns
+2025-04-11 16:07:48,044 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class', 'Rule Set']
+2025-04-11 16:07:48,044 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 16:07:48,045 - models.excel_data - INFO - Values shape: (11, 12)
+2025-04-11 16:07:48,045 - models.excel_data - INFO - Values sample: [['D' nan]
+ [2 'D']]
+2025-04-11 16:07:48,047 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 12 columns
+2025-04-11 16:07:48,072 - gui.pivot_table_widget - INFO - Pivot data set in widget
+2025-04-11 16:07:48,072 - gui.main_window - INFO - Successfully loaded data for rule set: Default Rule Set
+2025-04-11 16:08:11,898 - utils.config - INFO - Configuration saved successfully
+2025-04-11 16:08:11,940 - models.excel_data - WARNING - Invalid clearance value at MAINS_Line/MAINS_Line: D
+2025-04-11 16:08:11,940 - models.excel_data - WARNING - Invalid clearance value at MAINS_Line/Rule Set: Default Rule Set
+2025-04-11 16:08:11,940 - models.excel_data - WARNING - Invalid clearance value at MAINS_Neutral/MAINS_Neutral: D
+2025-04-11 16:08:11,941 - models.excel_data - WARNING - Invalid clearance value at MAINS_Neutral/Rule Set: Default Rule Set
+2025-04-11 16:08:11,941 - models.excel_data - WARNING - Invalid clearance value at MAINS_BoostSwNode/MAINS_BoostSwNode: D
+2025-04-11 16:08:11,941 - models.excel_data - WARNING - Invalid clearance value at MAINS_BoostSwNode/Rule Set: Default Rule Set
+2025-04-11 16:08:11,942 - models.excel_data - WARNING - Invalid clearance value at MAINS_BUS/MAINS_BUS: D
+2025-04-11 16:08:11,942 - models.excel_data - WARNING - Invalid clearance value at MAINS_BUS/Rule Set: Default Rule Set
+2025-04-11 16:08:11,942 - models.excel_data - WARNING - Invalid clearance value at MAINS_LowVoltage/MAINS_LowVoltage: D
+2025-04-11 16:08:11,942 - models.excel_data - WARNING - Invalid clearance value at MAINS_LowVoltage/Rule Set: Default Rule Set
+2025-04-11 16:08:11,943 - models.excel_data - WARNING - Invalid clearance value at MAINS_HB_A/MAINS_HB_A: D
+2025-04-11 16:08:11,943 - models.excel_data - WARNING - Invalid clearance value at MAINS_HB_A/Rule Set: Default Rule Set
+2025-04-11 16:08:11,944 - models.excel_data - WARNING - Invalid clearance value at MAINS_HB_B/MAINS_HB_B: D
+2025-04-11 16:08:11,944 - models.excel_data - WARNING - Invalid clearance value at MAINS_HB_B/Rule Set: Default Rule Set
+2025-04-11 16:08:11,945 - models.excel_data - WARNING - Invalid clearance value at MAINS_FlyBackSwNode/MAINS_FlyBackSwNode: D
+2025-04-11 16:08:11,945 - models.excel_data - WARNING - Invalid clearance value at MAINS_FlyBackSwNode/Rule Set: Default Rule Set
+2025-04-11 16:08:11,945 - models.excel_data - WARNING - Invalid clearance value at CHSGND/CHSGND: D
+2025-04-11 16:08:11,946 - models.excel_data - WARNING - Invalid clearance value at CHSGND/Rule Set: Default Rule Set
+2025-04-11 16:08:11,946 - models.excel_data - WARNING - Invalid clearance value at ISO_LowVoltage/ISO_LowVoltage: D
+2025-04-11 16:08:11,946 - models.excel_data - WARNING - Invalid clearance value at ISO_LowVoltage/Rule Set: Default Rule Set
+2025-04-11 16:08:11,947 - models.excel_data - WARNING - Invalid clearance value at Other Net Classes/ISO_LowVoltage: F
+2025-04-11 16:08:11,947 - models.excel_data - WARNING - Invalid clearance value at Other Net Classes/Other Net Class: F
+2025-04-11 16:08:11,947 - models.excel_data - WARNING - Invalid clearance value at Other Net Classes/Rule Set: Default Rule Set
+2025-04-11 16:08:11,947 - models.excel_data - INFO - Created 54 clearance rules from pivot data
+2025-04-11 16:08:11,950 - models.rule_model - INFO - Added rule: Clearance_MAINS_Neutral_MAINS_Line (Clearance)
+2025-04-11 16:08:11,950 - models.rule_model - INFO - Added rule: Clearance_MAINS_BoostSwNode_MAINS_Line (Clearance)
+2025-04-11 16:08:11,951 - models.rule_model - INFO - Added rule: Clearance_MAINS_BoostSwNode_MAINS_Neutral (Clearance)
+2025-04-11 16:08:11,951 - models.rule_model - INFO - Added rule: Clearance_MAINS_BUS_MAINS_Line (Clearance)
+2025-04-11 16:08:11,951 - models.rule_model - INFO - Added rule: Clearance_MAINS_BUS_MAINS_Neutral (Clearance)
+2025-04-11 16:08:11,951 - models.rule_model - INFO - Added rule: Clearance_MAINS_BUS_MAINS_BoostSwNode (Clearance)
+2025-04-11 16:08:11,952 - models.rule_model - INFO - Added rule: Clearance_MAINS_LowVoltage_MAINS_Line (Clearance)
+2025-04-11 16:08:11,952 - models.rule_model - INFO - Added rule: Clearance_MAINS_LowVoltage_MAINS_Neutral (Clearance)
+2025-04-11 16:08:11,952 - models.rule_model - INFO - Added rule: Clearance_MAINS_LowVoltage_MAINS_BoostSwNode (Clearance)
+2025-04-11 16:08:11,953 - models.rule_model - INFO - Added rule: Clearance_MAINS_LowVoltage_MAINS_BUS (Clearance)
+2025-04-11 16:08:11,953 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_A_MAINS_Line (Clearance)
+2025-04-11 16:08:11,953 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_A_MAINS_Neutral (Clearance)
+2025-04-11 16:08:11,953 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_A_MAINS_BoostSwNode (Clearance)
+2025-04-11 16:08:11,954 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_A_MAINS_BUS (Clearance)
+2025-04-11 16:08:11,954 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_A_MAINS_LowVoltage (Clearance)
+2025-04-11 16:08:11,954 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_B_MAINS_Line (Clearance)
+2025-04-11 16:08:11,955 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_B_MAINS_Neutral (Clearance)
+2025-04-11 16:08:11,955 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_B_MAINS_BoostSwNode (Clearance)
+2025-04-11 16:08:11,955 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_B_MAINS_BUS (Clearance)
+2025-04-11 16:08:11,955 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_B_MAINS_LowVoltage (Clearance)
+2025-04-11 16:08:11,956 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_B_MAINS_HB_A (Clearance)
+2025-04-11 16:08:11,956 - models.rule_model - INFO - Added rule: Clearance_MAINS_FlyBackSwNode_MAINS_Line (Clearance)
+2025-04-11 16:08:11,956 - models.rule_model - INFO - Added rule: Clearance_MAINS_FlyBackSwNode_MAINS_Neutral (Clearance)
+2025-04-11 16:08:11,956 - models.rule_model - INFO - Added rule: Clearance_MAINS_FlyBackSwNode_MAINS_BoostSwNode (Clearance)
+2025-04-11 16:08:11,957 - models.rule_model - INFO - Added rule: Clearance_MAINS_FlyBackSwNode_MAINS_BUS (Clearance)
+2025-04-11 16:08:11,957 - models.rule_model - INFO - Added rule: Clearance_MAINS_FlyBackSwNode_MAINS_LowVoltage (Clearance)
+2025-04-11 16:08:11,957 - models.rule_model - INFO - Added rule: Clearance_MAINS_FlyBackSwNode_MAINS_HB_A (Clearance)
+2025-04-11 16:08:11,957 - models.rule_model - INFO - Added rule: Clearance_MAINS_FlyBackSwNode_MAINS_HB_B (Clearance)
+2025-04-11 16:08:11,958 - models.rule_model - INFO - Added rule: Clearance_CHSGND_MAINS_Line (Clearance)
+2025-04-11 16:08:11,958 - models.rule_model - INFO - Added rule: Clearance_CHSGND_MAINS_Neutral (Clearance)
+2025-04-11 16:08:11,958 - models.rule_model - INFO - Added rule: Clearance_CHSGND_MAINS_BoostSwNode (Clearance)
+2025-04-11 16:08:11,959 - models.rule_model - INFO - Added rule: Clearance_CHSGND_MAINS_BUS (Clearance)
+2025-04-11 16:08:11,959 - models.rule_model - INFO - Added rule: Clearance_CHSGND_MAINS_LowVoltage (Clearance)
+2025-04-11 16:08:11,959 - models.rule_model - INFO - Added rule: Clearance_CHSGND_MAINS_HB_A (Clearance)
+2025-04-11 16:08:11,959 - models.rule_model - INFO - Added rule: Clearance_CHSGND_MAINS_HB_B (Clearance)
+2025-04-11 16:08:11,960 - models.rule_model - INFO - Added rule: Clearance_CHSGND_MAINS_FlyBackSwNode (Clearance)
+2025-04-11 16:08:11,960 - models.rule_model - INFO - Added rule: Clearance_ISO_LowVoltage_MAINS_Line (Clearance)
+2025-04-11 16:08:11,960 - models.rule_model - INFO - Added rule: Clearance_ISO_LowVoltage_MAINS_Neutral (Clearance)
+2025-04-11 16:08:11,960 - models.rule_model - INFO - Added rule: Clearance_ISO_LowVoltage_MAINS_BoostSwNode (Clearance)
+2025-04-11 16:08:11,961 - models.rule_model - INFO - Added rule: Clearance_ISO_LowVoltage_MAINS_BUS (Clearance)
+2025-04-11 16:08:11,961 - models.rule_model - INFO - Added rule: Clearance_ISO_LowVoltage_MAINS_LowVoltage (Clearance)
+2025-04-11 16:08:11,961 - models.rule_model - INFO - Added rule: Clearance_ISO_LowVoltage_MAINS_HB_A (Clearance)
+2025-04-11 16:08:11,961 - models.rule_model - INFO - Added rule: Clearance_ISO_LowVoltage_MAINS_HB_B (Clearance)
+2025-04-11 16:08:11,962 - models.rule_model - INFO - Added rule: Clearance_ISO_LowVoltage_MAINS_FlyBackSwNode (Clearance)
+2025-04-11 16:08:11,962 - models.rule_model - INFO - Added rule: Clearance_ISO_LowVoltage_CHSGND (Clearance)
+2025-04-11 16:08:11,962 - models.rule_model - INFO - Added rule: Clearance_Other Net Classes_MAINS_Line (Clearance)
+2025-04-11 16:08:11,962 - models.rule_model - INFO - Added rule: Clearance_Other Net Classes_MAINS_Neutral (Clearance)
+2025-04-11 16:08:11,963 - models.rule_model - INFO - Added rule: Clearance_Other Net Classes_MAINS_BoostSwNode (Clearance)
+2025-04-11 16:08:11,963 - models.rule_model - INFO - Added rule: Clearance_Other Net Classes_MAINS_BUS (Clearance)
+2025-04-11 16:08:11,963 - models.rule_model - INFO - Added rule: Clearance_Other Net Classes_MAINS_LowVoltage (Clearance)
+2025-04-11 16:08:11,963 - models.rule_model - INFO - Added rule: Clearance_Other Net Classes_MAINS_HB_A (Clearance)
+2025-04-11 16:08:11,963 - models.rule_model - INFO - Added rule: Clearance_Other Net Classes_MAINS_HB_B (Clearance)
+2025-04-11 16:08:11,964 - models.rule_model - INFO - Added rule: Clearance_Other Net Classes_MAINS_FlyBackSwNode (Clearance)
+2025-04-11 16:08:11,964 - models.rule_model - INFO - Added rule: Clearance_Other Net Classes_CHSGND (Clearance)
+2025-04-11 16:08:11,965 - services.rule_generator - INFO - Generated RUL content with 54 rules
+2025-04-11 16:08:11,966 - services.rule_generator - INFO - Saved RUL file to: C:/code/AltiumXCEL2QueryBuilder/samples/E2703700_Board_KL_test.RUL
+2025-04-11 16:10:05,439 - utils.config - INFO - Configuration saved successfully
+2025-04-11 16:10:05,441 - utils.config - INFO - Configuration saved successfully
+2025-04-11 16:10:05,443 - utils.config - INFO - Configuration saved successfully
+2025-04-11 16:10:05,443 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 17:21:25,369 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 17:21:25,408 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 17:21:25,408 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 17:21:25,426 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-11 17:21:25,901 - gui.pivot_table_widget - INFO - Pivot table widget initialized
+2025-04-11 17:21:25,927 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 17:21:25,928 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 17:21:25,928 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 17:21:25,933 - gui.main_window - ERROR - Error restoring window geometry: 'ConfigManager' object has no attribute 'contains'
+2025-04-11 17:21:25,934 - gui.main_window - INFO - Main window initialized
+2025-04-11 17:21:29,416 - utils.config - INFO - Configuration saved successfully
+2025-04-11 17:21:29,488 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\light.qss
+2025-04-11 17:21:29,488 - themes.theme_manager - INFO - Theme changed to: light
+2025-04-11 17:21:31,648 - utils.config - INFO - Configuration saved successfully
+2025-04-11 17:21:31,703 - themes.theme_manager - INFO - Applied theme from file: C:\code\AltiumXCEL2QueryBuilder\styles\dark.qss
+2025-04-11 17:21:31,703 - themes.theme_manager - INFO - Theme changed to: dark
+2025-04-11 17:21:33,142 - utils.config - INFO - Configuration saved successfully
+2025-04-11 17:21:33,144 - utils.config - INFO - Configuration saved successfully
+2025-04-11 17:21:33,145 - utils.config - INFO - Configuration saved successfully
+2025-04-11 17:21:33,145 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 19:04:55,685 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 19:04:55,721 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 19:04:55,721 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 19:04:55,722 - themes.theme_manager - INFO - Applied theme: dark
+2025-04-11 19:04:56,194 - gui.pivot_table_widget - INFO - Pivot table widget initialized
+2025-04-11 19:04:56,215 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 19:04:56,216 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 19:04:56,216 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 19:04:56,219 - gui.main_window - ERROR - Error restoring window geometry: 'ConfigManager' object has no attribute 'contains'
+2025-04-11 19:04:56,221 - gui.main_window - INFO - Main window initialized
+2025-04-11 19:05:01,068 - utils.config - INFO - Configuration saved successfully
+2025-04-11 19:05:01,119 - themes.theme_manager - INFO - Applied theme: light
+2025-04-11 19:05:01,120 - themes.theme_manager - INFO - Theme changed to: light
+2025-04-11 19:05:05,447 - utils.config - INFO - Configuration saved successfully
+2025-04-11 19:05:05,449 - utils.config - INFO - Configuration saved successfully
+2025-04-11 19:05:05,450 - utils.config - INFO - Configuration saved successfully
+2025-04-11 19:05:05,450 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 19:06:10,092 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 19:06:10,137 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 19:06:10,137 - themes.theme_manager - INFO - Theme manager initialized with theme: light
+2025-04-11 19:06:10,138 - themes.theme_manager - INFO - Applied theme: light
+2025-04-11 19:06:10,643 - gui.pivot_table_widget - INFO - Pivot table widget initialized
+2025-04-11 19:06:10,678 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 19:06:10,678 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 19:06:10,679 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 19:06:10,682 - gui.main_window - ERROR - Error restoring window geometry: 'ConfigManager' object has no attribute 'contains'
+2025-04-11 19:06:10,683 - gui.main_window - INFO - Main window initialized
+2025-04-11 19:06:13,997 - utils.config - INFO - Configuration saved successfully
+2025-04-11 19:06:14,042 - themes.theme_manager - INFO - Applied theme: dark
+2025-04-11 19:06:14,042 - themes.theme_manager - INFO - Theme changed to: dark
+2025-04-11 19:06:20,743 - utils.config - INFO - Configuration saved successfully
+2025-04-11 19:06:20,745 - utils.config - INFO - Configuration saved successfully
+2025-04-11 19:06:20,746 - utils.config - INFO - Configuration saved successfully
+2025-04-11 19:06:20,746 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 19:35:46,557 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 19:35:46,627 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 19:35:46,627 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 19:35:46,628 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 19:35:46,630 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 19:37:37,728 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 19:37:37,763 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 19:37:37,763 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 19:37:37,764 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 19:37:37,765 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 19:37:38,257 - gui.pivot_table_widget - INFO - Pivot table widget initialized
+2025-04-11 19:37:38,284 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 19:37:38,285 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 19:37:38,285 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 19:37:38,292 - gui.main_window - ERROR - Error restoring window geometry: 'ConfigManager' object has no attribute 'contains'
+2025-04-11 19:37:38,293 - gui.main_window - INFO - Main window initialized
+2025-04-11 19:37:44,217 - utils.config - INFO - Configuration saved successfully
+2025-04-11 19:37:44,217 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\light.qss
+2025-04-11 19:37:44,268 - themes.theme_manager - INFO - Applied theme 'light' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/light.qss
+2025-04-11 19:37:44,269 - themes.theme_manager - INFO - Theme changed to: light
+2025-04-11 19:37:46,280 - utils.config - INFO - Configuration saved successfully
+2025-04-11 19:37:46,281 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 19:37:46,329 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 19:37:46,330 - themes.theme_manager - INFO - Theme changed to: dark
+2025-04-11 19:37:52,322 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 19:37:52,340 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 19:37:52,438 - gui.excel_preview_dialog - INFO - Excel data loaded in preview
+2025-04-11 19:37:52,438 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 19:37:57,086 - gui.excel_preview_dialog - INFO - Unit changed to: mm
+2025-04-11 19:38:00,013 - gui.main_window - WARNING - No 'Rule Set' column found in imported data. Creating a default rule set.
+2025-04-11 19:38:00,025 - gui.pivot_table_widget - INFO - Pivot table widget initialized
+2025-04-11 19:38:00,026 - models.excel_data - INFO - Loaded DataFrame with 22 rows and 12 columns
+2025-04-11 19:38:00,027 - models.excel_data - INFO - Column index: ['D', nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, 'Rule Set']
+2025-04-11 19:38:00,027 - models.excel_data - INFO - Row index first few: ['MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A']
+2025-04-11 19:38:00,027 - models.excel_data - INFO - Values shape: (22, 12)
+2025-04-11 19:38:00,028 - models.excel_data - INFO - Values sample: [[2 'D']
+ [2 2]]
+2025-04-11 19:38:00,030 - gui.pivot_table_widget - INFO - Pivot table model updated with 22 rows and 12 columns
+2025-04-11 19:38:00,076 - gui.pivot_table_widget - INFO - Pivot data set in widget
+2025-04-11 19:38:00,077 - gui.main_window - INFO - Successfully loaded data for rule set: Default Rule Set
+2025-04-11 19:38:04,736 - utils.config - INFO - Configuration saved successfully
+2025-04-11 19:38:04,738 - utils.config - INFO - Configuration saved successfully
+2025-04-11 19:38:04,739 - utils.config - INFO - Configuration saved successfully
+2025-04-11 19:38:04,740 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 20:05:13,479 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 20:05:13,530 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 20:05:13,530 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 20:05:13,531 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 20:05:13,533 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 20:05:13,976 - gui.pivot_table_widget - INFO - Pivot table widget initialized
+2025-04-11 20:05:14,000 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 20:05:14,001 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 20:05:14,001 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 20:05:14,004 - gui.main_window - ERROR - Error restoring window geometry: 'ConfigManager' object has no attribute 'contains'
+2025-04-11 20:05:14,005 - gui.main_window - INFO - Main window initialized
+2025-04-11 20:05:19,869 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 20:05:19,885 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 20:05:19,969 - gui.excel_preview_dialog - INFO - Excel data loaded in preview
+2025-04-11 20:05:19,969 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 20:05:23,301 - gui.excel_preview_dialog - INFO - Unit changed to: mm
+2025-04-11 20:05:24,437 - gui.main_window - WARNING - No 'Rule Set' column found in imported data. Creating a default rule set.
+2025-04-11 20:05:24,447 - gui.pivot_table_widget - INFO - Pivot table widget initialized
+2025-04-11 20:05:24,448 - models.excel_data - INFO - Loaded DataFrame with 22 rows and 12 columns
+2025-04-11 20:05:24,449 - models.excel_data - INFO - Column index: ['D', nan, nan, nan, nan, nan, nan, nan, nan, nan, nan, 'Rule Set']
+2025-04-11 20:05:24,449 - models.excel_data - INFO - Row index first few: ['MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A']
+2025-04-11 20:05:24,449 - models.excel_data - INFO - Values shape: (22, 12)
+2025-04-11 20:05:24,450 - models.excel_data - INFO - Values sample: [[2 'D']
+ [2 2]]
+2025-04-11 20:05:24,452 - gui.pivot_table_widget - INFO - Pivot table model updated with 22 rows and 12 columns
+2025-04-11 20:05:24,494 - gui.pivot_table_widget - INFO - Pivot data set in widget
+2025-04-11 20:05:24,495 - gui.main_window - INFO - Successfully loaded data for rule set: Default Rule Set
+2025-04-11 20:05:29,038 - gui.pivot_table_widget - INFO - Updated cell (0, 0) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,039 - gui.pivot_table_widget - INFO - Updated cell (1, 0) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,039 - gui.pivot_table_widget - INFO - Updated cell (1, 1) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,040 - gui.pivot_table_widget - INFO - Updated cell (2, 0) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,040 - gui.pivot_table_widget - INFO - Updated cell (2, 1) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,040 - gui.pivot_table_widget - INFO - Updated cell (2, 2) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,041 - gui.pivot_table_widget - INFO - Updated cell (3, 0) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,041 - gui.pivot_table_widget - INFO - Updated cell (3, 1) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,041 - gui.pivot_table_widget - INFO - Updated cell (3, 2) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,041 - gui.pivot_table_widget - INFO - Updated cell (3, 3) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,042 - gui.pivot_table_widget - INFO - Updated cell (4, 0) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,042 - gui.pivot_table_widget - INFO - Updated cell (4, 1) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,043 - gui.pivot_table_widget - INFO - Updated cell (4, 2) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,043 - gui.pivot_table_widget - INFO - Updated cell (4, 3) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,043 - gui.pivot_table_widget - INFO - Updated cell (4, 4) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,043 - gui.pivot_table_widget - INFO - Updated cell (5, 0) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,044 - gui.pivot_table_widget - INFO - Updated cell (5, 1) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,044 - gui.pivot_table_widget - INFO - Updated cell (5, 2) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,044 - gui.pivot_table_widget - INFO - Updated cell (5, 3) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,044 - gui.pivot_table_widget - INFO - Updated cell (5, 4) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,044 - gui.pivot_table_widget - INFO - Updated cell (5, 5) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,045 - gui.pivot_table_widget - INFO - Updated cell (6, 0) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,045 - gui.pivot_table_widget - INFO - Updated cell (6, 1) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,045 - gui.pivot_table_widget - INFO - Updated cell (6, 2) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,045 - gui.pivot_table_widget - INFO - Updated cell (6, 3) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,046 - gui.pivot_table_widget - INFO - Updated cell (6, 4) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,046 - gui.pivot_table_widget - INFO - Updated cell (6, 5) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,046 - gui.pivot_table_widget - INFO - Updated cell (6, 6) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,046 - gui.pivot_table_widget - INFO - Updated cell (7, 0) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,047 - gui.pivot_table_widget - INFO - Updated cell (7, 1) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,047 - gui.pivot_table_widget - INFO - Updated cell (7, 2) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,047 - gui.pivot_table_widget - INFO - Updated cell (7, 3) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,048 - gui.pivot_table_widget - INFO - Updated cell (7, 4) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,048 - gui.pivot_table_widget - INFO - Updated cell (7, 5) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,049 - gui.pivot_table_widget - INFO - Updated cell (7, 6) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,049 - gui.pivot_table_widget - INFO - Updated cell (7, 7) to unit mm with value 0.050799972568014815
+2025-04-11 20:05:29,049 - gui.pivot_table_widget - INFO - Updated cell (8, 0) to unit mm with value 0.10159994513602963
+2025-04-11 20:05:29,050 - gui.pivot_table_widget - INFO - Updated cell (8, 1) to unit mm with value 0.10159994513602963
+2025-04-11 20:05:29,050 - gui.pivot_table_widget - INFO - Updated cell (8, 2) to unit mm with value 0.10159994513602963
+2025-04-11 20:05:29,050 - gui.pivot_table_widget - INFO - Updated cell (8, 3) to unit mm with value 0.10159994513602963
+2025-04-11 20:05:29,051 - gui.pivot_table_widget - INFO - Updated cell (8, 4) to unit mm with value 0.10159994513602963
+2025-04-11 20:05:29,051 - gui.pivot_table_widget - INFO - Updated cell (8, 5) to unit mm with value 0.10159994513602963
+2025-04-11 20:05:29,051 - gui.pivot_table_widget - INFO - Updated cell (8, 6) to unit mm with value 0.10159994513602963
+2025-04-11 20:05:29,051 - gui.pivot_table_widget - INFO - Updated cell (8, 7) to unit mm with value 0.10159994513602963
+2025-04-11 20:05:29,051 - gui.pivot_table_widget - INFO - Updated cell (8, 8) to unit mm with value 0.10159994513602963
+2025-04-11 20:05:29,052 - gui.pivot_table_widget - INFO - Updated cell (9, 0) to unit mm with value 0.10159994513602963
+2025-04-11 20:05:29,052 - gui.pivot_table_widget - INFO - Updated cell (9, 1) to unit mm with value 0.10159994513602963
+2025-04-11 20:05:29,052 - gui.pivot_table_widget - INFO - Updated cell (9, 2) to unit mm with value 0.10159994513602963
+2025-04-11 20:05:29,052 - gui.pivot_table_widget - INFO - Updated cell (9, 3) to unit mm with value 0.10159994513602963
+2025-04-11 20:05:29,053 - gui.pivot_table_widget - INFO - Updated cell (9, 4) to unit mm with value 0.10159994513602963
+2025-04-11 20:05:29,053 - gui.pivot_table_widget - INFO - Updated cell (9, 5) to unit mm with value 0.10159994513602963
+2025-04-11 20:05:29,053 - gui.pivot_table_widget - INFO - Updated cell (9, 6) to unit mm with value 0.10159994513602963
+2025-04-11 20:05:29,053 - gui.pivot_table_widget - INFO - Updated cell (9, 7) to unit mm with value 0.10159994513602963
+2025-04-11 20:05:29,053 - gui.pivot_table_widget - INFO - Updated cell (9, 8) to unit mm with value 0.10159994513602963
+2025-04-11 20:05:29,054 - gui.pivot_table_widget - INFO - Pivot table model updated with 22 rows and 12 columns
+2025-04-11 20:05:29,054 - gui.pivot_table_widget - INFO - Unit changed to: mm
+2025-04-11 20:05:31,365 - gui.pivot_table_widget - INFO - Updated cell (0, 0) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,366 - gui.pivot_table_widget - INFO - Updated cell (1, 0) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,366 - gui.pivot_table_widget - INFO - Updated cell (1, 1) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,367 - gui.pivot_table_widget - INFO - Updated cell (2, 0) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,367 - gui.pivot_table_widget - INFO - Updated cell (2, 1) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,368 - gui.pivot_table_widget - INFO - Updated cell (2, 2) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,368 - gui.pivot_table_widget - INFO - Updated cell (3, 0) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,368 - gui.pivot_table_widget - INFO - Updated cell (3, 1) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,369 - gui.pivot_table_widget - INFO - Updated cell (3, 2) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,369 - gui.pivot_table_widget - INFO - Updated cell (3, 3) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,369 - gui.pivot_table_widget - INFO - Updated cell (4, 0) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,370 - gui.pivot_table_widget - INFO - Updated cell (4, 1) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,370 - gui.pivot_table_widget - INFO - Updated cell (4, 2) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,370 - gui.pivot_table_widget - INFO - Updated cell (4, 3) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,370 - gui.pivot_table_widget - INFO - Updated cell (4, 4) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,371 - gui.pivot_table_widget - INFO - Updated cell (5, 0) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,371 - gui.pivot_table_widget - INFO - Updated cell (5, 1) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,371 - gui.pivot_table_widget - INFO - Updated cell (5, 2) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,371 - gui.pivot_table_widget - INFO - Updated cell (5, 3) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,372 - gui.pivot_table_widget - INFO - Updated cell (5, 4) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,372 - gui.pivot_table_widget - INFO - Updated cell (5, 5) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,372 - gui.pivot_table_widget - INFO - Updated cell (6, 0) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,373 - gui.pivot_table_widget - INFO - Updated cell (6, 1) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,373 - gui.pivot_table_widget - INFO - Updated cell (6, 2) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,373 - gui.pivot_table_widget - INFO - Updated cell (6, 3) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,374 - gui.pivot_table_widget - INFO - Updated cell (6, 4) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,374 - gui.pivot_table_widget - INFO - Updated cell (6, 5) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,374 - gui.pivot_table_widget - INFO - Updated cell (6, 6) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,375 - gui.pivot_table_widget - INFO - Updated cell (7, 0) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,375 - gui.pivot_table_widget - INFO - Updated cell (7, 1) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,375 - gui.pivot_table_widget - INFO - Updated cell (7, 2) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,376 - gui.pivot_table_widget - INFO - Updated cell (7, 3) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,376 - gui.pivot_table_widget - INFO - Updated cell (7, 4) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,376 - gui.pivot_table_widget - INFO - Updated cell (7, 5) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,377 - gui.pivot_table_widget - INFO - Updated cell (7, 6) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,377 - gui.pivot_table_widget - INFO - Updated cell (7, 7) to unit mil with value 2.0078740157480315
+2025-04-11 20:05:31,377 - gui.pivot_table_widget - INFO - Updated cell (8, 0) to unit mil with value 4.015748031496063
+2025-04-11 20:05:31,377 - gui.pivot_table_widget - INFO - Updated cell (8, 1) to unit mil with value 4.015748031496063
+2025-04-11 20:05:31,378 - gui.pivot_table_widget - INFO - Updated cell (8, 2) to unit mil with value 4.015748031496063
+2025-04-11 20:05:31,378 - gui.pivot_table_widget - INFO - Updated cell (8, 3) to unit mil with value 4.015748031496063
+2025-04-11 20:05:31,378 - gui.pivot_table_widget - INFO - Updated cell (8, 4) to unit mil with value 4.015748031496063
+2025-04-11 20:05:31,378 - gui.pivot_table_widget - INFO - Updated cell (8, 5) to unit mil with value 4.015748031496063
+2025-04-11 20:05:31,379 - gui.pivot_table_widget - INFO - Updated cell (8, 6) to unit mil with value 4.015748031496063
+2025-04-11 20:05:31,379 - gui.pivot_table_widget - INFO - Updated cell (8, 7) to unit mil with value 4.015748031496063
+2025-04-11 20:05:31,379 - gui.pivot_table_widget - INFO - Updated cell (8, 8) to unit mil with value 4.015748031496063
+2025-04-11 20:05:31,380 - gui.pivot_table_widget - INFO - Updated cell (9, 0) to unit mil with value 4.015748031496063
+2025-04-11 20:05:31,380 - gui.pivot_table_widget - INFO - Updated cell (9, 1) to unit mil with value 4.015748031496063
+2025-04-11 20:05:31,380 - gui.pivot_table_widget - INFO - Updated cell (9, 2) to unit mil with value 4.015748031496063
+2025-04-11 20:05:31,381 - gui.pivot_table_widget - INFO - Updated cell (9, 3) to unit mil with value 4.015748031496063
+2025-04-11 20:05:31,381 - gui.pivot_table_widget - INFO - Updated cell (9, 4) to unit mil with value 4.015748031496063
+2025-04-11 20:05:31,381 - gui.pivot_table_widget - INFO - Updated cell (9, 5) to unit mil with value 4.015748031496063
+2025-04-11 20:05:31,381 - gui.pivot_table_widget - INFO - Updated cell (9, 6) to unit mil with value 4.015748031496063
+2025-04-11 20:05:31,382 - gui.pivot_table_widget - INFO - Updated cell (9, 7) to unit mil with value 4.015748031496063
+2025-04-11 20:05:31,382 - gui.pivot_table_widget - INFO - Updated cell (9, 8) to unit mil with value 4.015748031496063
+2025-04-11 20:05:31,382 - gui.pivot_table_widget - INFO - Pivot table model updated with 22 rows and 12 columns
+2025-04-11 20:05:31,383 - gui.pivot_table_widget - INFO - Unit changed to: mil
+2025-04-11 20:05:38,719 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:05:38,720 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:05:38,721 - gui.main_window - INFO - Importing RUL file: C:/code/AltiumXCEL2QueryBuilder/samples/E2703700_Board_KL.RUL
+2025-04-11 20:05:38,723 - services.rule_generator - INFO - Cleared all rules from rule manager
+2025-04-11 20:05:38,724 - services.rule_generator - WARNING - No rule blocks found in RUL content
+2025-04-11 20:05:38,724 - services.rule_generator - WARNING - Parsed RUL file with warnings: C:/code/AltiumXCEL2QueryBuilder/samples/E2703700_Board_KL.RUL
+2025-04-11 20:05:56,508 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:05:56,510 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:05:56,511 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:05:56,512 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 20:09:39,934 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 20:09:39,988 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 20:09:39,989 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 20:09:39,989 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 20:09:39,991 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 20:10:57,086 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 20:10:57,118 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 20:10:57,119 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 20:10:57,119 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 20:10:57,121 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 20:10:57,564 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 20:10:57,565 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 20:10:57,566 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 20:10:57,570 - gui.main_window - ERROR - Error restoring window geometry: 'ConfigManager' object has no attribute 'contains'
+2025-04-11 20:10:57,571 - gui.main_window - INFO - Main window initialized
+2025-04-11 20:11:11,848 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 20:11:11,863 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 20:11:11,945 - gui.excel_preview_dialog - INFO - Excel data loaded in preview
+2025-04-11 20:11:11,945 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 20:11:23,816 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:11:23,818 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:11:23,819 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:11:23,820 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 20:13:08,084 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 20:13:08,144 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 20:13:08,145 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 20:13:08,145 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 20:13:08,146 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 20:13:08,689 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 20:13:08,690 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 20:13:08,690 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 20:13:08,696 - gui.main_window - ERROR - Error restoring window geometry: 'ConfigManager' object has no attribute 'contains'
+2025-04-11 20:13:08,697 - gui.main_window - INFO - Main window initialized
+2025-04-11 20:13:15,414 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 20:13:15,521 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 20:13:15,521 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 20:13:15,522 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 20:15:51,859 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 20:15:51,893 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 20:15:51,894 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 20:15:51,894 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 20:15:51,896 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 20:15:52,370 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 20:15:52,371 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 20:15:52,371 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 20:15:52,376 - gui.main_window - ERROR - Error restoring window geometry: 'ConfigManager' object has no attribute 'contains'
+2025-04-11 20:15:52,377 - gui.main_window - INFO - Main window initialized
+2025-04-11 20:15:57,577 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 20:15:57,663 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 20:15:57,664 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 20:15:57,664 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 20:17:31,784 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 20:17:31,822 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 20:17:31,823 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 20:17:31,823 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 20:17:31,825 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 20:17:32,324 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 20:17:32,325 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 20:17:32,325 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 20:17:32,328 - gui.main_window - ERROR - Error restoring window geometry: 'ConfigManager' object has no attribute 'contains'
+2025-04-11 20:17:32,329 - gui.main_window - INFO - Main window initialized
+2025-04-11 20:17:39,648 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 20:17:39,746 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 20:17:39,746 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 20:17:39,747 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 20:17:45,248 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 20:17:54,876 - gui.excel_preview_dialog - INFO - Excel preview model updated with 23 rows and 12 columns
+2025-04-11 20:17:54,877 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 20:18:09,847 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:18:09,849 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:18:09,850 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:18:09,851 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 20:21:46,313 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 20:21:46,354 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 20:21:46,355 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 20:21:46,356 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 20:21:46,357 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 20:21:46,821 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 20:21:46,822 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 20:21:46,822 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 20:21:46,825 - gui.main_window - ERROR - Error restoring window geometry: 'ConfigManager' object has no attribute 'contains'
+2025-04-11 20:21:46,826 - gui.main_window - INFO - Main window initialized
+2025-04-11 20:21:54,351 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 20:21:54,440 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 20:21:54,440 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 20:21:54,441 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 20:22:00,176 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 20:22:00,177 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 20:22:00,304 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 20:22:00,304 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 20:22:04,095 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 20:22:04,096 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 20:22:11,643 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 20:22:25,968 - gui.main_window - WARNING - No 'Rule Set' column found in imported data. Creating a default rule set.
+2025-04-11 20:22:25,980 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 12 columns
+2025-04-11 20:22:25,980 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class', 'Rule Set']
+2025-04-11 20:22:25,981 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 20:22:25,981 - models.excel_data - INFO - Values shape: (11, 12)
+2025-04-11 20:22:25,981 - models.excel_data - INFO - Values sample: [[0.295 nan]
+ [2.0 0.295]]
+2025-04-11 20:22:25,998 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 12 columns
+2025-04-11 20:22:25,999 - gui.main_window - INFO - Successfully loaded data for rule set: Default Rule Set
+2025-04-11 20:23:08,576 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:23:08,578 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:23:08,580 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:23:08,580 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 20:32:30,779 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 20:32:30,828 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 20:32:30,829 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 20:32:30,829 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 20:32:30,831 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 20:32:30,879 - gui.main_window - ERROR - Error restoring window geometry: 'ConfigManager' object has no attribute 'contains'
+2025-04-11 20:32:30,880 - gui.main_window - INFO - Main window initialized
+2025-04-11 20:32:36,868 - gui.main_window - ERROR - Error showing preferences dialog: name 'QWidget' is not defined
+2025-04-11 20:32:42,464 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 20:32:42,465 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 20:32:42,465 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 20:32:42,475 - gui.main_window - INFO - Rule Editor tab created and shown.
+2025-04-11 20:32:44,788 - gui.main_window - INFO - Rule Editor tab closed.
+2025-04-11 20:32:44,789 - gui.main_window - INFO - Closed tab: Rule Editor
+2025-04-11 20:32:52,674 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:32:52,675 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:32:52,676 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:32:52,677 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 20:32:52,677 - gui.main_window - INFO - Application closing.
+2025-04-11 20:52:01,713 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 20:52:01,769 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 20:52:01,770 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 20:52:01,771 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 20:52:01,772 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 20:52:01,832 - gui.main_window - ERROR - Error restoring window geometry: 'ConfigManager' object has no attribute 'contains'
+2025-04-11 20:52:01,834 - gui.main_window - INFO - Main window initialized
+2025-04-11 20:52:07,442 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 20:52:07,512 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 20:52:07,512 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 20:52:07,512 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 20:52:10,669 - gui.excel_preview_dialog - INFO - Excel preview model updated with 23 rows and 12 columns
+2025-04-11 20:52:10,670 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 20:52:12,649 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 20:52:12,650 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 20:52:13,312 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 20:52:13,312 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 20:52:39,502 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 20:52:48,304 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 20:52:48,305 - gui.main_window - ERROR - Error loading data into pivot table: 'PivotTableWidget' object has no attribute 'load_data'
+Traceback (most recent call last):
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\main_window.py", line 504, in _process_excel_import
+    self.pivot_tab.load_data(processed_df)
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'PivotTableWidget' object has no attribute 'load_data'
+2025-04-11 20:57:36,958 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:57:36,960 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:57:36,961 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:57:36,961 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 20:57:36,961 - gui.main_window - INFO - Application closing.
+2025-04-11 20:57:45,374 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 20:57:45,410 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 20:57:45,410 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 20:57:45,411 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 20:57:45,412 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 20:57:45,461 - gui.main_window - ERROR - Error restoring window geometry: 'ConfigManager' object has no attribute 'contains'
+2025-04-11 20:57:45,462 - gui.main_window - INFO - Main window initialized
+2025-04-11 20:57:58,130 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 20:57:58,201 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 20:57:58,202 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 20:57:58,202 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 20:58:13,238 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 20:58:15,763 - gui.excel_preview_dialog - INFO - Excel preview model updated with 23 rows and 12 columns
+2025-04-11 20:58:15,763 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 20:58:19,145 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 20:58:19,145 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 20:58:19,230 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 20:58:19,231 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 20:58:23,418 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 20:58:32,950 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 20:58:32,951 - gui.main_window - ERROR - Error loading data into pivot table: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+Traceback (most recent call last):
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\main_window.py", line 504, in _process_excel_import
+    self.pivot_tab.set_pivot_data(processed_df) # Changed load_data to set_pivot_data
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\pivot_table_widget.py", line 312, in set_pivot_data
+    self.model.set_pivot_data(pivot_data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\pivot_table_widget.py", line 48, in set_pivot_data
+    if pivot_data and pivot_data.pivot_df is not None:
+       ^^^^^^^^^^
+  File "C:\Users\Klong\AppData\Roaming\Python\Python313\site-packages\pandas\core\generic.py", line 1577, in __nonzero__
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: The truth value of a DataFrame is ambiguous. Use a.empty, a.bool(), a.item(), a.any() or a.all().
+2025-04-11 20:58:36,773 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:58:36,775 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:58:36,776 - utils.config - INFO - Configuration saved successfully
+2025-04-11 20:58:36,776 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 20:58:36,776 - gui.main_window - INFO - Application closing.
+2025-04-11 21:05:16,427 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 21:05:16,470 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 21:05:16,470 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 21:05:16,471 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 21:05:16,473 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 21:05:16,533 - gui.main_window - ERROR - Error restoring window geometry: 'ConfigManager' object has no attribute 'contains'
+2025-04-11 21:05:16,534 - gui.main_window - INFO - Main window initialized
+2025-04-11 21:05:25,159 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 21:05:25,236 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 21:05:25,236 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:05:25,237 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 21:05:35,296 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 21:05:35,297 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:05:35,462 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:05:35,463 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:05:38,157 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:05:38,157 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:05:44,044 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:05:50,375 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 21:05:50,376 - gui.main_window - ERROR - Error loading data into pivot table: 'DataFrame' object has no attribute 'pivot_df'
+Traceback (most recent call last):
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\main_window.py", line 504, in _process_excel_import
+    self.pivot_tab.set_pivot_data(processed_df) # Changed load_data to set_pivot_data
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\pivot_table_widget.py", line 312, in set_pivot_data
+    self.model.set_pivot_data(pivot_data)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\pivot_table_widget.py", line 48, in set_pivot_data
+    if pivot_data is not None and pivot_data.pivot_df is not None:
+                                  ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Klong\AppData\Roaming\Python\Python313\site-packages\pandas\core\generic.py", line 6299, in __getattr__
+    return object.__getattribute__(self, name)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+AttributeError: 'DataFrame' object has no attribute 'pivot_df'
+2025-04-11 21:05:59,845 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:05:59,847 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:05:59,848 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:05:59,848 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 21:05:59,848 - gui.main_window - INFO - Application closing.
+2025-04-11 21:07:13,668 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 21:07:13,703 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 21:07:13,704 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 21:07:13,704 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 21:07:13,706 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 21:07:13,754 - gui.main_window - ERROR - Error restoring window geometry: 'ConfigManager' object has no attribute 'contains'
+2025-04-11 21:07:13,755 - gui.main_window - INFO - Main window initialized
+2025-04-11 21:07:19,382 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 21:07:19,453 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 21:07:19,453 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:07:19,454 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 21:07:23,960 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 21:07:23,961 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:07:24,198 - gui.excel_preview_dialog - INFO - Excel preview model updated with 21 rows and 12 columns
+2025-04-11 21:07:24,199 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:07:25,663 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 21:07:25,664 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:07:25,783 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:07:26,023 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:07:26,379 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 21:07:26,380 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:07:27,416 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:07:27,416 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:07:30,955 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:07:30,955 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:07:57,700 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:08:03,672 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 21:08:03,674 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-11 21:08:03,674 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-11 21:08:03,674 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 21:08:03,675 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-11 21:08:03,676 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-11 21:08:03,700 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-11 21:08:03,701 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-11 21:08:44,871 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 21:08:44,872 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 21:08:44,872 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 21:08:44,880 - gui.main_window - INFO - Rule Editor tab created and shown.
+2025-04-11 21:09:19,994 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:09:19,996 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:09:19,998 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:09:19,998 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 21:09:19,998 - gui.main_window - INFO - Application closing.
+2025-04-11 21:11:02,879 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 21:11:02,931 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 21:11:02,932 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 21:11:02,932 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 21:11:02,933 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 21:11:02,989 - gui.main_window - ERROR - Error restoring window geometry: 'ConfigManager' object has no attribute 'contains'
+2025-04-11 21:11:02,990 - gui.main_window - INFO - Main window initialized
+2025-04-11 21:11:08,718 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 21:11:08,786 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 21:11:08,787 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:11:08,787 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 21:11:17,135 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 21:11:17,136 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:11:17,199 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:11:17,199 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:11:43,168 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:11:43,169 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:11:44,299 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:11:50,806 - gui.main_window - ERROR - Failed to create Pivot Table tab: unexpected character after line continuation character (pivot_table_widget.py, line 334)
+Traceback (most recent call last):
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\main_window.py", line 478, in _process_excel_import
+    from gui.pivot_table_widget import PivotTableWidget
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\pivot_table_widget.py", line 334
+    \"\"\"Generate rules based on the current pivot table data and options\"\"\"
+     ^
+SyntaxError: unexpected character after line continuation character
+2025-04-11 21:11:54,266 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:11:54,268 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:11:54,269 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:11:54,269 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 21:11:54,269 - gui.main_window - INFO - Application closing.
+2025-04-11 21:13:08,515 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 21:13:08,551 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 21:13:08,552 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 21:13:08,552 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 21:13:08,554 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 21:13:09,002 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 21:13:09,002 - gui.main_window - INFO - Main window initialized
+2025-04-11 21:13:15,128 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 21:13:15,203 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 21:13:15,203 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:13:15,203 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 21:13:18,797 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 21:13:18,797 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:13:19,593 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:13:19,594 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:13:21,374 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:13:21,374 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:13:30,091 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:13:35,621 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 21:13:35,622 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-11 21:13:35,622 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-11 21:13:35,623 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 21:13:35,623 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-11 21:13:35,624 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-11 21:13:35,648 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-11 21:13:35,649 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-11 21:13:39,011 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 21:13:39,044 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mil, Prefix: 'Rule_'
+2025-04-11 21:13:42,274 - gui.pivot_table_widget - WARNING - Rule generation function returned None unexpectedly.
+2025-04-11 21:13:44,517 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:13:44,519 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:13:44,520 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:13:44,521 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 21:13:44,521 - gui.main_window - INFO - Application closing.
+2025-04-11 21:16:31,631 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 21:16:31,673 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 21:16:31,673 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 21:16:31,674 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 21:16:31,677 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 21:16:32,209 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 21:16:32,210 - gui.main_window - INFO - Main window initialized
+2025-04-11 21:16:42,763 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 21:16:42,842 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 21:16:42,842 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:16:42,843 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 21:16:49,208 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 21:16:49,209 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:16:49,324 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:16:49,324 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:16:50,684 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:16:50,685 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:16:56,276 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:17:06,145 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 21:17:06,147 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-11 21:17:06,147 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-11 21:17:06,147 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 21:17:06,147 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-11 21:17:06,148 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-11 21:17:06,177 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-11 21:17:06,178 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-11 21:17:24,107 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 21:17:24,134 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mm, Prefix: 'Rule_'
+2025-04-11 21:17:24,135 - models.excel_data - INFO - Created 66 clearance rules from pivot data
+2025-04-11 21:17:24,136 - gui.pivot_table_widget - INFO - Successfully generated 66 rules.
+2025-04-11 21:17:30,841 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 21:17:30,841 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 21:17:30,842 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 21:17:30,849 - gui.main_window - INFO - Rule Editor tab created and shown.
+2025-04-11 21:17:54,228 - gui.main_window - INFO - Rule Editor tab closed.
+2025-04-11 21:17:54,240 - gui.main_window - INFO - Closed tab: Rule Editor
+2025-04-11 21:18:28,017 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 21:18:28,046 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mm, Prefix: 'Rule_'
+2025-04-11 21:18:28,048 - models.excel_data - INFO - Created 66 clearance rules from pivot data
+2025-04-11 21:18:28,048 - gui.pivot_table_widget - INFO - Successfully generated 66 rules.
+2025-04-11 21:18:31,935 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 21:18:31,936 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 21:18:31,936 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 21:18:31,943 - gui.main_window - INFO - Rule Editor tab created and shown.
+2025-04-11 21:18:34,342 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 21:18:34,373 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mm, Prefix: 'Rule_'
+2025-04-11 21:18:34,375 - models.excel_data - INFO - Created 66 clearance rules from pivot data
+2025-04-11 21:18:34,376 - gui.pivot_table_widget - INFO - Successfully generated 66 rules.
+2025-04-11 21:18:43,811 - gui.main_window - INFO - Rule Editor tab closed.
+2025-04-11 21:18:43,824 - gui.main_window - INFO - Closed tab: Rule Editor
+2025-04-11 21:18:45,272 - gui.main_window - INFO - Pivot Table tab closed.
+2025-04-11 21:18:45,272 - gui.main_window - INFO - Closed tab: Pivot Table
+2025-04-11 21:18:46,617 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:18:46,619 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:18:46,620 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:18:46,620 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 21:18:46,621 - gui.main_window - INFO - Application closing.
+2025-04-11 21:21:08,330 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 21:21:08,383 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 21:21:08,383 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 21:21:08,384 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 21:21:08,387 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 21:21:08,871 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 21:21:08,872 - gui.main_window - INFO - Main window initialized
+2025-04-11 21:21:13,984 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 21:21:14,062 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 21:21:14,062 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:21:14,063 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 21:21:16,509 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 21:21:16,510 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:21:16,616 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:21:16,616 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:21:17,261 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:21:17,262 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:21:23,540 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:21:38,796 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 21:21:38,797 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-11 21:21:38,798 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-11 21:21:38,798 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 21:21:38,798 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-11 21:21:38,799 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-11 21:21:38,830 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-11 21:21:38,831 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-11 21:21:42,161 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 21:21:42,189 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mil, Prefix: 'Rule_'
+2025-04-11 21:21:42,191 - models.excel_data - INFO - Created 66 clearance rules from pivot data
+2025-04-11 21:21:42,192 - gui.pivot_table_widget - INFO - Successfully generated 66 rules.
+2025-04-11 21:21:48,150 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 21:21:48,151 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 21:21:48,152 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 21:21:48,160 - gui.main_window - INFO - Rule Editor tab created and shown.
+2025-04-11 21:21:50,701 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 21:21:50,734 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mil, Prefix: 'Rule_'
+2025-04-11 21:21:50,736 - models.excel_data - INFO - Created 66 clearance rules from pivot data
+2025-04-11 21:21:50,736 - gui.pivot_table_widget - INFO - Successfully generated 66 rules.
+2025-04-11 21:22:03,632 - gui.main_window - INFO - Rule Editor tab closed.
+2025-04-11 21:22:03,644 - gui.main_window - INFO - Closed tab: Rule Editor
+2025-04-11 21:22:08,838 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:22:08,839 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:22:08,841 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:22:08,842 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 21:22:08,842 - gui.main_window - INFO - Application closing.
+2025-04-11 21:26:05,544 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 21:26:05,591 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 21:26:05,592 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 21:26:05,592 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 21:26:05,594 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 21:26:06,029 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 21:26:06,030 - gui.main_window - INFO - Main window initialized
+2025-04-11 21:26:11,412 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 21:26:11,477 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 21:26:11,478 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:26:11,478 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 21:26:14,437 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 21:26:14,437 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:26:14,549 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:26:14,550 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:26:14,712 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:26:14,712 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:26:14,764 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 21:26:14,765 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-11 21:26:14,765 - models.excel_data - INFO - Column index: ['D', nan, nan, nan, nan, nan, nan, nan, nan, nan, nan]
+2025-04-11 21:26:14,766 - models.excel_data - INFO - Row index first few: ['MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A']
+2025-04-11 21:26:14,766 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-11 21:26:14,766 - models.excel_data - INFO - Values sample: [[2 'D']
+ [2 2]]
+2025-04-11 21:26:14,789 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-11 21:26:14,790 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-11 21:26:20,880 - gui.main_window - INFO - Pivot Table tab closed.
+2025-04-11 21:26:20,881 - gui.main_window - INFO - Closed tab: Pivot Table
+2025-04-11 21:26:26,579 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 21:26:26,635 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 21:26:26,636 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:26:26,636 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 21:26:30,739 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 21:26:30,740 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:26:30,815 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:26:30,816 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:26:32,502 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:26:32,503 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 21:26:48,115 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 21:26:52,490 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 21:26:52,491 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-11 21:26:52,492 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-11 21:26:52,492 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 21:26:52,492 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-11 21:26:52,493 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-11 21:26:52,521 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-11 21:26:52,521 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-11 21:27:03,742 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 21:27:03,776 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mm, Prefix: 'Rule_'
+2025-04-11 21:27:03,779 - models.excel_data - INFO - Created 66 clearance rules from pivot data
+2025-04-11 21:27:03,779 - gui.pivot_table_widget - INFO - Successfully generated 66 rules.
+2025-04-11 21:27:03,780 - gui.main_window - INFO - Received 66 generated rules from pivot table.
+2025-04-11 21:27:03,795 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 21:27:03,796 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 21:27:03,796 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 21:27:03,805 - gui.main_window - INFO - Rule Editor tab created and shown.
+2025-04-11 21:27:03,805 - gui.main_window - ERROR - Error loading generated rules into rule editor: 'RuleManager' object has no attribute 'add_rules'
+Traceback (most recent call last):
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\main_window.py", line 950, in _handle_generated_rules
+    rule_manager.add_rules(rules) # Add the generated rules to the manager
+    ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'RuleManager' object has no attribute 'add_rules'. Did you mean: 'add_rule'?
+2025-04-11 21:27:12,295 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:27:12,297 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:27:12,298 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:27:12,299 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 21:27:12,299 - gui.main_window - INFO - Application closing.
+2025-04-11 21:34:52,890 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 21:34:52,945 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 21:34:52,945 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 21:34:52,946 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 21:34:52,947 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 21:53:54,596 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 21:53:54,634 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 21:53:54,635 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 21:53:54,635 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 21:53:54,637 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 21:55:32,475 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 21:55:32,516 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 21:55:32,516 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 21:55:32,517 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 21:55:32,519 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 21:56:07,764 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 21:56:07,795 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 21:56:07,795 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 21:56:07,796 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 21:56:07,798 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 21:58:18,968 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 21:58:19,008 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 21:58:19,009 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 21:58:19,009 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 21:58:19,011 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 21:58:19,471 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 21:58:19,471 - gui.main_window - INFO - Main window initialized
+2025-04-11 21:58:21,568 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:58:21,569 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:58:21,571 - utils.config - INFO - Configuration saved successfully
+2025-04-11 21:58:21,571 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 21:58:21,571 - gui.main_window - INFO - Application closing.
+2025-04-11 22:05:31,645 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 22:05:31,681 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 22:05:31,682 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 22:05:31,682 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 22:05:31,684 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 22:05:32,155 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 22:05:32,155 - gui.main_window - INFO - Main window initialized
+2025-04-11 22:05:37,754 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 22:05:37,825 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 22:05:37,826 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:05:37,826 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 22:05:41,131 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 22:05:41,132 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:05:41,220 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:05:41,221 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:05:42,691 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:05:42,692 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:05:49,397 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:05:53,688 - gui.main_window - ERROR - Failed to create Pivot Table tab: 'MainWindow' object has no attribute '_on_data_changed'
+Traceback (most recent call last):
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\main_window.py", line 495, in _process_excel_import
+    self.pivot_tab.model.data_changed.connect(self._on_data_changed)
+                                              ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute '_on_data_changed'
+2025-04-11 22:05:58,760 - utils.config - INFO - Configuration saved successfully
+2025-04-11 22:05:58,762 - utils.config - INFO - Configuration saved successfully
+2025-04-11 22:05:58,763 - utils.config - INFO - Configuration saved successfully
+2025-04-11 22:05:58,764 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 22:05:58,764 - gui.main_window - INFO - Application closing.
+2025-04-11 22:10:36,667 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 22:10:36,708 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 22:10:36,708 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 22:10:36,709 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 22:10:36,710 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 22:10:37,212 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 22:10:37,213 - gui.main_window - INFO - Main window initialized
+2025-04-11 22:10:44,111 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 22:10:44,210 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 22:10:44,210 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:10:44,211 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 22:10:47,592 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 22:10:47,593 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:10:47,680 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:10:47,681 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:10:48,950 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:10:48,951 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:10:54,290 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:11:03,686 - gui.main_window - ERROR - Failed to create Pivot Table tab: 'MainWindow' object has no attribute '_on_data_changed'
+Traceback (most recent call last):
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\main_window.py", line 496, in _process_excel_import
+    self.pivot_tab.model.data_changed.connect(self._on_data_changed)
+                                              ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute '_on_data_changed'
+2025-04-11 22:11:08,184 - utils.config - INFO - Configuration saved successfully
+2025-04-11 22:11:08,186 - utils.config - INFO - Configuration saved successfully
+2025-04-11 22:11:08,187 - utils.config - INFO - Configuration saved successfully
+2025-04-11 22:11:08,188 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 22:11:08,188 - gui.main_window - INFO - Application closing.
+2025-04-11 22:13:25,431 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 22:13:25,470 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 22:13:25,470 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 22:13:25,471 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 22:13:25,472 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 22:13:25,945 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 22:13:25,945 - gui.main_window - INFO - Main window initialized
+2025-04-11 22:13:31,863 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 22:13:31,932 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 22:13:31,932 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:13:31,933 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 22:13:36,212 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 22:13:36,213 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:13:36,356 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:13:36,356 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:13:54,003 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:13:54,003 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:13:54,986 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:14:01,237 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 22:14:01,238 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-11 22:14:01,239 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-11 22:14:01,239 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 22:14:01,239 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-11 22:14:01,240 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-11 22:14:01,261 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-11 22:14:01,261 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-11 22:14:07,654 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 22:14:07,681 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mm, Prefix: 'Rule_'
+2025-04-11 22:14:07,683 - models.excel_data - INFO - Created 66 clearance rules from pivot data
+2025-04-11 22:14:07,683 - gui.pivot_table_widget - INFO - Successfully generated 66 rules.
+2025-04-11 22:14:07,684 - gui.main_window - INFO - Received 66 generated rules from pivot table.
+2025-04-11 22:14:07,710 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 22:14:07,711 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 22:14:07,711 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 22:14:07,720 - gui.main_window - INFO - Rule Editor tab created and shown.
+2025-04-11 22:17:26,465 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 22:17:26,498 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 22:17:26,498 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 22:17:26,499 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 22:17:26,500 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 22:17:26,929 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 22:17:26,930 - gui.main_window - INFO - Main window initialized
+2025-04-11 22:17:32,198 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 22:17:32,266 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 22:17:32,267 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:17:32,267 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 22:17:35,567 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 22:17:35,568 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:17:35,664 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:17:35,664 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:17:44,224 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:17:44,224 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:17:45,357 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:17:57,150 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 22:17:57,152 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-11 22:17:57,152 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-11 22:17:57,152 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 22:17:57,153 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-11 22:17:57,154 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-11 22:17:57,176 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-11 22:17:57,176 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-11 22:17:59,721 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 22:17:59,749 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mil, Prefix: 'Rule_'
+2025-04-11 22:17:59,751 - models.excel_data - INFO - Created 66 clearance rules from pivot data
+2025-04-11 22:17:59,751 - gui.pivot_table_widget - INFO - Successfully generated 66 rules.
+2025-04-11 22:17:59,752 - gui.main_window - INFO - Received 66 generated rules from pivot table.
+2025-04-11 22:17:59,764 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 22:17:59,764 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 22:17:59,765 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 22:17:59,774 - gui.main_window - INFO - Rule Editor tab created and shown.
+2025-04-11 22:19:46,361 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 22:19:46,402 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 22:19:46,403 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 22:19:46,403 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 22:19:46,405 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 22:19:46,888 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 22:19:46,888 - gui.main_window - INFO - Main window initialized
+2025-04-11 22:19:52,781 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 22:19:52,858 - gui.excel_preview_dialog - INFO - Excel preview model updated with 22 rows and 12 columns
+2025-04-11 22:19:52,859 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:19:52,859 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 22:19:55,318 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-11 22:19:55,319 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:19:55,979 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:19:55,980 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:19:56,492 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:19:56,492 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:20:19,454 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:20:25,094 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 22:20:25,096 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-11 22:20:25,097 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-11 22:20:25,097 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 22:20:25,097 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-11 22:20:25,099 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-11 22:20:25,125 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-11 22:20:25,126 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-11 22:20:28,903 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 22:20:28,937 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mil, Prefix: 'Rule_'
+2025-04-11 22:20:28,938 - models.excel_data - INFO - Created 66 clearance rules from pivot data
+2025-04-11 22:20:28,939 - gui.pivot_table_widget - INFO - Successfully generated 66 rules.
+2025-04-11 22:20:28,939 - gui.main_window - INFO - Received 66 generated rules from pivot table.
+2025-04-11 22:20:28,951 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 22:20:28,952 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 22:20:28,952 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 22:20:28,959 - gui.main_window - INFO - Rule Editor tab created and shown.
+2025-04-11 22:21:51,358 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 22:21:51,390 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 22:21:51,391 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 22:21:51,392 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 22:21:51,393 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 22:21:51,837 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 22:21:51,837 - gui.main_window - INFO - Main window initialized
+2025-04-11 22:21:57,661 - utils.config - INFO - Configuration saved successfully
+2025-04-11 22:21:57,663 - utils.config - INFO - Configuration saved successfully
+2025-04-11 22:21:57,664 - utils.config - INFO - Configuration saved successfully
+2025-04-11 22:21:57,664 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 22:21:57,665 - gui.main_window - INFO - Application closing.
+2025-04-11 22:23:10,482 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 22:23:10,518 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 22:23:10,518 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 22:23:10,519 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 22:23:10,520 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 22:23:10,993 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 22:23:10,994 - gui.main_window - INFO - Main window initialized
+2025-04-11 22:26:55,268 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 22:26:55,346 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:26:55,346 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:26:55,347 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 22:27:04,771 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:27:13,913 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 22:27:13,915 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-11 22:27:13,915 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-11 22:27:13,915 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 22:27:13,915 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-11 22:27:13,916 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-11 22:27:13,939 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-11 22:27:13,939 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-11 22:27:18,085 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 22:27:18,115 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mil, Prefix: 'Rule_'
+2025-04-11 22:27:18,116 - models.excel_data - INFO - Created 66 clearance rules from pivot data
+2025-04-11 22:27:18,117 - gui.pivot_table_widget - INFO - Successfully generated 66 rules.
+2025-04-11 22:27:18,117 - gui.main_window - INFO - Received 66 generated rules from pivot table.
+2025-04-11 22:27:18,130 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 22:27:18,130 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 22:27:18,130 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 22:27:18,137 - gui.main_window - INFO - Rule Editor tab created and shown.
+2025-04-11 22:35:17,767 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 22:35:17,801 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 22:35:17,801 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 22:35:17,802 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 22:35:17,803 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 22:35:18,263 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 22:35:18,264 - gui.main_window - INFO - Main window initialized
+2025-04-11 22:35:23,737 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 22:35:23,794 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:35:23,794 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:35:23,795 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 22:35:30,930 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:35:35,354 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 22:35:35,356 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-11 22:35:35,356 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-11 22:35:35,357 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 22:35:35,357 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-11 22:35:35,358 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-11 22:35:35,380 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-11 22:35:35,381 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-11 22:35:38,984 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 22:35:39,015 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mil, Prefix: 'Rule_'
+2025-04-11 22:35:39,017 - models.excel_data - INFO - Created 66 clearance rules from pivot data
+2025-04-11 22:35:39,018 - gui.pivot_table_widget - INFO - Successfully generated 66 rules.
+2025-04-11 22:35:39,018 - gui.main_window - INFO - Received 66 generated rules from pivot table.
+2025-04-11 22:35:39,053 - gui.main_window - ERROR - Failed to create Rule Editor tab: unexpected character after line continuation character (rule_editor_widget.py, line 689)
+Traceback (most recent call last):
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\main_window.py", line 278, in _show_rule_editor_tab
+    from gui.rule_editor_widget import RulesManagerWidget
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\rule_editor_widget.py", line 689
+    \"\"\"Appends new rules to the existing list in the table model.\"\"\"
+     ^
+SyntaxError: unexpected character after line continuation character
+2025-04-11 22:35:41,766 - gui.main_window - ERROR - Failed to show or access the Rule Editor tab to add generated rules.
+2025-04-11 22:35:45,698 - utils.config - INFO - Configuration saved successfully
+2025-04-11 22:35:45,700 - utils.config - INFO - Configuration saved successfully
+2025-04-11 22:35:45,701 - utils.config - INFO - Configuration saved successfully
+2025-04-11 22:35:45,701 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 22:35:45,702 - gui.main_window - INFO - Application closing.
+2025-04-11 22:37:55,657 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 22:37:55,706 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 22:37:55,706 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 22:37:55,706 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 22:37:55,708 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 22:37:56,124 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 22:37:56,125 - gui.main_window - INFO - Main window initialized
+2025-04-11 22:38:01,232 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 22:38:01,281 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:38:01,281 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:38:01,282 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 22:38:06,441 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:38:10,316 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 22:38:10,318 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-11 22:38:10,319 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-11 22:38:10,319 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 22:38:10,319 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-11 22:38:10,320 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-11 22:38:10,349 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-11 22:38:10,350 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-11 22:38:15,690 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 22:38:15,717 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mm, Prefix: 'Rule_'
+2025-04-11 22:38:15,719 - models.excel_data - INFO - Created 66 clearance rules from pivot data
+2025-04-11 22:38:15,719 - gui.pivot_table_widget - INFO - Successfully generated 66 rules.
+2025-04-11 22:38:15,720 - gui.main_window - INFO - Received 66 generated rules from pivot table.
+2025-04-11 22:38:15,767 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 22:38:15,768 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 22:38:15,769 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 22:38:15,776 - gui.main_window - INFO - Rule Editor tab created and shown.
+2025-04-11 22:42:42,132 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 22:42:42,173 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 22:42:42,174 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 22:42:42,174 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 22:42:42,176 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 22:42:42,655 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 22:42:42,656 - gui.main_window - INFO - Main window initialized
+2025-04-11 22:49:48,925 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 22:49:48,972 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:49:48,973 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:49:48,973 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 22:50:16,753 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:50:21,736 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 22:50:21,737 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-11 22:50:21,738 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-11 22:50:21,738 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 22:50:21,738 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-11 22:50:21,739 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-11 22:50:21,762 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-11 22:50:21,762 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-11 22:50:24,243 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 22:50:24,271 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mil, Prefix: 'Rule_'
+2025-04-11 22:50:24,273 - models.excel_data - INFO - Created 66 clearance rules from pivot data
+2025-04-11 22:50:24,273 - gui.pivot_table_widget - INFO - Successfully generated 66 rules.
+2025-04-11 22:50:24,274 - gui.main_window - INFO - Received 66 generated rules from pivot table.
+2025-04-11 22:50:24,288 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 22:50:24,289 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 22:50:24,290 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 22:50:24,297 - gui.main_window - INFO - Rule Editor tab created and shown.
+2025-04-11 22:50:25,571 - gui.rule_editor_widget - INFO - Rule table model updated with 66 rules
+2025-04-11 22:50:25,571 - gui.main_window - INFO - Replaced rules in Rule Editor with generated rules.
+2025-04-11 22:50:25,572 - gui.main_window - INFO - Switched to existing Rule Editor tab.
+2025-04-11 22:51:07,039 - models.rule_model - INFO - Added rule: New_Clearance_Rule_1 (Clearance)
+2025-04-11 22:51:07,040 - gui.rule_editor_widget - INFO - Rule table model updated with 1 rules
+2025-04-11 22:51:07,042 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 22:51:07,049 - gui.rule_editor_widget - ERROR - Error updating rule property: 'ClearanceRuleEditor' object has no attribute 'min_clearance_spin'
+Traceback (most recent call last):
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\rule_editor_widget.py", line 214, in _on_property_changed
+    if sender == self.min_clearance_spin:
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ClearanceRuleEditor' object has no attribute 'min_clearance_spin'. Did you mean: 'clearance_spin'?
+2025-04-11 22:51:07,052 - gui.rule_editor_widget - INFO - Rule set in editor: New_Clearance_Rule_1 (Clearance)
+2025-04-11 22:51:07,053 - gui.rule_editor_widget - INFO - Editing rule: New_Clearance_Rule_1
+2025-04-11 22:51:07,055 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 22:51:07,062 - gui.rule_editor_widget - ERROR - Error updating rule property: 'ClearanceRuleEditor' object has no attribute 'min_clearance_spin'
+Traceback (most recent call last):
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\rule_editor_widget.py", line 214, in _on_property_changed
+    if sender == self.min_clearance_spin:
+                 ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ClearanceRuleEditor' object has no attribute 'min_clearance_spin'. Did you mean: 'clearance_spin'?
+2025-04-11 22:51:07,064 - gui.rule_editor_widget - INFO - Rule set in editor: New_Clearance_Rule_1 (Clearance)
+2025-04-11 22:51:07,065 - gui.rule_editor_widget - INFO - Editing rule: New_Clearance_Rule_1
+2025-04-11 22:51:07,065 - gui.rule_editor_widget - INFO - Added new rule: New_Clearance_Rule_1 (Clearance)
+2025-04-11 22:51:17,076 - utils.config - INFO - Configuration saved successfully
+2025-04-11 22:51:17,079 - utils.config - INFO - Configuration saved successfully
+2025-04-11 22:51:17,080 - utils.config - INFO - Configuration saved successfully
+2025-04-11 22:51:17,080 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 22:51:17,080 - gui.main_window - INFO - Application closing.
+2025-04-11 22:56:16,558 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 22:56:16,608 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 22:56:16,608 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 22:56:16,609 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 22:56:16,610 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 22:56:17,127 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 22:56:17,129 - gui.main_window - INFO - Main window initialized
+2025-04-11 22:56:25,378 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 22:56:25,426 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:56:25,426 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 22:56:25,426 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 22:56:35,844 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 22:56:37,849 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 22:56:37,850 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-11 22:56:37,850 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-11 22:56:37,850 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 22:56:37,851 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-11 22:56:37,852 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-11 22:56:37,877 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-11 22:56:37,878 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-11 22:56:40,669 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 22:56:40,698 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mil, Prefix: 'Rule_'
+2025-04-11 22:56:40,699 - models.excel_data - INFO - Created 66 clearance rules from pivot data
+2025-04-11 22:56:40,699 - gui.pivot_table_widget - INFO - Successfully generated 66 rules.
+2025-04-11 22:56:40,700 - gui.main_window - INFO - Received 66 generated rules from pivot table.
+2025-04-11 22:56:40,748 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 22:56:40,748 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 22:56:40,749 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 22:56:40,758 - gui.main_window - INFO - Rule Editor tab created and shown.
+2025-04-11 22:56:41,843 - gui.rule_editor_widget - INFO - Rule table model updated with 66 rules
+2025-04-11 22:56:41,843 - gui.main_window - INFO - Replaced rules in Rule Editor with generated rules.
+2025-04-11 22:56:41,844 - gui.main_window - INFO - Switched to existing Rule Editor tab.
+2025-04-11 22:57:23,463 - utils.config - INFO - Configuration saved successfully
+2025-04-11 22:57:23,465 - utils.config - INFO - Configuration saved successfully
+2025-04-11 22:57:23,466 - utils.config - INFO - Configuration saved successfully
+2025-04-11 22:57:23,466 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 22:57:23,466 - gui.main_window - INFO - Application closing.
+2025-04-11 23:00:49,421 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 23:00:49,456 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 23:00:49,457 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 23:00:49,457 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 23:00:49,458 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 23:00:49,861 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 23:00:49,861 - gui.main_window - INFO - Main window initialized
+2025-04-11 23:00:57,132 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 23:00:57,181 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 23:00:57,181 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 23:00:57,181 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 23:01:03,002 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 23:01:08,441 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 23:01:08,443 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-11 23:01:08,443 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-11 23:01:08,444 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 23:01:08,444 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-11 23:01:08,445 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-11 23:01:08,477 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-11 23:01:08,478 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-11 23:01:10,715 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 23:01:10,744 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mil, Prefix: 'Rule_'
+2025-04-11 23:01:10,746 - models.excel_data - INFO - Created 66 clearance rules from pivot data
+2025-04-11 23:01:10,747 - gui.pivot_table_widget - INFO - Successfully generated 66 rules.
+2025-04-11 23:01:10,747 - gui.main_window - INFO - Received 66 generated rules from pivot table.
+2025-04-11 23:01:10,762 - gui.rule_editor_widget - INFO - Rule table model updated with 0 rules
+2025-04-11 23:01:10,763 - gui.rule_editor_widget - INFO - Rule manager set with 0 rules
+2025-04-11 23:01:10,763 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 23:01:10,773 - gui.main_window - INFO - Rule Editor tab created and shown.
+2025-04-11 23:01:12,431 - gui.rule_editor_widget - INFO - Rule table model updated with 66 rules
+2025-04-11 23:01:12,431 - gui.main_window - INFO - Replaced rules in Rule Editor with generated rules.
+2025-04-11 23:01:12,431 - gui.main_window - INFO - Switched to existing Rule Editor tab.
+2025-04-11 23:03:37,724 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:03:37,727 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:03:37,728 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:03:37,729 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 23:03:37,729 - gui.main_window - INFO - Application closing.

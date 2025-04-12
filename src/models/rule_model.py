@@ -10,6 +10,7 @@ Defines the data models for different Altium rule types.
 
 import logging
 import re
+import uuid # Import the uuid module
 from enum import Enum
 from typing import Dict, List, Optional, Union, Tuple
 
@@ -32,14 +33,15 @@ class UnitType(Enum):
         elif unit_str in ('inch', 'inches', 'in'):
             return UnitType.INCH
         else:
-            raise ValueError(f"Unknown unit type: {unit_str}")
+            raise ValueError(f"Unknown unit type: {unit_str}. Valid unit types are: 'mil', 'mils', 'mm', 'millimeter', 'millimeters', 'inch', 'inches', 'in'.")
     
     @staticmethod
     def convert(value: float, from_unit: 'UnitType', to_unit: 'UnitType') -> float:
         """Convert value between unit types"""
         # Convert to mils as base unit
+        MM_TO_MIL_CONVERSION = 39.37007874015748  # More precise conversion factor
         if from_unit == UnitType.MM:
-            value_mils = value * 39.3701
+            value_mils = value * MM_TO_MIL_CONVERSION
         elif from_unit == UnitType.INCH:
             value_mils = value * 1000
         else:  # already in mils
@@ -87,17 +89,23 @@ class RuleScope:
             items=data.get("items", [])
         )
     
-    def to_rul_format(self) -> str:
-        """Convert to RUL file format"""
+    def to_query_string(self) -> str:
+        """Convert to RUL file format query string"""
         if self.scope_type == "All":
             return "All"
-        elif self.scope_type == "NetClasses":
-            return f"InNetClasses('{';'.join(self.items)}')"
         elif self.scope_type == "NetClass":
+            # Altium query for a single net class
             return f"InNetClass('{self.items[0]}')" if self.items else "All"
+        elif self.scope_type == "NetClasses":
+            # Altium query for multiple net classes (ORed together)
+            class_queries = [f"InNetClass('{item}')" for item in self.items]
+            return ' OR '.join(class_queries)
         elif self.scope_type == "Custom":
-            return f"'{';'.join(self.items)}'"
-        return "All"
+            # Assume custom scope is already a valid Altium query string
+            return self.items[0] if self.items else "All"
+        else:
+            logger.warning(f"Unknown scope type '{self.scope_type}' for RUL format, defaulting to All")
+            return "All"
 
 
 class BaseRule:
@@ -133,18 +141,26 @@ class BaseRule:
             priority=data.get("priority", 1)
         )
     
-    def to_rul_format(self) -> List[str]:
-        """Convert to RUL file format"""
-        rul_lines = []
-        rul_lines.append(f"Rule")
-        rul_lines.append(f"{{")
-        rul_lines.append(f"    Name = '{self.name}'")
-        rul_lines.append(f"    Enabled = '{str(self.enabled).lower()}'")
-        if self.comment:
-            rul_lines.append(f"    Comment = '{self.comment}'")
-        rul_lines.append(f"    Priority = {self.priority}")
-        # Subclasses will add specific rule parameters
-        return rul_lines
+    def to_rul_format(self) -> str:
+        """Convert to a single pipe-delimited RUL file line"""
+        # Base properties common to all rules
+        properties = {
+            "NAME": self.name,
+            "ENABLED": str(self.enabled).upper(),  # TRUE/FALSE
+            "PRIORITY": str(self.priority),
+            "COMMENT": self.comment,
+            "RULEKIND": self.rule_type.value,
+            # Generate a unique ID for the rule using UUID4
+            "UNIQUEID": str(uuid.uuid4()).upper() # Generate and format UUID
+        }
+        # Subclasses will add their specific properties
+        return self._build_rul_line(properties)
+
+    def _build_rul_line(self, properties: Dict[str, str]) -> str:
+        """Helper to build the pipe-delimited string from properties"""
+        # Filter out empty values, except for potentially required ones if any
+        line_parts = [f"{key}={value}" for key, value in properties.items() if value is not None and value != ""]
+        return '|'.join(line_parts)
 
 
 class ClearanceRule(BaseRule):
@@ -191,16 +207,25 @@ class ClearanceRule(BaseRule):
             target_scope=RuleScope.from_dict(target_scope_data)
         )
     
-    def to_rul_format(self) -> List[str]:
-        """Convert to RUL file format"""
-        rul_lines = super().to_rul_format()
-        rul_lines.append(f"    RuleKind = '{self.rule_type.value}'")
-        rul_lines.append(f"    MinimumClearance = {self.min_clearance}")
-        rul_lines.append(f"    MinimumClearanceType = '{self.unit.value}'")
-        rul_lines.append(f"    SourceScope = {self.source_scope.to_rul_format()}")
-        rul_lines.append(f"    TargetScope = {self.target_scope.to_rul_format()}")
-        rul_lines.append("}")
-        return rul_lines
+    def to_rul_format(self) -> str:
+        """Convert to a single pipe-delimited RUL file line for Clearance"""
+        # Start with base properties
+        properties = {
+            "NAME": self.name,
+            "ENABLED": str(self.enabled).upper(),
+            "PRIORITY": str(self.priority),
+            "COMMENT": self.comment,
+            "RULEKIND": self.rule_type.value,
+            # Clearance specific properties
+            "SCOPE1EXPRESSION": self.source_scope.to_rul_format(),
+            "SCOPE2EXPRESSION": self.target_scope.to_rul_format(),
+            # Use GAP for the clearance value, append unit
+            "GAP": f"{self.min_clearance}{self.unit.value}",
+            # Add other common clearance defaults if needed
+            "NETSCOPE": "DifferentNets", # Common default
+            "LAYERKIND": "SameLayer",   # Common default
+        }
+        return self._build_rul_line(properties)
 
 
 class ShortCircuitRule(BaseRule):
@@ -235,13 +260,20 @@ class ShortCircuitRule(BaseRule):
             scope=RuleScope.from_dict(scope_data)
         )
     
-    def to_rul_format(self) -> List[str]:
-        """Convert to RUL file format"""
-        rul_lines = super().to_rul_format()
-        rul_lines.append(f"    RuleKind = '{self.rule_type.value}'")
-        rul_lines.append(f"    Scope = {self.scope.to_rul_format()}")
-        rul_lines.append("}")
-        return rul_lines
+    def to_rul_format(self) -> str:
+        """Convert to a single pipe-delimited RUL file line for ShortCircuit"""
+        properties = {
+            "NAME": self.name,
+            "ENABLED": str(self.enabled).upper(),
+            "PRIORITY": str(self.priority),
+            "COMMENT": self.comment,
+            "RULEKIND": self.rule_type.value,
+            # ShortCircuit specific properties
+            "SCOPE1EXPRESSION": self.scope.to_rul_format(), # Use SCOPE1EXPRESSION for single scope rules
+            "SCOPE2EXPRESSION": self.scope.to_rul_format(), # Often the same for ShortCircuit
+            "ALLOWED": "FALSE", # Common default for ShortCircuit
+        }
+        return self._build_rul_line(properties)
 
 
 class UnRoutedNetRule(BaseRule):
@@ -276,13 +308,19 @@ class UnRoutedNetRule(BaseRule):
             scope=RuleScope.from_dict(scope_data)
         )
     
-    def to_rul_format(self) -> List[str]:
-        """Convert to RUL file format"""
-        rul_lines = super().to_rul_format()
-        rul_lines.append(f"    RuleKind = '{self.rule_type.value}'")
-        rul_lines.append(f"    Scope = {self.scope.to_rul_format()}")
-        rul_lines.append("}")
-        return rul_lines
+    def to_rul_format(self) -> str:
+        """Convert to a single pipe-delimited RUL file line for UnRoutedNet"""
+        properties = {
+            "NAME": self.name,
+            "ENABLED": str(self.enabled).upper(),
+            "PRIORITY": str(self.priority),
+            "COMMENT": self.comment,
+            "RULEKIND": self.rule_type.value,
+            # UnRoutedNet specific properties
+            "SCOPE1EXPRESSION": self.scope.to_rul_format(), # Use SCOPE1EXPRESSION
+            "CHECKBADCONNECTIONS": "TRUE", # Common default
+        }
+        return self._build_rul_line(properties)
 
 
 # Add additional rule types later...
@@ -313,24 +351,14 @@ class RuleManager:
         return [rule for rule in self.rules if rule.rule_type == rule_type]
     
     def to_rul_format(self) -> str:
-        """Convert all rules to RUL file format"""
-        rul_lines = []
-        
-        # Add header
-        rul_lines.append("# Altium Designer Rules")
-        rul_lines.append("#")
-        rul_lines.append("# Auto-generated file")
-        rul_lines.append("")
-        
-        # Add all rules
-        for rule in self.rules:
-            rul_lines.extend(rule.to_rul_format())
-            rul_lines.append("")
-        
-        return "\n".join(rul_lines)
+        """Convert all rules to RUL file format (pipe-delimited lines)"""
+        # Generate one line per rule
+        rul_lines = [rule.to_rul_format() for rule in self.rules]
+        # Join lines with newline characters appropriate for the target system (e.g., \r\n for Windows)
+        return "\r\n".join(rul_lines)
     
     def from_rul_content(self, rul_content: str) -> bool:
-        """Parse rules from RUL file content
+        """Parse rules from RUL file content (pipe-delimited lines)
 
         Args:
             rul_content (str): The content of a .RUL file
@@ -346,7 +374,7 @@ class RuleManager:
             rule_blocks = self._extract_rule_blocks(rul_content)
             
             if not rule_blocks:
-                logger.warning("No rule blocks found in RUL content")
+                logger.error("No rule blocks found in RUL content. Ensure the RUL file contains valid rule definitions.")
                 return False
             
             logger.info(f"Found {len(rule_blocks)} rule blocks in RUL content")
@@ -441,7 +469,11 @@ class RuleManager:
             
             # Parse unit type
             try:
-                unit = UnitType.from_string(min_clearance_type) if min_clearance_type else UnitType.MIL
+                try:
+                    unit = UnitType.from_string(min_clearance_type) if min_clearance_type else UnitType.MIL
+                except ValueError:
+                    logger.warning(f"Invalid MinimumClearanceType: {min_clearance_type}, defaulting to MIL")
+                    unit = UnitType.MIL
             except ValueError:
                 logger.warning(f"Invalid MinimumClearanceType: {min_clearance_type}, using MIL")
                 unit = UnitType.MIL
@@ -519,14 +551,24 @@ class RuleManager:
         
         match = re.search(pattern, block)
         if match:
-            return match.group(1).strip()
+            value = match.group(1).strip()
+            # Sanitize the value to handle special characters or escape sequences
+            sanitized_value = re.sub(r'[^\w\s\-.,;:]', '', value)  # Allow alphanumeric, spaces, and common symbols
+            return sanitized_value
         return ""
     
     def _parse_scope(self, scope_str: str) -> RuleScope:
-        """Parse a scope string into a RuleScope object"""
-        if not scope_str or scope_str == "All":
-            return RuleScope("All")
-        
+        # Check for InNetClass pattern
+        net_class_match = re.match(r'InNetClass\([\'"]([^\'"]*)[\'"]\)', scope_str)
+        if net_class_match:
+            net_class_name = net_class_match.group(1).strip()
+            # Validate net class name for invalid characters
+            if re.match(r'^[a-zA-Z0-9_\-]+$', net_class_name):  # Allow alphanumeric, underscores, and hyphens
+                return RuleScope("NetClass", [net_class_name])
+            else:
+                logger.warning(f"Invalid net class name: {net_class_name}")
+        else:
+            logger.warning(f"Invalid InNetClass format: {scope_str}")
         # Check for InNetClass pattern
         net_class_match = re.match(r'InNetClass\([\'"]([^\'"]*)[\'"]', scope_str)
         if net_class_match:
@@ -538,7 +580,7 @@ class RuleManager:
             classes = net_classes_match.group(1).split(';')
             return RuleScope("NetClasses", classes)
         
-        # Check for simple quoted string (custom scope)
+        logger.warning(f"Could not parse scope: '{scope_str}'. Defaulting to 'All'. Ensure the scope string is valid.")
         quoted_match = re.match(r'[\'"]([^\'"]*)[\'"]', scope_str)
         if quoted_match:
             items = quoted_match.group(1).split(';')

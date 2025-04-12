@@ -16,7 +16,8 @@ import numpy as np
 from PyQt5.QtWidgets import (
     QDialog, QTableView, QHeaderView, QVBoxLayout, QHBoxLayout, 
     QLabel, QComboBox, QPushButton, QGroupBox, QFormLayout,
-    QDialogButtonBox, QCheckBox, QSpinBox, QFileDialog, QSplitter
+    QDialogButtonBox, QCheckBox, QSpinBox, QFileDialog, QSplitter,
+    QLineEdit, QSpacerItem, QSizePolicy, QMessageBox
 )
 from PyQt5.QtCore import Qt, QAbstractTableModel, QModelIndex, QVariant, pyqtSignal
 from PyQt5.QtGui import QColor, QBrush
@@ -164,7 +165,8 @@ class ExcelPreviewDialog(QDialog):
         self.sheet_name = sheet_name
         self.unit = UnitType.MIL
         self.skip_rows = 0
-        self.use_first_row_as_header = True
+        self.end_row = 11 # -1 means no end row limit
+        self.use_first_row_as_header = False # Default changed to False
         self.use_first_column_as_index = True
         
         self.setWindowTitle(f"Preview Excel File - {sheet_name}")
@@ -184,191 +186,187 @@ class ExcelPreviewDialog(QDialog):
         main_layout = QVBoxLayout()
         self.setLayout(main_layout)
 
-        # Controls layout
-        controls_layout = QHBoxLayout()
-        main_layout.addLayout(controls_layout)
+        # Top section with controls and variable replacement
+        top_section_layout = QHBoxLayout()
+        main_layout.addLayout(top_section_layout)
 
-        # Sheet options
+        # --- Import Options Group --- 
         options_group = QGroupBox("Import Options")
         options_layout = QFormLayout()
         options_group.setLayout(options_layout)
+        top_section_layout.addWidget(options_group)
 
         # Skip rows option
         self.skip_rows_spin = QSpinBox()
         self.skip_rows_spin.setRange(0, 100)
         self.skip_rows_spin.setValue(self.skip_rows)
-        self.skip_rows_spin.valueChanged.connect(self._on_skip_rows_changed)
+        self.skip_rows_spin.valueChanged.connect(self._on_options_changed)
         options_layout.addRow("Skip Rows:", self.skip_rows_spin)
-
-        # Use first row as header
-        self.header_checkbox = QCheckBox("Use First Row as Headers")
-        self.header_checkbox.setChecked(self.use_first_row_as_header)
-        self.header_checkbox.toggled.connect(self._on_header_option_changed)
-        options_layout.addRow("", self.header_checkbox)
-
-        # Start row option
-        self.start_row_spin = QSpinBox()
-        self.start_row_spin.setRange(1, 1000)  # Example range, adjust as needed
-        self.start_row_spin.setValue(1)
-        self.start_row_spin.valueChanged.connect(self._on_start_row_changed)
-        options_layout.addRow("Start Row:", self.start_row_spin)
 
         # End row option
         self.end_row_spin = QSpinBox()
-        self.end_row_spin.setRange(1, 1000)  # Example range, adjust as needed
-        self.end_row_spin.setValue(1000)
-        self.end_row_spin.valueChanged.connect(self._on_end_row_changed)
+        self.end_row_spin.setRange(-1, 1000000) # Allow large number of rows, -1 for no limit
+        self.end_row_spin.setValue(self.end_row)
+        self.end_row_spin.setToolTip("Specify the last row to include (-1 for no limit). Applied after skipping rows.")
+        self.end_row_spin.valueChanged.connect(self._on_options_changed)
         options_layout.addRow("End Row:", self.end_row_spin)
 
-        controls_layout.addWidget(options_group)
+        # Use first row as header option
+        self.header_checkbox = QCheckBox()
+        self.header_checkbox.setChecked(self.use_first_row_as_header)
+        self.header_checkbox.stateChanged.connect(self._on_options_changed)
+        options_layout.addRow("Use First Row as Header:", self.header_checkbox)
 
-        # Unit selection
-        unit_group = QGroupBox("Unit")
-        unit_layout = QFormLayout()
-        unit_group.setLayout(unit_layout)
+        # Use first column as index option
+        self.index_col_checkbox = QCheckBox()
+        self.index_col_checkbox.setChecked(self.use_first_column_as_index)
+        self.index_col_checkbox.stateChanged.connect(self._on_options_changed)
+        options_layout.addRow("Use First Column as Index:", self.index_col_checkbox)
 
-        self.unit_combo = QComboBox()
-        self.unit_combo.addItem("mil", UnitType.MIL.value)
-        self.unit_combo.addItem("mm", UnitType.MM.value)
-        self.unit_combo.addItem("inch", UnitType.INCH.value)
-        self.unit_combo.currentIndexChanged.connect(self._on_unit_changed)
+        # --- Variable Replacement Group --- 
+        variable_group = QGroupBox("Replace Variables (in Preview)")
+        variable_layout = QFormLayout()
+        variable_group.setLayout(variable_layout)
+        top_section_layout.addWidget(variable_group)
 
-        unit_layout.addRow("Unit:", self.unit_combo)
-        controls_layout.addWidget(unit_group)
+        self.d_var_input = QLineEdit()
+        self.d_var_input.setPlaceholderText("Enter numeric value for D")
+        variable_layout.addRow("D =", self.d_var_input)
 
-        # Add refresh button
-        self.refresh_button = QPushButton("Refresh Preview")
-        self.refresh_button.clicked.connect(self._load_data)
-        controls_layout.addWidget(self.refresh_button)
+        self.f_var_input = QLineEdit()
+        self.f_var_input.setPlaceholderText("Enter numeric value for F")
+        variable_layout.addRow("F =", self.f_var_input)
 
-        # Add stretcher to push controls to the left
-        controls_layout.addStretch(1)
+        self.replace_button = QPushButton("Replace Variables Now")
+        self.replace_button.clicked.connect(self._replace_variables)
+        variable_layout.addRow(self.replace_button)
 
-        # Table view
+        # --- Table View --- 
         self.table_view = QTableView()
-        self.table_model = ExcelPreviewModel()
-        self.table_view.setModel(self.table_model)
-
-        # Configure table view
+        self.model = ExcelPreviewModel(self)
+        self.table_view.setModel(self.model)
         self.table_view.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.table_view.verticalHeader().setVisible(True)
-        self.table_view.setAlternatingRowColors(True)
-
+        self.table_view.verticalHeader().setSectionResizeMode(QHeaderView.ResizeToContents)
         main_layout.addWidget(self.table_view)
 
-        # Dialog buttons
+        # --- Dialog Buttons --- 
         self.button_box = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
         main_layout.addWidget(self.button_box)
 
-        # Update the preview when start and stop positions are changed
-        self.start_row_spin.valueChanged.connect(self._update_preview)
-        self.end_row_spin.valueChanged.connect(self._update_preview)
-
     def _load_data(self):
-        """Load data into the preview table"""
+        """Load and process data based on current options"""
         try:
-            # Make a copy of the original dataframe
             processed_df = self.df.copy()
             
-            # Skip rows if needed
-            if self.skip_rows > 0:
-                processed_df = processed_df.iloc[self.skip_rows:].reset_index(drop=True)
+            # Skip rows
+            if self.skip_rows > 0 and self.skip_rows < len(processed_df):
+                processed_df = processed_df.iloc[self.skip_rows:]
             
-            # Use first row as header if needed
-            if self.use_first_row_as_header and len(processed_df) > 0:
-                # Get the first row as headers
-                headers = processed_df.iloc[0].values
-                # Remove the first row (now used as headers)
-                processed_df = processed_df.iloc[1:].reset_index(drop=True)
-                # Set the column names
-                processed_df.columns = headers
+            # Set header
+            header_row_present = False
+            if self.use_first_row_as_header and not processed_df.empty:
+                processed_df.columns = processed_df.iloc[0]
+                processed_df = processed_df[1:]
+                header_row_present = True
             
-            # Update model
-            self.table_model.set_dataframe(processed_df)
+            # Apply end row limit (relative to the data *after* skipping and potential header removal)
+            if self.end_row != -1 and self.end_row >= 0:
+                # Calculate the actual number of data rows to keep
+                rows_to_keep = self.end_row
+                if rows_to_keep < len(processed_df):
+                     processed_df = processed_df.iloc[:rows_to_keep]
+
+            # Set index (optional, might not be needed for preview model)
+            # if self.use_first_column_as_index and not processed_df.empty:
+            #     processed_df = processed_df.set_index(processed_df.columns[0])
             
-            # Resize columns for better visibility
-            self.table_view.resizeColumnsToContents()
-            self.table_view.resizeRowsToContents()
+            # Reset index for display consistency in the table model
+            processed_df = processed_df.reset_index(drop=True)
             
-            # Force the table to update
-            self.table_view.update()
-            
-            logger.info("Excel data loaded in preview")
+            self.current_processed_df = processed_df # Store the processed df
+            self.model.set_dataframe(processed_df)
+            logger.info("Preview data reloaded with current options.")
         except Exception as e:
-            logger.error(f"Error loading Excel data in preview: {str(e)}")
-    
-    def _on_skip_rows_changed(self, value):
-        """Handle skip rows change"""
-        self.skip_rows = value
-        logger.info(f"Skip rows changed to: {value}")
-        # Automatically refresh the preview
-        self._load_data()
-    
-    def _on_header_option_changed(self, checked):
-        """Handle header option change"""
-        self.use_first_row_as_header = checked
-        logger.info(f"Use first row as header changed to: {checked}")
-        # Automatically refresh the preview
-        self._load_data()
-    
-    def _on_start_row_changed(self, value):
-        """Handle start row change"""
-        self.start_row = value
-        logger.info(f"Start row changed to: {value}")
-        # We don't refresh here as this is used during import, not preview
+            logger.error(f"Error processing data for preview: {str(e)}")
+            QMessageBox.warning(self, "Processing Error", f"Could not apply options: {str(e)}")
+            # Fallback to original data if processing fails
+            self.current_processed_df = self.df.copy()
+            self.model.set_dataframe(self.current_processed_df)
 
-    def _on_end_row_changed(self, value):
-        """Handle end row change"""
-        self.end_row = value
-        logger.info(f"End row changed to: {value}")
-        # We don't refresh here as this is used during import, not preview
+    def _on_options_changed(self):
+        """Handle changes in import options"""
+        self.skip_rows = self.skip_rows_spin.value()
+        self.end_row = self.end_row_spin.value()
+        self.use_first_row_as_header = self.header_checkbox.isChecked()
+        self.use_first_column_as_index = self.index_col_checkbox.isChecked()
+        self._load_data() # Reload data with new options
 
-    def _on_unit_changed(self, index):
-        """Handle unit change"""
-        unit_str = self.unit_combo.currentData()
+    def _replace_variables(self):
+        """Replace 'D' and 'F' variables in the preview table with user-provided values."""
+        if self.current_processed_df is None:
+            QMessageBox.warning(self, "No Data", "No data loaded in the preview.")
+            return
+
+        d_value_str = self.d_var_input.text().strip()
+        f_value_str = self.f_var_input.text().strip()
+
+        variables = {}
         try:
-            self.unit = UnitType(unit_str)
-            logger.info(f"Unit changed to: {self.unit.value}")
+            if d_value_str:
+                variables['D'] = float(d_value_str)
+            if f_value_str:
+                variables['F'] = float(f_value_str)
         except ValueError:
-            logger.error(f"Invalid unit: {unit_str}")
+            QMessageBox.warning(self, "Invalid Input", "Please enter valid numeric values for D and F.")
+            return
 
-    def _update_preview(self):
-        """Update the preview table based on start and stop rows."""
-        try:
-            # Adjust the dataframe based on start and stop rows
-            start_row = self.start_row_spin.value() - 1  # Convert to 0-based index
-            end_row = self.end_row_spin.value()
+        if not variables:
+            QMessageBox.information(self, "No Variables", "Please enter values for D or F to replace.")
+            return
 
-            # Ensure valid range
-            if start_row < 0 or end_row > len(self.df) or start_row >= end_row:
-                logger.warning("Invalid start or end row range for preview update.")
-                return
+        modified_count = 0
+        df_copy = self.current_processed_df.copy()
 
-            # Slice the dataframe
-            preview_df = self.df.iloc[start_row:end_row]
+        for col in df_copy.columns:
+            # Apply replacement only to object columns (likely strings)
+            # Use pd.api.types.is_object_dtype for robust type checking
+            if pd.api.types.is_object_dtype(df_copy[col]):
+                for var, value in variables.items():
+                    # Case-insensitive replacement
+                    # Ensure comparison happens with strings
+                    mask = df_copy[col].astype(str).str.upper() == str(var).upper()
+                    if mask.any():
+                        df_copy.loc[mask, col] = value
+                        modified_count += mask.sum()
+        
+        # Convert columns back to numeric if possible after replacement
+        for col in df_copy.columns:
+             # Use pd.api.types.is_object_dtype for robust type checking
+             if pd.api.types.is_object_dtype(df_copy[col]):
+                 # Attempt conversion, ignore errors for non-numeric strings
+                 df_copy[col] = pd.to_numeric(df_copy[col], errors='ignore')
 
-            # Update the model with the sliced dataframe
-            self.table_model.set_dataframe(preview_df)
+        if modified_count > 0:
+            # Update the model with the modified DataFrame
+            self.current_processed_df = df_copy
+            self.model.set_dataframe(self.current_processed_df)
+            QMessageBox.information(self, "Replacement Complete", f"Replaced {modified_count} instance(s) of variables {list(variables.keys())} in the preview.")
+        else:
+            QMessageBox.information(self, "No Changes", "No instances of the specified variables were found in the preview data.")
 
-            # Resize columns for better visibility
-            self.table_view.resizeColumnsToContents()
-            self.table_view.resizeRowsToContents()
-
-            logger.info("Preview updated with selected row range.")
-        except Exception as e:
-            logger.error(f"Error updating preview: {str(e)}")
-    
     def get_processed_dataframe(self) -> pd.DataFrame:
-        """Get the processed dataframe"""
-        return self.table_model.get_dataframe()
-    
+        """Return the final processed dataframe after preview and potential modifications"""
+        # Ensure the latest state of the dataframe (after potential variable replacement) is returned
+        return self.current_processed_df.copy() if hasattr(self, 'current_processed_df') and self.current_processed_df is not None else pd.DataFrame()
+
     def get_import_options(self) -> Dict[str, Any]:
-        """Get the import options"""
+        """Return the selected import options"""
         return {
-            "unit": self.unit,
             "skip_rows": self.skip_rows,
-            "use_first_row_as_header": self.use_first_row_as_header,
-            "use_first_column_as_index": self.use_first_column_as_index
+            "header": 0 if self.use_first_row_as_header else None,
+            "index_col": 0 if self.use_first_column_as_index else None,
+            "nrows": self.end_row if self.end_row != -1 else None # Add nrows based on end_row for potential use in pandas read_excel
+            # Add other relevant options if needed
         }

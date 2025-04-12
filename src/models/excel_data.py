@@ -64,41 +64,62 @@ class ExcelPivotData:
     
     def to_clearance_rules(self, rule_name_prefix: str = "Clearance_") -> List[ClearanceRule]:
         """Convert pivot data to clearance rules"""
-        if self.pivot_df is None or self.values is None:
-            logger.error("No data loaded")
+        if self.pivot_df is None or self.values is None or self.row_index is None or self.column_index is None:
+            logger.error("No valid pivot data loaded to convert to clearance rules.")
             return []
         
         rules = []
+        priority_counter = 1 # Simple priority assignment
         
-        # For each cell in the pivot table
+        # Iterate through the pivot table cells
         for row_idx, row_name in enumerate(self.row_index):
+            # Ensure row_name is a valid string
+            if not isinstance(row_name, str) or not row_name:
+                logger.warning(f"Skipping invalid row header at index {row_idx}: {row_name}")
+                continue
+
             for col_idx, col_name in enumerate(self.column_index):
-                # Get clearance value
+                 # Ensure col_name is a valid string
+                if not isinstance(col_name, str) or not col_name:
+                    logger.warning(f"Skipping invalid column header at index {col_idx}: {col_name}")
+                    continue
+
+                # Get clearance value from the numpy array
                 clearance_value = self.values[row_idx, col_idx]
                 
-                # Skip NaN or empty values
-                if pd.isna(clearance_value) or clearance_value == "":
-                    continue
+                # Check if the clearance value is NaN, empty, or zero
+                if pd.isna(clearance_value) or clearance_value == "" or clearance_value == 0:
+                    # Skip this cell if clearance value is invalid or zero, continue to next column
+                    continue 
                 
-                # Convert to float if possible
                 try:
                     clearance_value = float(clearance_value)
+                    # Optional: Add a check for negative values if needed
+                    if clearance_value < 0:
+                        logger.warning(f"Skipping negative clearance value at {row_name}/{col_name}: {clearance_value}")
+                        continue
                 except (ValueError, TypeError):
-                    logger.warning(f"Invalid clearance value at {row_name}/{col_name}: {clearance_value}")
-                    continue
+                    logger.warning(f"Skipping non-numeric clearance value at {row_name}/{col_name}: {clearance_value}")
+                    continue # Also skip if conversion fails
+
+                # --- Create Rule --- 
+                # Create rule name (ensure valid characters if necessary)
+                # Basic sanitization: replace spaces and invalid chars
+                safe_row_name = row_name.replace(' ', '_').replace('/', '_').replace('\\', '_')
+                safe_col_name = col_name.replace(' ', '_').replace('/', '_').replace('\\', '_')
+                rule_name = f"{rule_name_prefix}{safe_row_name}_to_{safe_col_name}"
                 
-                # Create rule name
-                rule_name = f"{rule_name_prefix}{row_name}_{col_name}"
-                
-                # Create rule scopes
-                source_scope = RuleScope("NetClass", [row_name])
-                target_scope = RuleScope("NetClass", [col_name])
+                # Create rule scopes using Altium's query language format
+                # Assuming row/column names are Net Classes
+                source_scope = RuleScope("NetClass", [row_name]) # Keep original name for scope
+                target_scope = RuleScope("NetClass", [col_name]) # Keep original name for scope
                 
                 # Create the rule
                 rule = ClearanceRule(
                     name=rule_name,
                     enabled=True,
-                    comment=f"Clearance between {row_name} and {col_name}",
+                    priority=priority_counter,
+                    comment=f"Clearance between NetClass '{row_name}' and NetClass '{col_name}'",
                     min_clearance=clearance_value,
                     unit=self.unit,
                     source_scope=source_scope,
@@ -106,6 +127,7 @@ class ExcelPivotData:
                 )
                 
                 rules.append(rule)
+                priority_counter += 1 # Increment priority for the next rule
         
         logger.info(f"Created {len(rules)} clearance rules from pivot data")
         return rules
