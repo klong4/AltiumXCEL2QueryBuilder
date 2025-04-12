@@ -41,6 +41,7 @@ class RulesManagerWidget(QWidget):
         self._unsaved_changes = False
 
         self._init_ui()
+        self.resize(400, 300) # Set default size
         # self.load_rules() # Removed: Load rules explicitly via set_and_load_rules
 
     def _init_ui(self):
@@ -53,6 +54,7 @@ class RulesManagerWidget(QWidget):
         self.rules_list_widget.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.rules_list_widget.setContextMenuPolicy(Qt.CustomContextMenu)
         self.rules_list_widget.customContextMenuRequested.connect(self._show_context_menu)
+        self.rules_list_widget.itemDoubleClicked.connect(self._handle_item_double_click) # Connect double-click
         layout.addWidget(self.rules_list_widget)
 
         # --- Action Buttons ---
@@ -210,8 +212,17 @@ class RulesManagerWidget(QWidget):
         self._set_unsaved_changes(True)
         logger.info(f"Added new rule: {new_rule_name}")
 
+    def _handle_item_double_click(self, item: QListWidgetItem):
+        """Handle double-clicking on a rule item to edit it."""
+        rule_to_edit = item.data(Qt.UserRole)
+        if isinstance(rule_to_edit, BaseRule):
+            logger.debug(f"Double-click detected on rule: {rule_to_edit.name}")
+            self._open_edit_dialog_for_rule(rule_to_edit, item) # Pass item for potential update
+        else:
+            logger.warning(f"Double-click on item without valid BaseRule data: {item.text()}")
+
     def _edit_rule(self):
-        """Open the RuleEditDialog for the selected rule."""
+        """Edit the currently selected rule."""
         selected_items = self.rules_list_widget.selectedItems()
         if not selected_items:
             QMessageBox.warning(self, "Edit Rule", "Please select a rule to edit.")
@@ -220,11 +231,15 @@ class RulesManagerWidget(QWidget):
         selected_item = selected_items[0]
         rule_to_edit = selected_item.data(Qt.UserRole)
 
-        if not isinstance(rule_to_edit, BaseRule):
+        if isinstance(rule_to_edit, BaseRule):
+            self._open_edit_dialog_for_rule(rule_to_edit, selected_item)
+        else:
             logger.error(f"Invalid data found for selected item: {rule_to_edit}")
             QMessageBox.critical(self, "Error", "Could not retrieve rule data for editing.")
-            return
 
+    def _open_edit_dialog_for_rule(self, rule_to_edit: BaseRule, list_item: QListWidgetItem):
+        """Opens the RuleEditDialog for the given rule and updates it if accepted."""
+        logger.info(f"Opening edit dialog for rule: {rule_to_edit.name}")
         # Create and show the dialog
         dialog = RuleEditDialog(rule_to_edit, self)
         if dialog.exec_() == QDialog.Accepted:
@@ -233,11 +248,16 @@ class RulesManagerWidget(QWidget):
 
             # Update the original rule object directly
             try:
+                # Store original name for logging/comparison if needed
+                # original_name = rule_to_edit.name
+
+                # Apply updates from dialog data
                 rule_to_edit.name = updated_data.get('name', rule_to_edit.name)
                 rule_to_edit.enabled = updated_data.get('enabled', rule_to_edit.enabled)
                 rule_to_edit.priority = updated_data.get('priority', rule_to_edit.priority)
                 rule_to_edit.comment = updated_data.get('comment', rule_to_edit.comment)
 
+                # Apply type-specific updates
                 if isinstance(rule_to_edit, ClearanceRule):
                     rule_to_edit.min_clearance = updated_data.get('min_clearance', rule_to_edit.min_clearance)
                     rule_to_edit.unit = updated_data.get('unit', rule_to_edit.unit)
@@ -248,12 +268,16 @@ class RulesManagerWidget(QWidget):
                 # Add elif blocks for other specific rule types if they exist
 
                 # Update the list widget item text
-                selected_item.setText(f"{rule_to_edit.name} ({rule_to_edit.rule_type.value})")
+                list_item.setText(f"{rule_to_edit.name} ({rule_to_edit.rule_type.value})")
+
                 # Update the details view if this item is still selected
-                self._update_rule_details(rule_to_edit)
+                if list_item in self.rules_list_widget.selectedItems():
+                    self._update_rule_details(rule_to_edit)
+
                 # Mark changes as unsaved
                 self._set_unsaved_changes(True)
                 logger.info(f"Rule '{rule_to_edit.name}' updated successfully.")
+
             except Exception as e:
                 logger.error(f"Error applying updated rule data: {e}", exc_info=True)
                 QMessageBox.critical(self, "Update Error", f"Failed to apply rule changes: {e}")

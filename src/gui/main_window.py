@@ -360,14 +360,15 @@ class MainWindow(QMainWindow):
         self._add_toolbar_action("rul_import.png", "Import RUL", "Ctrl+R",
                                  "Import data from Altium RUL file (Ctrl+R)", self._import_rul)
         
-        self.toolbar.addSeparator()
+        # self.toolbar.addSeparator() # Separator removed as export buttons are gone
         
-        # Add Export to Excel toolbar action
-        self._add_toolbar_action("excel_export.png", "Export Excel", "Ctrl+E",
-                                 "Export pivot data to Excel file (Ctrl+E)", self._export_excel)
+        # # Add Export to Excel toolbar action - REMOVED
+        # self._add_toolbar_action("excel_export.png", "Export Excel", "Ctrl+E",
+        #                          "Export pivot data to Excel file (Ctrl+E)", self._export_excel)
 
-        self._add_toolbar_action("rul_export.png", "Export RUL", "Ctrl+S",
-                                 "Export data to Altium RUL file (Ctrl+S)", self._export_rul)
+        # # Add Export RUL toolbar action - REMOVED
+        # self._add_toolbar_action("rul_export.png", "Export RUL", "Ctrl+S",
+        #                          "Export data to Altium RUL file (Ctrl+S)", self._export_rul)
     
     def _add_toolbar_action(self, icon_name, text, shortcut, tooltip, callback):
         """Helper method to create and add toolbar actions"""
@@ -977,85 +978,6 @@ class MainWindow(QMainWindow):
 
     # Add placeholder methods if needed by other parts, assuming they exist in widgets:
     # def _on_data_saved(self): ... # Might be called after successful export
-
-    def _export_rul(self):
-        """Export the rules from the Rule Editor tab to an Altium RUL file."""
-        # Use renamed variable
-        if self.rules_manager_tab is None or not hasattr(self.rules_manager_tab, 'get_rule_manager'):
-            QMessageBox.warning(self, "Export Error", "Rule Manager tab is not open or does not support exporting.")
-            logger.warning("Attempted to export RUL when Rule Manager tab is not available.")
-            return False # Indicate failure/not applicable
-
-        # Use renamed variable
-        rule_manager = self.rules_manager_tab.get_rule_manager()
-        if not rule_manager or not rule_manager.rules:
-            QMessageBox.warning(self, "Export Error", "No rules available in the Rule Manager to export.")
-            logger.warning("Attempted to export RUL with no rules loaded in the manager.")
-            return False # Indicate failure/nothing to save
-
-        suggested_filename = "generated_rules.RUL"
-        # You could potentially base the suggested name on an imported file if tracked
-
-        file_path = self._get_file_path_dialog(
-            dialog_type="save",
-            title="Export Rules to Altium RUL File",
-            file_filter="RUL Files (*.RUL);;All Files (*)"
-        )
-
-        if not file_path:
-            logger.info("RUL export cancelled by user.")
-            # Returning True here because the user explicitly cancelled, not an error state.
-            # This prevents the closeEvent from aborting if the user cancels the save dialog.
-            return True # User cancelled the dialog
-
-        # Ensure the filename ends with .RUL (case-insensitive check)
-        if not file_path.lower().endswith('.rul'):
-            file_path += '.RUL'
-
-        # Update last directory - Handled by _get_file_path_dialog now
-        # self.config.update_last_directory(os.path.dirname(file_path))
-        self.status_bar.showMessage(f"Exporting rules to {os.path.basename(file_path)}...", 3000)
-        logger.info(f"Exporting rules to RUL file: {file_path}")
-
-        try:
-            rule_generator = RuleGenerator()
-            # Assign the manager from the editor to the generator instance
-            rule_generator.rule_manager = rule_manager
-            # Generate the RUL content using the assigned manager
-            rul_content = rule_generator.generate_rul_content()
-
-            with open(file_path, 'w', encoding='utf-8') as f:
-                f.write(rul_content)
-
-            self.status_bar.showMessage(f"Successfully exported to {os.path.basename(file_path)}", 5000)
-            logger.info(f"Successfully exported rules to {file_path}")
-            QMessageBox.information(self, "Export Successful", f"Rules successfully exported to:\\n{file_path}")
-
-            # Mark the tab as saved - Needs implementation in RulesManagerWidget
-            # if hasattr(self.rules_manager_tab, 'mark_saved'):
-            #     self.rules_manager_tab.mark_saved()
-            self._check_unsaved_changes() # Update window title
-
-            return True # Indicate success
-
-        except RuleGeneratorError as rge:
-            error_msg = f"Error generating RUL content: {str(rge)}"
-            logger.error(error_msg, exc_info=True)
-            QMessageBox.critical(self, "Export Error", error_msg)
-            self.status_bar.showMessage("Export failed", 5000)
-            return False # Indicate failure
-        except IOError as ioe:
-            error_msg = f"Error writing RUL file '{os.path.basename(file_path)}': {str(ioe)}"
-            logger.error(error_msg, exc_info=True)
-            QMessageBox.critical(self, "Export Error", error_msg)
-            self.status_bar.showMessage("Export failed", 5000)
-            return False # Indicate failure
-        except Exception as e:
-            error_msg = f"An unexpected error occurred during RUL export: {str(e)}"
-            logger.error(error_msg, exc_info=True)
-            QMessageBox.critical(self, "Export Error", error_msg)
-            self.status_bar.showMessage("Export failed", 5000)
-            return False # Indicate failure
 
     def _on_data_changed(self, *args, **kwargs):
         """Slot to handle data changes from tabs (e.g., pivot table, rule editor)."""
