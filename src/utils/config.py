@@ -10,7 +10,7 @@ class ConfigManager:
     """Manages application configuration using a JSON file."""
 
     DEFAULT_CONFIG = {
-        "theme": "light",
+        "theme": "dark",
         "recent_files": [],
         "max_recent_files": 10,
         "window_geometry": None,

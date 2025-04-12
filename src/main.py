@@ -53,8 +53,8 @@ def main():
     config = ConfigManager()
     
     # Initialize theme manager
-    theme_manager = ThemeManager(app, config)
-    theme_manager.apply_theme()
+    theme_manager = ThemeManager(app)  # Remove the config argument
+    theme_manager.apply_theme(config.get("theme", "light")) # Pass theme name from config
     
     # Create and show the main window
     main_window = MainWindow(config, theme_manager)

@@ -7,19 +7,15 @@ from pathlib import Path
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtCore import QFile, QTextStream
 
-from ..utils.config import config_manager
-from . import dark, light # Import theme modules
+from utils.config import config_manager
+from .dark import DarkTheme # Import theme class
+from .light import LightTheme # Import theme class
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 STYLES_DIR = os.path.join(BASE_DIR, '..', 'styles')
 
 class ThemeManager:
     """Manages application themes."""
-
-    THEMES = {
-        "light": light.STYLE,
-        "dark": dark.STYLE,
-    }
 
     def __init__(self, app: QApplication):
         """
@@ -29,8 +25,13 @@ class ThemeManager:
             app (QApplication): The main application instance.
         """
         self.app = app
-        self.current_theme = config_manager.get("theme", "light") # Default to light theme
-        self.apply_theme(self.current_theme)
+        # Store theme instances
+        self.THEMES = {
+            "light": LightTheme(),
+            "dark": DarkTheme(),
+        }
+        self.current_theme_name = config_manager.get("theme", "dark") # Default to dark theme
+        self.apply_theme(self.current_theme_name)
 
     def apply_theme(self, theme_name: str):
         """
@@ -43,16 +44,16 @@ class ThemeManager:
             logging.warning(f"Theme '{theme_name}' not found. Using default theme.")
             theme_name = "light" # Fallback to default
 
-        qss = self.THEMES.get(theme_name)
+        theme_instance = self.THEMES.get(theme_name)
 
-        if qss:
-            self.app.setStyleSheet(qss)
-            self.current_theme = theme_name
+        if theme_instance:
+            theme_instance.apply(self.app) # Call the theme's apply method
+            self.current_theme_name = theme_name
             config_manager.set("theme", theme_name) # Save the selected theme
             logging.info(f"Applied theme: {theme_name}")
         else:
-            logging.error(f"Failed to load QSS for theme: {theme_name}")
-
+            # This case should ideally not happen if fallback works
+            logging.error(f"Failed to get theme instance for: {theme_name}")
 
     def get_current_theme(self) -> str:
         """
@@ -61,7 +62,7 @@ class ThemeManager:
         Returns:
             str: The name of the current theme.
         """
-        return self.current_theme
+        return self.current_theme_name
 
     def get_available_themes(self) -> list:
         """

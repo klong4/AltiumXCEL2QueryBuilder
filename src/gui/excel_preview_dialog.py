@@ -34,7 +34,7 @@ class ExcelPreviewModel(QAbstractTableModel):
     def __init__(self, parent=None):
         """Initialize Excel preview model"""
         super().__init__(parent)
-        self.df = None
+        self.df = pd.DataFrame() # Explicitly initialize as empty DataFrame
         self.editable = True
     
     def set_dataframe(self, df: pd.DataFrame):

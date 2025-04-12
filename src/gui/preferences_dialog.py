@@ -7,328 +7,272 @@ Preferences Dialog
 
 Dialog for configuring application preferences.
 """
-
-import os
-import logging
+import logging # Add logging import
+import os # Add os import
 from PyQt5.QtWidgets import (
     QDialog, QVBoxLayout, QHBoxLayout, QFormLayout, QGroupBox,
     QLabel, QLineEdit, QComboBox, QCheckBox, QPushButton,
-    QDialogButtonBox, QFileDialog, QTabWidget
+    QDialogButtonBox, QFileDialog, QTabWidget, QWidget, QMessageBox # Add QMessageBox
 )
 from PyQt5.QtCore import Qt, QSettings, pyqtSignal
 
-from models.rule_model import UnitType
+# Assuming config_manager provides get/set methods similar to QSettings
+# Assuming theme_manager provides get_available_themes, get_current_theme, apply_theme
+# from utils.config import ConfigManager # Example import
+# from themes.theme_manager import ThemeManager # Example import
+
+# Remove UnitType import if not used directly here
+# from models.rule_model import UnitType
 
 logger = logging.getLogger(__name__)
 
 class PreferencesDialog(QDialog):
     """Dialog for configuring application preferences"""
     
-    settings_changed = pyqtSignal()
+    settings_changed = pyqtSignal() # Signal emitted when settings are applied
     
     def __init__(self, config_manager, theme_manager, parent=None):
-        """Initialize preferences dialog"""
+        """Initialize the preferences dialog."""
         super().__init__(parent)
-        self.config = config_manager
+        self.config_manager = config_manager
         self.theme_manager = theme_manager
-        self.original_values = {}
-        self.has_changes = False
-        
-        # Set window properties
+        self._changed_settings = {} # Store pending changes
+
         self.setWindowTitle("Preferences")
-        self.setMinimumSize(500, 400)
-        self.setModal(True)
+        self.setMinimumWidth(500)
         
-        # Initialize UI
         self._init_ui()
-        
-        # Load current settings
         self._load_settings()
         
-        logger.info("Preferences dialog initialized")
-    
+        logger.debug("PreferencesDialog initialized.")
+
     def _init_ui(self):
-        """Initialize the UI components"""
-        # Main layout
-        main_layout = QVBoxLayout()
-        self.setLayout(main_layout)
+        """Initialize the user interface components."""
+        main_layout = QVBoxLayout(self)
         
-        # Create tabs for different settings categories
-        self.tabs = QTabWidget()
-        main_layout.addWidget(self.tabs)
+        self.tab_widget = QTabWidget()
+        main_layout.addWidget(self.tab_widget)
         
-        # General tab
+        # Create tabs
         self.general_tab = QWidget()
-        self.tabs.addTab(self.general_tab, "General")
-        self._init_general_tab()
-        
-        # Appearance tab
         self.appearance_tab = QWidget()
-        self.tabs.addTab(self.appearance_tab, "Appearance")
-        self._init_appearance_tab()
-        
-        # Paths tab
         self.paths_tab = QWidget()
-        self.tabs.addTab(self.paths_tab, "Paths")
+        
+        self.tab_widget.addTab(self.general_tab, "General")
+        self.tab_widget.addTab(self.appearance_tab, "Appearance")
+        self.tab_widget.addTab(self.paths_tab, "Paths")
+        
+        # Initialize content for each tab
+        self._init_general_tab()
+        self._init_appearance_tab()
         self._init_paths_tab()
         
-        # Button box
+        # Dialog buttons
         self.button_box = QDialogButtonBox(
             QDialogButtonBox.Ok | QDialogButtonBox.Cancel | QDialogButtonBox.Apply
         )
         self.button_box.accepted.connect(self.accept)
         self.button_box.rejected.connect(self.reject)
-        
-        # Get the Apply button
-        self.apply_button = self.button_box.button(QDialogButtonBox.Apply)
-        self.apply_button.clicked.connect(self._apply_settings)
-        self.apply_button.setEnabled(False)  # Disabled until changes are made
+        self.button_box.button(QDialogButtonBox.Apply).clicked.connect(self._apply_settings)
+        # Disable Apply button initially
+        self.button_box.button(QDialogButtonBox.Apply).setEnabled(False)
         
         main_layout.addWidget(self.button_box)
-    
+
     def _init_general_tab(self):
-        """Initialize the general settings tab"""
-        layout = QVBoxLayout()
-        self.general_tab.setLayout(layout)
+        """Initialize the General settings tab."""
+        layout = QFormLayout(self.general_tab)
         
-        # Units group
-        units_group = QGroupBox("Units")
-        units_layout = QFormLayout()
-        units_group.setLayout(units_layout)
-        
-        self.default_unit_combo = QComboBox()
-        self.default_unit_combo.addItem("mil", UnitType.MIL.value)
-        self.default_unit_combo.addItem("mm", UnitType.MM.value)
-        self.default_unit_combo.addItem("inch", UnitType.INCH.value)
-        self.default_unit_combo.currentIndexChanged.connect(self._mark_as_changed)
-        units_layout.addRow("Default Unit:", self.default_unit_combo)
-        
-        layout.addWidget(units_group)
-        
-        # Autosave group
-        autosave_group = QGroupBox("Autosave")
-        autosave_layout = QFormLayout()
-        autosave_group.setLayout(autosave_layout)
-        
-        self.autosave_checkbox = QCheckBox("Enable autosave")
-        self.autosave_checkbox.stateChanged.connect(self._mark_as_changed)
-        autosave_layout.addRow("", self.autosave_checkbox)
-        
-        layout.addWidget(autosave_group)
-        
-        # Add stretch to push widgets to the top
-        layout.addStretch(1)
-    
+        # Example setting: Auto-check for updates (conceptual)
+        self.check_updates_checkbox = QCheckBox("Automatically check for updates on startup")
+        self.check_updates_checkbox.stateChanged.connect(lambda: self._mark_as_changed("check_for_updates", self.check_updates_checkbox.isChecked()))
+        layout.addRow(self.check_updates_checkbox)
+
+        # Example setting: Default Unit Type (if applicable globally)
+        # self.default_unit_combo = QComboBox()
+        # for unit in UnitType:
+        #     self.default_unit_combo.addItem(unit.name.capitalize(), unit)
+        # self.default_unit_combo.currentIndexChanged.connect(lambda: self._mark_as_changed("default_unit", self.default_unit_combo.currentData().name))
+        # layout.addRow("Default Unit:", self.default_unit_combo)
+
+        # Add more general settings as needed
+        layout.addRow(QLabel("More general settings can be added here."))
+
+
     def _init_appearance_tab(self):
-        """Initialize the appearance settings tab"""
-        layout = QVBoxLayout()
-        self.appearance_tab.setLayout(layout)
+        """Initialize the Appearance settings tab."""
+        layout = QFormLayout(self.appearance_tab)
         
-        # Theme group
-        theme_group = QGroupBox("Theme")
-        theme_layout = QFormLayout()
-        theme_group.setLayout(theme_layout)
-        
+        # Theme selection
         self.theme_combo = QComboBox()
-        # Add themes from theme manager
-        for theme_id, theme_name in self.theme_manager.get_available_themes().items():
-            self.theme_combo.addItem(theme_name, theme_id)
-        self.theme_combo.currentIndexChanged.connect(self._mark_as_changed)
-        theme_layout.addRow("Theme:", self.theme_combo)
-        
-        layout.addWidget(theme_group)
-        
-        # UI Elements group
-        ui_group = QGroupBox("UI Elements")
-        ui_layout = QFormLayout()
-        ui_group.setLayout(ui_layout)
-        
-        self.statusbar_checkbox = QCheckBox("Show status bar")
-        self.statusbar_checkbox.stateChanged.connect(self._mark_as_changed)
-        ui_layout.addRow("", self.statusbar_checkbox)
-        
-        self.toolbar_checkbox = QCheckBox("Show toolbar")
-        self.toolbar_checkbox.stateChanged.connect(self._mark_as_changed)
-        ui_layout.addRow("", self.toolbar_checkbox)
-        
-        layout.addWidget(ui_group)
-        
-        # Add stretch to push widgets to the top
-        layout.addStretch(1)
-    
+        available_themes = self.theme_manager.get_available_themes()
+        for theme_name in available_themes:
+            self.theme_combo.addItem(theme_name.capitalize(), theme_name)
+        self.theme_combo.currentIndexChanged.connect(self._on_theme_changed)
+        layout.addRow("Theme:", self.theme_combo)
+
+        # Font selection (conceptual)
+        # self.font_button = QPushButton("Select Font...")
+        # self.font_label = QLabel("Default Font: System Default") # Placeholder
+        # layout.addRow(self.font_label, self.font_button)
+
+        layout.addRow(QLabel("More appearance settings can be added here."))
+
     def _init_paths_tab(self):
-        """Initialize the paths settings tab"""
-        layout = QVBoxLayout()
-        self.paths_tab.setLayout(layout)
-        
-        # Directories group
-        directories_group = QGroupBox("Default Directories")
-        directories_layout = QFormLayout()
-        directories_group.setLayout(directories_layout)
-        
-        # Import directory
+        """Initialize the Paths settings tab."""
+        layout = QFormLayout(self.paths_tab)
+
+        # Default Import Directory
         import_dir_layout = QHBoxLayout()
         self.import_dir_edit = QLineEdit()
-        self.import_dir_edit.textChanged.connect(self._mark_as_changed)
+        self.import_dir_edit.setReadOnly(True)
+        import_dir_button = QPushButton("Browse...")
+        import_dir_button.clicked.connect(self._browse_import_dir)
         import_dir_layout.addWidget(self.import_dir_edit)
-        
-        self.import_dir_button = QPushButton("Browse...")
-        self.import_dir_button.clicked.connect(self._browse_import_dir)
-        import_dir_layout.addWidget(self.import_dir_button)
-        directories_layout.addRow("Import Directory:", import_dir_layout)
-        
-        # Export directory
+        import_dir_layout.addWidget(import_dir_button)
+        layout.addRow("Default Import Directory:", import_dir_layout)
+
+        # Default Export Directory
         export_dir_layout = QHBoxLayout()
         self.export_dir_edit = QLineEdit()
-        self.export_dir_edit.textChanged.connect(self._mark_as_changed)
+        self.export_dir_edit.setReadOnly(True)
+        export_dir_button = QPushButton("Browse...")
+        export_dir_button.clicked.connect(self._browse_export_dir)
         export_dir_layout.addWidget(self.export_dir_edit)
-        
-        self.export_dir_button = QPushButton("Browse...")
-        self.export_dir_button.clicked.connect(self._browse_export_dir)
-        export_dir_layout.addWidget(self.export_dir_button)
-        directories_layout.addRow("Export Directory:", export_dir_layout)
-        
-        layout.addWidget(directories_group)
-        
-        # Add stretch to push widgets to the top
-        layout.addStretch(1)
-    
+        export_dir_layout.addWidget(export_dir_button)
+        layout.addRow("Default Export Directory:", export_dir_layout)
+
+        # Add more path settings as needed
+        layout.addRow(QLabel("More path settings can be added here."))
+
     def _load_settings(self):
-        """Load current settings into the dialog"""
-        # General tab settings
-        default_unit = self.config.get("default_unit", UnitType.MIL.value)
-        index = self.default_unit_combo.findData(default_unit)
-        if index >= 0:
-            self.default_unit_combo.setCurrentIndex(index)
-        self.original_values["default_unit"] = default_unit
-        
-        autosave = self.config.get("autosave", False)
-        self.autosave_checkbox.setChecked(autosave)
-        self.original_values["autosave"] = autosave
-        
-        # Appearance tab settings
-        theme = self.theme_manager.get_current_theme()
-        index = self.theme_combo.findData(theme)
-        if index >= 0:
+        """Load current settings from the config manager into the UI."""
+        logger.debug("Loading settings into Preferences dialog.")
+        # General Tab
+        check_updates = self.config_manager.get("check_for_updates", True) # Default to True
+        self.check_updates_checkbox.setChecked(check_updates)
+        # default_unit_str = self.config_manager.get("default_unit", UnitType.MIL.name)
+        # try:
+        #     default_unit = UnitType[default_unit_str]
+        #     index = self.default_unit_combo.findData(default_unit)
+        #     if index != -1: self.default_unit_combo.setCurrentIndex(index)
+        # except KeyError:
+        #     logger.warning(f"Invalid default unit '{default_unit_str}' found in config.")
+
+        # Appearance Tab
+        current_theme = self.theme_manager.get_current_theme()
+        index = self.theme_combo.findData(current_theme)
+        if index != -1:
             self.theme_combo.setCurrentIndex(index)
-        self.original_values["theme"] = theme
-        
-        show_statusbar = self.config.get("show_statusbar", True)
-        self.statusbar_checkbox.setChecked(show_statusbar)
-        self.original_values["show_statusbar"] = show_statusbar
-        
-        show_toolbar = self.config.get("show_toolbar", True)
-        self.toolbar_checkbox.setChecked(show_toolbar)
-        self.original_values["show_toolbar"] = show_toolbar
-        
-        # Paths tab settings
-        import_dir = self.config.get("import_directory", "")
+        else:
+            logger.warning(f"Current theme '{current_theme}' not found in available themes.")
+            # Optionally set to a default theme index (e.g., 0)
+            if self.theme_combo.count() > 0:
+                self.theme_combo.setCurrentIndex(0)
+
+
+        # Paths Tab
+        import_dir = self.config_manager.get("default_import_directory", "")
         self.import_dir_edit.setText(import_dir)
-        self.original_values["import_directory"] = import_dir
-        
-        export_dir = self.config.get("export_directory", "")
+        export_dir = self.config_manager.get("default_export_directory", "")
         self.export_dir_edit.setText(export_dir)
-        self.original_values["export_directory"] = export_dir
-        
-        # Reset has_changes flag
-        self.has_changes = False
-        self.apply_button.setEnabled(False)
-    
+
+        self._changed_settings.clear() # Clear pending changes after loading
+        self.button_box.button(QDialogButtonBox.Apply).setEnabled(False) # Disable Apply button
+
     def _save_settings(self):
-        """Save settings from the dialog"""
-        # General tab settings
-        default_unit = self.default_unit_combo.currentData()
-        self.config.set("default_unit", default_unit)
-        
-        autosave = self.autosave_checkbox.isChecked()
-        self.config.set("autosave", autosave)
-        
-        # Appearance tab settings
-        theme = self.theme_combo.currentData()
-        if theme != self.original_values["theme"]:
-            self.theme_manager.set_theme(theme)
-        
-        show_statusbar = self.statusbar_checkbox.isChecked()
-        self.config.set("show_statusbar", show_statusbar)
-        
-        show_toolbar = self.toolbar_checkbox.isChecked()
-        self.config.set("show_toolbar", show_toolbar)
-        
-        # Paths tab settings
-        import_dir = self.import_dir_edit.text()
-        if import_dir and os.path.exists(import_dir):
-            self.config.set("import_directory", import_dir)
-        
-        export_dir = self.export_dir_edit.text()
-        if export_dir and os.path.exists(export_dir):
-            self.config.set("export_directory", export_dir)
-        
-        # Reset the apply button
-        self.has_changes = False
-        self.apply_button.setEnabled(False)
-        
-        # Update original values
-        self._load_settings()
-        
-        # Emit signal that settings have changed
-        self.settings_changed.emit()
-        
-        logger.info("Preferences saved")
-    
-    def _mark_as_changed(self):
-        """Mark the dialog as having unsaved changes"""
-        self.has_changes = True
-        self.apply_button.setEnabled(True)
-    
+        """Save the changed settings to the config manager."""
+        logger.info(f"Saving {len(self._changed_settings)} changed settings.")
+        if not self._changed_settings:
+            return False # No changes to save
+
+        for key, value in self._changed_settings.items():
+            self.config_manager.set(key, value)
+            logger.debug(f"Set config: {key} = {value}")
+
+        # Special handling for theme application
+        if "theme" in self._changed_settings:
+            try:
+                self.theme_manager.apply_theme(self._changed_settings["theme"])
+                logger.info(f"Applied theme: {self._changed_settings['theme']}")
+            except Exception as e:
+                 logger.error(f"Error applying theme '{self._changed_settings['theme']}' during save: {e}")
+                 # Optionally inform the user
+                 QMessageBox.warning(self, "Theme Error", f"Could not apply theme '{self._changed_settings['theme']}'.")
+
+
+        self._changed_settings.clear() # Clear pending changes after saving
+        self.button_box.button(QDialogButtonBox.Apply).setEnabled(False) # Disable Apply button
+        self.settings_changed.emit() # Signal that settings were potentially changed
+        return True
+
+    def _mark_as_changed(self, key: str, value: any):
+        """Marks a setting as changed and enables the Apply button."""
+        # Check if the value actually changed from the stored config value
+        current_value = self.config_manager.get(key)
+        # Handle potential type differences if necessary (e.g., bool vs str)
+        if value != current_value:
+            logger.debug(f"Setting marked as changed: {key} = {value} (was {current_value})")
+            self._changed_settings[key] = value
+            self.button_box.button(QDialogButtonBox.Apply).setEnabled(True)
+        else:
+            # If user changes back to original value, remove from changed list
+            if key in self._changed_settings:
+                logger.debug(f"Setting change reverted: {key}")
+                del self._changed_settings[key]
+                # Disable Apply button only if no other changes are pending
+                if not self._changed_settings:
+                    self.button_box.button(QDialogButtonBox.Apply).setEnabled(False)
+
+
+    def _on_theme_changed(self):
+        """Handle theme combo box change."""
+        selected_theme = self.theme_combo.currentData()
+        self._mark_as_changed("theme", selected_theme)
+
     def _apply_settings(self):
-        """Apply settings without closing the dialog"""
+        """Apply the currently changed settings without closing the dialog."""
+        logger.info("Applying preference changes.")
         self._save_settings()
-    
+        # Keep the dialog open
+
+    def _browse_directory(self, line_edit: QLineEdit, config_key: str):
+        """Opens a directory selection dialog and updates the line edit and config."""
+        current_dir = line_edit.text() or self.config_manager.get("last_directory", "") # Start from current or last used
+        directory = QFileDialog.getExistingDirectory(
+            self,
+            "Select Directory",
+            current_dir
+        )
+        if directory:
+            line_edit.setText(directory)
+            self._mark_as_changed(config_key, directory)
+            # Optionally update last_directory as well
+            self.config_manager.set("last_directory", directory)
+
     def _browse_import_dir(self):
-        """Browse for import directory"""
-        directory = QFileDialog.getExistingDirectory(
-            self,
-            "Select Import Directory",
-            self.import_dir_edit.text() or os.path.expanduser("~")
-        )
-        
-        if directory:
-            self.import_dir_edit.setText(directory)
-            self._mark_as_changed()
-    
+        """Browse for the default import directory."""
+        self._browse_directory(self.import_dir_edit, "default_import_directory")
+
     def _browse_export_dir(self):
-        """Browse for export directory"""
-        directory = QFileDialog.getExistingDirectory(
-            self,
-            "Select Export Directory",
-            self.export_dir_edit.text() or os.path.expanduser("~")
-        )
-        
-        if directory:
-            self.export_dir_edit.setText(directory)
-            self._mark_as_changed()
-    
+        """Browse for the default export directory."""
+        self._browse_directory(self.export_dir_edit, "default_export_directory")
+
     def accept(self):
-        """Handle dialog acceptance (OK button)"""
-        if self.has_changes:
-            self._save_settings()
+        """Apply settings and close the dialog."""
+        logger.debug("Preferences accepted (OK clicked).")
+        self._save_settings()
         super().accept()
-    
+
     def reject(self):
-        """Handle dialog rejection (Cancel button)"""
-        if self.has_changes:
-            # Ask for confirmation if there are unsaved changes
-            from PyQt5.QtWidgets import QMessageBox
-            reply = QMessageBox.question(
-                self,
-                "Unsaved Changes",
-                "You have unsaved changes. Are you sure you want to discard them?",
-                QMessageBox.Yes | QMessageBox.No,
-                QMessageBox.No
-            )
-            
-            if reply == QMessageBox.No:
-                return
-        
+        """Discard changes and close the dialog."""
+        logger.debug("Preferences rejected (Cancel clicked).")
+        if self._changed_settings:
+             reply = QMessageBox.question(self, "Discard Changes?",
+                                          "You have unsaved changes. Are you sure you want to discard them?",
+                                          QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+             if reply == QMessageBox.No:
+                 return # Do not close if user cancels discard
+
         super().reject()
 

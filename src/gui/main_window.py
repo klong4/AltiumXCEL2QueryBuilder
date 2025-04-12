@@ -14,6 +14,7 @@ import sys
 import logging
 import re # Import re for regex matching
 from datetime import datetime # Import datetime
+from typing import List, Optional # For type hinting
 from PyQt5.QtWidgets import (QMainWindow, QTabWidget, QAction, QFileDialog,
                              QMenu, QToolBar, QStatusBar, QMessageBox,
                              QDockWidget, QVBoxLayout, QHBoxLayout, QWidget,
@@ -22,10 +23,13 @@ from PyQt5.QtGui import QFont, QIcon, QKeySequence
 from PyQt5.QtCore import Qt, QSize, pyqtSignal
 
 from models.excel_data import ExcelPivotData
-from models.rule_model import RuleType, UnitType, BaseRule
+from models.rule_model import RuleType, UnitType, BaseRule # Import BaseRule
+# Import RuleManager directly
 from models.rule_model import RuleManager
 
 from gui.preferences_dialog import PreferencesDialog # Add import for PreferencesDialog
+# Import RulesManagerWidget instead of RuleEditorWidget
+from gui.rule_editor_widget import RulesManagerWidget
 from services.rule_generator import RuleGenerator, RuleGeneratorError # Add import for RuleGenerator
 
 logger = logging.getLogger(__name__)
@@ -42,7 +46,8 @@ class MainWindow(QMainWindow):
         self.theme_manager = theme_manager
         # self.has_unsaved_changes = False # Removed, will use signal/slot or check tab state
         self.pivot_tab = None
-        self.rule_editor_tab = None
+        # Rename instance variable
+        self.rules_manager_tab = None
 
         # Set default font for the application
         default_font = QFont("Arial", 10)
@@ -112,6 +117,7 @@ class MainWindow(QMainWindow):
             # Check if the widget being closed has unsaved changes
             prompt_save = False
             tab_name = self.tab_widget.tabText(index)
+            # Check if RulesManagerWidget implements has_unsaved_changes
             if hasattr(widget, 'has_unsaved_changes') and widget.has_unsaved_changes():
                 reply = QMessageBox.question(self, f'Unsaved Changes in {tab_name}',
                                              f'The tab "{tab_name}" has unsaved changes. Do you want to save them before closing?',
@@ -121,7 +127,8 @@ class MainWindow(QMainWindow):
                 if reply == QMessageBox.Save:
                     # Attempt to save based on tab type
                     save_successful = False
-                    if widget == self.rule_editor_tab:
+                    # Use renamed variable
+                    if widget == self.rules_manager_tab:
                         save_successful = self._export_rul() # Returns True on success/cancel, False on failure
                     elif widget == self.pivot_tab:
                         # Decide what saving means for pivot table (e.g., export Excel?)
@@ -138,26 +145,32 @@ class MainWindow(QMainWindow):
                     return # Abort closing
                 # If Discard, proceed to close without saving
 
-            # --- Proceed with closing the tab --- 
-            
+            # --- Proceed with closing the tab ---
+
             # Disconnect signals
             if widget == self.pivot_tab:
                 try:
                     if hasattr(self.pivot_tab, 'model') and self.pivot_tab.model:
                          self.pivot_tab.model.data_changed.disconnect(self._on_data_changed)
+                    # Disconnect rules_generated signal
+                    if hasattr(self.pivot_tab, 'rules_generated'):
+                        self.pivot_tab.rules_generated.disconnect(self._handle_generated_rules)
                 except TypeError: # Signal already disconnected
                     pass
                 self.pivot_tab = None
                 logger.info("Pivot Table tab closed.")
-            elif widget == self.rule_editor_tab:
+            # Use renamed variable
+            elif widget == self.rules_manager_tab:
                 try:
-                    self.rule_editor_tab.rules_changed.disconnect(self._on_data_changed)
-                    self.rule_editor_tab.pivot_data_updated.disconnect(self._on_rule_pivot_updated)
+                    # Use correct signal names from RulesManagerWidget
+                    self.rules_manager_tab.rules_changed.disconnect(self._on_data_changed)
+                    self.rules_manager_tab.pivot_data_updated.disconnect(self._on_rule_pivot_updated)
                 except TypeError:
                     pass
-                self.rule_editor_tab = None
-                logger.info("Rule Editor tab closed.")
-            
+                # Use renamed variable
+                self.rules_manager_tab = None
+                logger.info("Rule Manager tab closed.")
+
             # Remove the tab
             self.tab_widget.removeTab(index)
             widget.deleteLater() # Ensure the widget is properly deleted
@@ -244,62 +257,49 @@ class MainWindow(QMainWindow):
         """Create view menu and actions"""
         self.view_menu = self.menuBar().addMenu("&View")
         
-        # Add action to show Rule Editor
-        self._add_action(self.view_menu, "Show &Rule Editor", "settings.png", None,
-                         "Open the Rule Editor tab", self._show_rule_editor_tab)
+        # Update action text and callback if desired, but keep callback name for now
+        self._add_action(self.view_menu, "Show &Rule Manager", "settings.png", None,
+                         "Open the Rule Manager tab", self._show_rule_editor_tab) # Keep callback name for now
         
         self.view_menu.addSeparator()
-        
-        # Theme submenu
-        theme_menu = QMenu("&Theme", self)
-        self.view_menu.addMenu(theme_menu)
-        
-        # Theme actions
-        theme_group = QActionGroup(self)  # Ensure only one theme can be selected at a time
-        theme_group.setExclusive(True)
 
-        # Iterate directly over the list of theme IDs (names)
-        for theme_id in self.theme_manager.get_available_themes():
-            # Use theme_id for display name (e.g., capitalize) or keep as is
-            theme_display_name = theme_id.capitalize() 
-            theme_action = QAction(theme_display_name, self)
-            theme_action.setCheckable(True)
-            theme_action.setChecked(theme_id == self.theme_manager.get_current_theme())
-            theme_action.setData(theme_id) # Store the theme_id
-            # Connect using the theme_id captured by the lambda
-            theme_action.triggered.connect(lambda checked, theme=theme_id: self.theme_manager.set_theme(theme))
-            theme_group.addAction(theme_action)
-            theme_menu.addAction(theme_action)
+        # Theme selection submenu
+        self.theme_menu = self.view_menu.addMenu("&Themes")
+        theme_group = QActionGroup(self)
+        theme_group.setExclusive(True) # Only one theme can be active
 
-    def _show_rule_editor_tab(self):
-        """Creates and shows the Rule Editor tab if it doesn't exist."""
-        if self.rule_editor_tab is None:
-            try:
-                from gui.rule_editor_widget import RulesManagerWidget
-                self.rule_editor_tab = RulesManagerWidget()
-                # Connect signals only when creating the tab
-                self.rule_editor_tab.rules_changed.connect(self._on_data_changed)
-                self.rule_editor_tab.pivot_data_updated.connect(self._on_rule_pivot_updated)
-                # Connect to pivot data if pivot tab exists
-                if self.pivot_tab and hasattr(self.pivot_tab, 'get_pivot_data'):
-                    pivot_data = self.pivot_tab.get_pivot_data()
-                    if pivot_data:
-                        self.rule_editor_tab.update_pivot_data(pivot_data)
-                
-                index = self.tab_widget.addTab(self.rule_editor_tab, "Rule Editor")
-                self.tab_widget.setCurrentIndex(index)
-                logger.info("Rule Editor tab created and shown.")
-            except Exception as e:
-                logger.error(f"Failed to create Rule Editor tab: {e}", exc_info=True)
-                QMessageBox.critical(self, "Error", f"Could not create the Rule Editor tab: {e}")
-                self.rule_editor_tab = None # Ensure it's None if creation failed
+        light_theme_action = self._add_action(self.theme_menu, "&Light", None, None,
+                                              "Switch to Light Theme", lambda: self._change_theme("light"),
+                                              checkable=True)
+        dark_theme_action = self._add_action(self.theme_menu, "&Dark", None, None,
+                                             "Switch to Dark Theme", lambda: self._change_theme("dark"),
+                                             checkable=True)
+
+        theme_group.addAction(light_theme_action)
+        theme_group.addAction(dark_theme_action)
+
+        # Set the initially checked theme action
+        current_theme = self.theme_manager.get_current_theme()
+        if current_theme == "dark":
+            dark_theme_action.setChecked(True)
         else:
-            # Find the index of the existing rule editor tab and switch to it
-            for i in range(self.tab_widget.count()):
-                if self.tab_widget.widget(i) == self.rule_editor_tab:
-                    self.tab_widget.setCurrentIndex(i)
-                    break
-            logger.info("Switched to existing Rule Editor tab.")
+            light_theme_action.setChecked(True) # Default to light
+
+    def _change_theme(self, theme_name):
+        """Applies the selected theme."""
+        try:
+            self.theme_manager.apply_theme(theme_name)
+            logger.info(f"Theme changed to: {theme_name}")
+            # Update checkmarks in the theme menu
+            if self.theme_menu: # Check if theme_menu exists before accessing actions
+                for action in self.theme_menu.actions():
+                    if action.isCheckable():
+                        action.setChecked(action.data() == theme_name)
+            else:
+                logger.warning("Theme menu not found, cannot update checkmarks.")
+        except Exception as e:
+            logger.error(f"Error changing theme to {theme_name}: {e}")
+            QMessageBox.warning(self, "Theme Error", f"Could not apply theme '{theme_name}'.")
 
     def _create_help_menu(self):
         """Create help menu and actions"""
@@ -309,7 +309,21 @@ class MainWindow(QMainWindow):
         self._add_action(self.help_menu, "&About", "about.png", None,
                          "Show information about the application", self._show_about)
     
-    def _add_action(self, parent, text, icon_name, shortcut, tooltip, callback):
+    def _show_about(self):
+        """Show the About dialog."""
+        QMessageBox.about(self, "About Altium Rule Generator",
+                          "<b>Altium Rule Generator</b><br>" 
+                          "Version 1.0.0<br><br>" 
+                          "This application helps generate Altium Designer rules " 
+                          "from structured data (e.g., Excel).<br><br>" 
+                          "Author: Karl Long (klong4)<br>" 
+                          "Company: eControls<br>"
+                          "Email: klong@econtrols.com<br>"
+                          "URL: <a href='https://github.com/klong4/AltiumXCEL2QueryBuilder'>https://github.com/klong4/AltiumXCEL2QueryBuilder</a><br><br>" 
+                          "Copyright © 2025 Karl Long (klong4) / eControls")
+        logger.info("Showed About dialog.")
+
+    def _add_action(self, parent, text, icon_name, shortcut, tooltip, callback, checkable=False):
         """Helper method to create and add actions"""
         action = QAction(text, self)
         
@@ -321,12 +335,14 @@ class MainWindow(QMainWindow):
         
         action.setToolTip(tooltip)
         action.triggered.connect(callback)
+        action.setCheckable(checkable)  # Set checkable state
         parent.addAction(action)
         return action
 
     def _create_toolbar(self):
         """Create main toolbar"""
         self.toolbar = QToolBar("Main Toolbar")
+        self.toolbar.setObjectName("MainToolBar") # Set object name
         self.toolbar.setMovable(False)
         self.addToolBar(Qt.TopToolBarArea, self.toolbar)
         
@@ -423,19 +439,43 @@ class MainWindow(QMainWindow):
             else:
                 logger.warning("QApplication instance not found, cannot center window.")
 
+    def _get_file_path_dialog(self, dialog_type: str, title: str, 
+                              directory_key: str = "last_directory", 
+                              file_filter: str = "All Files (*)") -> str:
+        """Helper method to show a file dialog (open or save) and return the selected path."""
+        last_dir = self.config.get(directory_key, "")
+        
+        if dialog_type == "open":
+            file_path, _ = QFileDialog.getOpenFileName(self, title, last_dir, file_filter)
+        elif dialog_type == "save":
+            file_path, _ = QFileDialog.getSaveFileName(self, title, last_dir, file_filter)
+        else:
+            logger.error(f"Invalid dialog type specified: {dialog_type}")
+            return None
+
+        if file_path:
+            # Update the last used directory in the config
+            self.config.set(directory_key, os.path.dirname(file_path))
+            # Ensure .RUL extension for save dialog if needed (could be more generic)
+            if dialog_type == "save" and "RUL Files" in file_filter and not file_path.upper().endswith('.RUL'):
+                 file_path += '.RUL'
+            return file_path
+        else:
+            return None # User cancelled
+
     def _import_excel(self):
         """Import data from Excel file"""
-        file_path, _ = QFileDialog.getOpenFileName(
-            self,
-            "Import Excel File",
-            self.config.get("last_directory", ""),
-            "Excel Files (*.xlsx *.xls);;All Files (*)"
+        file_path = self._get_file_path_dialog(
+            dialog_type="open",
+            title="Import Excel File",
+            file_filter="Excel Files (*.xlsx *.xls);;All Files (*)"
         )
         
         if not file_path:
             return  # User cancelled
             
-        # Update last directory        self.config.update_last_directory(os.path.dirname(file_path))
+        # Update last directory - Handled by _get_file_path_dialog now
+        # self.config.update_last_directory(os.path.dirname(file_path)) 
         
         try:
             self._process_excel_import(file_path)
@@ -534,12 +574,12 @@ class MainWindow(QMainWindow):
                 self.pivot_tab.set_pivot_data(pivot_data_obj) # Pass the ExcelPivotData object
                 logger.info(f"Loaded data ({processed_df.shape[0]}x{processed_df.shape[1]}) into Pivot Table tab.")
                 # Update rule editor if it exists
-                if self.rule_editor_tab and hasattr(self.pivot_tab, 'get_pivot_data'):
+                if self.rules_manager_tab and hasattr(self.pivot_tab, 'get_pivot_data'):
                     # get_pivot_data should return the ExcelPivotData object
                     current_pivot_data = self.pivot_tab.get_pivot_data() 
                     if current_pivot_data:
-                        self.rule_editor_tab.update_pivot_data(current_pivot_data)
-                        logger.info("Updated Rule Editor with new pivot data.")
+                        self.rules_manager_tab.update_pivot_data(current_pivot_data)
+                        logger.info("Updated Rule Manager with new pivot data.")
             else:
                  raise ValueError("Failed to load DataFrame into ExcelPivotData object.")
         except Exception as e:
@@ -617,322 +657,132 @@ class MainWindow(QMainWindow):
         return start_row, end_row
     
     def _import_rul(self):
-        """Import data from RUL file"""
-        file_path, _ = QFileDialog.getOpenFileName(
-            self,
-            "Import RUL File",
-            self.config.get("last_directory", ""),
-            "RUL Files (*.RUL *.rul);;All Files (*)"
+        """Import data from Altium RUL file"""
+        file_path = self._get_file_path_dialog(
+            dialog_type="open",
+            title="Import RUL File",
+            file_filter="RUL Files (*.RUL *.rul);;All Files (*)"
         )
-        
+
         if not file_path:
-            return  # User cancelled
-        
-        # Update last directory and add to recent files
-        self.config.update_last_directory(os.path.dirname(file_path))
-        self.config.add_recent_file(file_path)
-        self.status_bar.showMessage(f"Importing RUL file: {os.path.basename(file_path)}", 5000)
-        logger.info(f"Importing RUL file: {file_path}")
-        
+            return # User cancelled
+
+        # Update last directory - Handled by _get_file_path_dialog now
+        # self.config.update_last_directory(os.path.dirname(file_path))
+
         try:
-            self._process_rul_import(file_path)
-        except Exception as e:
-            error_msg = f"Error importing RUL file: {str(e)}"
-            logger.error(error_msg)
-            QMessageBox.critical(self, "Import Error", error_msg)
-            self.status_bar.showMessage("Import failed", 5000)
-    
-    def _process_rul_import(self, file_path):
-        """Process RUL import from the given file path"""
-        from services.rule_generator import RuleGenerator, RuleGeneratorError
-        from models.rule_model import RuleManager # Import RuleManager
-        rule_generator = RuleGenerator()
-        
-        try:
-            # Parse RUL file - assume parse_rul_file populates rule_generator.rule_manager
-            success = rule_generator.parse_rul_file(file_path)
+            # Ensure rule manager tab exists before importing RUL
+            # Use renamed variable
+            if self.rules_manager_tab is None:
+                self._show_rule_editor_tab() # Create it if it doesn't exist
+                # Use renamed variable
+                if self.rules_manager_tab is None: # Check again if creation failed
+                    raise RuleGeneratorError("Could not create or find the Rule Manager tab.")
 
-            if not success:
-                # Check if rule_manager exists and has rules even if success is False (might parse some)
-                if not rule_generator.rule_manager or not rule_generator.rule_manager.rules:
-                     QMessageBox.warning(
-                         self,
-                         "Import Warning",
-                         "The RUL file could not be parsed or no valid rules were found."
-                     )
-                     logger.warning(f"Parsing RUL file {file_path} failed or yielded no rules.")
-                     return
-                else:
-                     logger.warning(f"Parsing RUL file {file_path} reported failure, but some rules were extracted.")
+            # Get the current rule manager or create a new one
+            # Use renamed variable
+            rule_manager = self.rules_manager_tab.get_rule_manager()
+            if rule_manager is None:
+                rule_manager = RuleManager()
+                logger.info("Created a new RuleManager for RUL import.")
 
-            # Get the RuleManager instance containing the parsed rules
-            rule_manager = rule_generator.rule_manager # This is the manager with parsed rules
-
-            if not rule_manager or not rule_manager.rules:
-                QMessageBox.warning(
-                    self,
-                    "Import Warning",
-                    "No rules were found or extracted from the RUL file."
-                )
-                logger.warning(f"No rules found in RuleManager after parsing {file_path}.")
-                return
-
-            # --- Create or Update Rule Editor Tab ---
-            if self.rule_editor_tab is None:
-                # Use the existing _show_rule_editor_tab method to create/show
-                self._show_rule_editor_tab()
-                # Check if creation was successful (it might fail)
-                if self.rule_editor_tab is None:
-                     logger.error("Failed to create Rule Editor tab during RUL import.")
-                     # QMessageBox shown in _show_rule_editor_tab
-                     return
-            else:
-                 # Find the index of the existing rule editor tab and switch to it
-                 for i in range(self.tab_widget.count()):
-                     if self.tab_widget.widget(i) == self.rule_editor_tab:
-                         self.tab_widget.setCurrentIndex(i)
-                         break
-                 logger.info("Switched to existing Rule Editor tab for RUL import.")
-
-            # Load the parsed rules into the Rule Editor tab
+            # Use RuleGenerator to parse the file into the manager
+            # (Assuming RuleGenerator needs a method like parse_rul_file)
+            # This part might need adjustment based on RuleGenerator's capabilities
             try:
-                # Load the manager containing the parsed rules directly
-                self.rule_editor_tab.load_rules(rule_manager) # Load the manager with parsed rules
-                logger.info(f"Loaded {len(rule_manager.rules)} parsed rules into the Rule Editor tab.")
+                # Placeholder: Assume RuleGenerator has a method to load rules into a manager
+                # You might need to implement this method in RuleGenerator
+                # generator = RuleGenerator()
+                # generator.rule_manager = rule_manager # Assign the manager
+                # Example: generator.parse_rul_file(file_path) # This method needs to exist
+                # For now, let's assume RuleManager has an import method for simplicity here.
+                # This depends heavily on how RUL parsing is implemented.
+                if not hasattr(rule_manager, 'import_from_rul'):
+                     raise NotImplementedError("RuleManager does not have an 'import_from_rul' method.")
 
-                # Optionally, switch focus to the Rule Editor tab
-                for i in range(self.tab_widget.count()):
-                    if self.tab_widget.widget(i) == self.rule_editor_tab:
-                        self.tab_widget.setCurrentIndex(i)
-                        break
+                rule_manager.import_from_rul(file_path) # Assumes this method exists and handles parsing
+                logger.info(f"Rules imported into RuleManager from {file_path}")
 
-                # Mark the rule editor as having unsaved changes
-                if hasattr(self.rule_editor_tab, 'mark_unsaved_changes'):
-                    self.rule_editor_tab.mark_unsaved_changes()
-                self._check_unsaved_changes() # Update window title
+            except Exception as parse_error:
+                 raise RuleGeneratorError(f"Failed to parse RUL file: {parse_error}") from parse_error
 
-            except Exception as e:
-                error_msg = f"Error loading parsed rules into rule editor: {str(e)}"
-                logger.error(error_msg, exc_info=True)
-                QMessageBox.critical(self, "Load Error", error_msg)
-        except RuleGeneratorError as rge: # Specific exception for rule generation issues
-            error_msg = f"Error parsing RUL file: {str(rge)}"
-            logger.error(error_msg, exc_info=True) # Include traceback for parsing errors
-            QMessageBox.critical(self, "RUL Parse Error", error_msg)
-            self.status_bar.showMessage("RUL import failed", 5000)
-        except Exception as e: # General exception handler
+
+            # Set the updated rule manager back to the tab
+            # Use renamed variable
+            self.rules_manager_tab.set_rule_manager(rule_manager)
+
+            self.status_bar.showMessage(f"Successfully imported {os.path.basename(file_path)}", 5000)
+            QMessageBox.information(self, "Import Successful", f"Successfully imported RUL file: {file_path}")
+            self._check_unsaved_changes() # Update unsaved status
+
+        except RuleGeneratorError as rge:
+             error_msg = f"Error importing RUL file: {str(rge)}"
+             logger.error(error_msg)
+             QMessageBox.critical(self, "Import Error", error_msg)
+             self.status_bar.showMessage("RUL import failed", 5000)
+        except Exception as e:
             error_msg = f"An unexpected error occurred during RUL import: {str(e)}"
             logger.error(error_msg, exc_info=True)
             QMessageBox.critical(self, "Import Error", error_msg)
-            self.status_bar.showMessage("Import failed", 5000)
+            self.status_bar.showMessage("RUL import failed", 5000)
+
 
     def _export_excel(self):
-        """Export the current pivot table data to an Excel file."""
-        if self.pivot_tab is None or self.pivot_tab.model is None:
-            QMessageBox.warning(self, "Export Error", "No pivot table data available to export.")
-            logger.warning("Attempted to export Excel with no pivot table tab or model.")
-            return False
+        """Export pivot data to Excel file"""
+        if self.pivot_tab is None:
+            QMessageBox.warning(self, "Export Error", "No pivot table data to export.")
+            return
 
-        try:
-            # Get the ExcelPivotData object from the model
-            pivot_data_obj = self.pivot_tab.model.get_updated_pivot_data()
-            if pivot_data_obj is None or pivot_data_obj.pivot_df is None:
-                 QMessageBox.warning(self, "Export Error", "Could not retrieve pivot data structure.")
-                 logger.warning("get_updated_pivot_data() returned None or pivot_df was None.")
-                 return False
-
-            df = pivot_data_obj.pivot_df # Get the DataFrame
-            if df.empty:
-                QMessageBox.warning(self, "Export Error", "Pivot table data is empty.")
-                logger.warning("Attempted to export empty pivot table data to Excel.")
-                return False
-        except Exception as e:
-            error_msg = f"Error retrieving data from pivot table model: {str(e)}"
-            logger.error(error_msg, exc_info=True)
-            QMessageBox.critical(self, "Export Error", error_msg)
-            return False
-
-        # Suggest a filename based on the original import or a default
-        suggested_filename = "pivot_export.xlsx"
-        # You could potentially store the original filename when importing
-        # if hasattr(self.pivot_tab, 'source_filename') and self.pivot_tab.source_filename:
-        #     base, _ = os.path.splitext(os.path.basename(self.pivot_tab.source_filename))
-        #     suggested_filename = f"{base}_pivot_export.xlsx"
-
-        file_path, _ = QFileDialog.getSaveFileName(
-            self,
-            "Export Pivot Table to Excel",
-            os.path.join(self.config.get("last_directory", ""), suggested_filename),
-            "Excel Files (*.xlsx);;All Files (*)"
+        file_path = self._get_file_path_dialog(
+            dialog_type="save",
+            title="Export Pivot Table to Excel",
+            file_filter="Excel Files (*.xlsx);;All Files (*)"
         )
 
         if not file_path:
-            logger.info("Excel export cancelled by user.")
-            return False # User cancelled
+            return # User cancelled
 
-        # Ensure the filename ends with .xlsx
-        if not file_path.lower().endswith('.xlsx'):
-            file_path += '.xlsx'
-
-        self.config.update_last_directory(os.path.dirname(file_path))
-        self.status_bar.showMessage(f"Exporting data to {os.path.basename(file_path)}...", 3000)
-        logger.info(f"Exporting pivot table data to Excel: {file_path}")
+        # Update last directory - Handled by _get_file_path_dialog now
+        # self.config.update_last_directory(os.path.dirname(file_path))
 
         try:
-            # Use pandas to export the DataFrame
-            # Make sure 'openpyxl' is installed (add to requirements.txt if needed)
-            df.to_excel(file_path, index=False) # index=False is common for exports like this
-            self.status_bar.showMessage(f"Successfully exported to {os.path.basename(file_path)}", 5000)
-            logger.info(f"Successfully exported pivot data to {file_path}")
-            QMessageBox.information(self, "Export Successful", f"Data successfully exported to:\\n{file_path}")
-            return True
+            # Call the export method on the pivot table widget
+            if self.pivot_tab.export_to_excel(file_path):
+                 self.status_bar.showMessage(f"Successfully exported pivot data to {os.path.basename(file_path)}", 5000)
+                 QMessageBox.information(self, "Export Successful", f"Successfully exported pivot data to:\\n{file_path}")
+            # Error handling should ideally be within pivot_tab.export_to_excel
+            # else:
+            #     QMessageBox.critical(self, "Export Error", "Failed to export pivot data to Excel.")
+            #     self.status_bar.showMessage("Excel export failed", 5000)
+
         except Exception as e:
-            error_msg = f"Error exporting data to Excel file '{os.path.basename(file_path)}': {str(e)}"
+            error_msg = f"An error occurred during Excel export: {str(e)}"
             logger.error(error_msg, exc_info=True)
             QMessageBox.critical(self, "Export Error", error_msg)
-            self.status_bar.showMessage("Export failed", 5000)
-            return False
-
-    def _handle_generated_rules(self, rules: list):
-        """
-        Handles the rules generated by the PivotTableWidget.
-        Loads the generated rules into the Rule Editor tab.
-
-        Args:
-            rules (list[BaseRule]): The list of generated rule objects.
-        """
-        if not rules:
-            logger.info("No rules were generated by the pivot table.")
-            QMessageBox.information(self, "No Rules Generated", "No rules were generated based on the current pivot table configuration.")
-            return
-
-        logger.info(f"Received {len(rules)} generated rules from pivot table.")
-
-        # Ensure the rule editor tab exists
-        self._show_rule_editor_tab()
-
-        if self.rule_editor_tab:
-            # Ask the user if they want to replace or append rules
-            # reply = QMessageBox.question(self, "Add Generated Rules",
-            #                              "Do you want to replace existing rules in the Rule Editor or append the newly generated rules?",
-            #                              QMessageBox.Replace | QMessageBox.Append | QMessageBox.Cancel,
-            #                              QMessageBox.Append) # Default to Append
-
-            msgBox = QMessageBox(self)
-            msgBox.setIcon(QMessageBox.Question)
-            msgBox.setWindowTitle("Add Generated Rules")
-            msgBox.setText("How do you want to add the generated rules to the Rule Editor?")
-            replaceButton = msgBox.addButton("Replace", QMessageBox.ActionRole)
-            appendButton = msgBox.addButton("Append", QMessageBox.ActionRole)
-            cancelButton = msgBox.addButton(QMessageBox.Cancel)
-            msgBox.setDefaultButton(appendButton) # Set Append as default
-
-            msgBox.exec()
-            clicked_button = msgBox.clickedButton()
-
-            if clicked_button == replaceButton:
-                # Call set_rules on the table_model
-                self.rule_editor_tab.table_model.set_rules(rules)
-                logger.info("Replaced rules in Rule Editor with generated rules.")
-            elif clicked_button == appendButton:
-                self.rule_editor_tab.add_rules(rules)
-                logger.info("Appended generated rules to Rule Editor.")
-            elif clicked_button == cancelButton: # Check if the cancel button was clicked
-                logger.info("User cancelled adding generated rules.")
-                return
-            else: # Should not happen, but handle just in case
-                logger.warning("Unexpected button clicked in add rules dialog.")
-                return
-            
-            # Switch to the rule editor tab
-            self._show_rule_editor_tab() # This will switch if it already exists
-        else:
-            logger.error("Failed to show or access the Rule Editor tab to add generated rules.")
-            QMessageBox.critical(self, "Error", "Could not access the Rule Editor tab to add the generated rules.")
-
-    def _check_unsaved_changes(self):
-        """Checks all open tabs for unsaved changes and updates the window title."""
-        has_changes = False
-        # Iterate through all widgets in the tab widget
-        for i in range(self.tab_widget.count()):
-            widget = self.tab_widget.widget(i)
-            if hasattr(widget, 'has_unsaved_changes') and widget.has_unsaved_changes():
-                has_changes = True
-                break # Found unsaved changes, no need to check further
-        
-        # Update window title if unsaved changes exist
-        base_title = "Altium Rule Generator"
-        if has_changes:
-            self.setWindowTitle(f"{base_title}*")
-        else:
-            self.setWindowTitle(base_title)
-        
-        # Emit signal if needed (though direct title update might be sufficient)
-        # self.unsaved_changes_changed.emit(has_changes)
-        logger.debug(f"Unsaved changes status checked: {has_changes}")
-
-    def closeEvent(self, event):
-        """Handle window close event"""
-        if self._check_unsaved_changes():
-            reply = QMessageBox.question(self, 'Unsaved Changes',
-                                         "You have unsaved changes. Do you want to save before exiting?",
-                                         QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel,
-                                         QMessageBox.Cancel) # Default to Cancel
-
-            if reply == QMessageBox.Save:
-                # Attempt to save ALL tabs with changes? Or just the current one?
-                # Let's try saving only the Rule Editor if it has changes, as it's the primary output.
-                save_successful = True # Assume success unless a save fails
-                if self.rule_editor_tab and hasattr(self.rule_editor_tab, 'has_unsaved_changes') and self.rule_editor_tab.has_unsaved_changes():
-                    save_successful = self._export_rul() # export_rul returns True on success/cancel, False on error
-                
-                # Add logic here if other tabs need saving (e.g., Pivot Table -> Excel)
-                # elif self.pivot_tab and hasattr(self.pivot_tab, 'has_unsaved_changes') and self.pivot_tab.has_unsaved_changes():
-                #    save_successful = self._export_excel()
-
-                if not save_successful:
-                    event.ignore() # Prevent closing if save failed
-                    return
-                # If save was successful or not needed for certain tabs, proceed to accept
-                event.accept()
-
-            elif reply == QMessageBox.Discard:
-                event.accept()
-            else: # Cancel
-                event.ignore()
-                return
-        else:
-            event.accept()
-        
-        # Save geometry before closing if accepted
-        if event.isAccepted():
-            self._save_geometry()
-            logger.info("Application closing.")
-
-    # Add placeholder methods if needed by other parts, assuming they exist in widgets:
-    # def _on_data_saved(self): ... # Might be called after successful export
+            self.status_bar.showMessage("Excel export failed", 5000)
 
     def _export_rul(self):
-        """Export the rules from the Rule Editor tab to an Altium RUL file."""
-        if self.rule_editor_tab is None or not hasattr(self.rule_editor_tab, 'get_rule_manager'):
-            QMessageBox.warning(self, "Export Error", "Rule Editor tab is not open or does not support exporting.")
-            logger.warning("Attempted to export RUL when Rule Editor tab is not available.")
+        """Export rules to Altium RUL file"""
+        # Use renamed variable
+        if self.rules_manager_tab is None or not hasattr(self.rules_manager_tab, 'get_rule_manager'):
+            QMessageBox.warning(self, "Export Error", "Rule Manager tab is not open or does not support exporting.")
+            logger.warning("Attempted to export RUL when Rule Manager tab is not available.")
             return False # Indicate failure/not applicable
 
-        rule_manager = self.rule_editor_tab.get_rule_manager()
+        # Use renamed variable
+        rule_manager = self.rules_manager_tab.get_rule_manager()
         if not rule_manager or not rule_manager.rules:
-            QMessageBox.warning(self, "Export Error", "No rules available in the Rule Editor to export.")
-            logger.warning("Attempted to export RUL with no rules loaded in the editor.")
+            QMessageBox.warning(self, "Export Error", "No rules available in the Rule Manager to export.")
+            logger.warning("Attempted to export RUL with no rules loaded in the manager.")
             return False # Indicate failure/nothing to save
 
         suggested_filename = "generated_rules.RUL"
         # You could potentially base the suggested name on an imported file if tracked
 
-        file_path, _ = QFileDialog.getSaveFileName(
-            self,
-            "Export Rules to Altium RUL File",
-            os.path.join(self.config.get("last_directory", ""), suggested_filename),
-            "Altium Rules Files (*.RUL);;All Files (*)"
+        file_path = self._get_file_path_dialog(
+            dialog_type="save",
+            title="Export Rules to Altium RUL File",
+            file_filter="RUL Files (*.RUL);;All Files (*)"
         )
 
         if not file_path:
@@ -945,7 +795,8 @@ class MainWindow(QMainWindow):
         if not file_path.lower().endswith('.rul'):
             file_path += '.RUL'
 
-        self.config.update_last_directory(os.path.dirname(file_path))
+        # Update last directory - Handled by _get_file_path_dialog now
+        # self.config.update_last_directory(os.path.dirname(file_path))
         self.status_bar.showMessage(f"Exporting rules to {os.path.basename(file_path)}...", 3000)
         logger.info(f"Exporting rules to RUL file: {file_path}")
 
@@ -963,9 +814,9 @@ class MainWindow(QMainWindow):
             logger.info(f"Successfully exported rules to {file_path}")
             QMessageBox.information(self, "Export Successful", f"Rules successfully exported to:\\n{file_path}")
 
-            # Mark the tab as saved
-            if hasattr(self.rule_editor_tab, 'mark_saved'):
-                self.rule_editor_tab.mark_saved()
+            # Mark the tab as saved - Needs implementation in RulesManagerWidget
+            # if hasattr(self.rules_manager_tab, 'mark_saved'):
+            #     self.rules_manager_tab.mark_saved()
             self._check_unsaved_changes() # Update window title
 
             return True # Indicate success
@@ -990,125 +841,164 @@ class MainWindow(QMainWindow):
             return False # Indicate failure
 
     def _show_preferences(self):
-        """Show the application preferences dialog."""
-        logging.info("Preferences action triggered.")
+        """Show the preferences dialog."""
+        # Pass the config manager and theme manager to the dialog
+        dialog = PreferencesDialog(self.config, self.theme_manager, self)
+        # Execute the dialog modally
+        dialog.exec_()
+        # Optionally, apply changes immediately if the dialog signals it
+        # For example, if the theme changed, re-apply it:
+        # self.theme_manager.apply_theme(self.config.get("theme", "light"))
+        logger.info("Preferences dialog closed.")
+
+    def _handle_generated_rules(self, generated_rules: List[BaseRule]):
+        """Handles the rules generated by the PivotTableWidget.
+        Loads the generated rules into the Rule Editor tab.
+
+        Args:
+            rules (list[BaseRule]): The list of generated rule objects.
+        """
+        if not generated_rules:
+            logger.warning("Received empty list of generated rules.")
+            return
+
+        logger.info(f"Received {len(generated_rules)} generated rules from pivot table.")
+
         try:
-            # Pass the config manager and theme manager to the dialog
-            pref_dialog = PreferencesDialog(self.config, self.theme_manager, self)
-            pref_dialog.exec_() # Show the dialog modally
-            # Changes (like theme) are applied by the dialog itself via the theme_manager
-            logger.info("Preferences dialog closed.")
+            # Ensure the Rule Manager tab exists or create it
+            self._show_rule_editor_tab()
+
+            if self.rules_manager_tab:
+                # Pass the generated rules to the Rule Manager tab using the new method
+                self.rules_manager_tab.set_and_load_rules(generated_rules)
+                # Switch to the Rule Manager tab
+                self.tab_widget.setCurrentWidget(self.rules_manager_tab) # Corrected: self.tabs -> self.tab_widget
+                logger.info("Loaded generated rules into Rule Manager tab and switched view.")
+            else:
+                # Error already logged in _show_rule_editor_tab if creation failed
+                logger.error("Failed to show or access the Rule Manager tab after attempting creation.")
+                # QMessageBox might have already been shown in _show_rule_editor_tab
+
         except Exception as e:
-            logger.error(f"Failed to open preferences dialog: {e}", exc_info=True)
-            QMessageBox.critical(self, "Error", f"Could not open preferences dialog: {e}")
+            logger.error(f"Error handling generated rules: {e}", exc_info=True)
+            QMessageBox.critical(self, "Error", f"An unexpected error occurred while handling generated rules: {e}")
 
-    def _show_about(self):
-        """Show the About dialog box with hardcoded information."""
-        logger.info("--- Showing About Dialog (Hardcoded Info) ---")
+    def _show_rule_editor_tab(self):
+        """Creates or shows the Rule Manager tab."""
+        if self.rules_manager_tab is None:
+            try:
+                logger.info("Creating Rule Manager tab.")
+                self.rules_manager_tab = RulesManagerWidget(self) # Pass self as parent
+                # Connect signals
+                self.rules_manager_tab.unsaved_changes_changed.connect(self._update_window_title)
+                # Add other necessary signal connections here
 
-        # Hardcoded information
-        app_version = "1.0.0"
-        author = "Karl Long (klong4)"
-        author_email = "klong@econtrols.com"
-        repo_url = "https://github.com/klong4/AltiumXCEL2QueryBuilder"
-        company_name = "EControls"
+                tab_index = self.tab_widget.addTab(self.rules_manager_tab, "Rule Manager") # Corrected: self.tabs -> self.tab_widget
+                logger.info(f"Rule Manager tab created at index {tab_index}.")
+                # Rules are now loaded externally via set_and_load_rules, not here.
+            except Exception as e:
+                logger.error(f"Failed to create Rule Manager tab: {e}", exc_info=True)
+                QMessageBox.critical(self, "Error", f"Could not create the Rule Manager tab: {e}")
+                self.rules_manager_tab = None # Ensure it's None if creation failed
+                return # Stop here if creation failed
 
-        # Log the values being used
-        logger.info(f"Using hardcoded values for About dialog: Version='{app_version}', Author='{author}', Email='{author_email}', URL='{repo_url}', Company='{company_name}'")
+        # Switch to the tab if it exists (even if just created)
+        if self.rules_manager_tab:
+            self.tab_widget.setCurrentWidget(self.rules_manager_tab) # Corrected: self.tabs -> self.tab_widget
+            logger.debug("Switched to Rule Manager tab.")
+        else:
+            logger.warning("Attempted to switch to Rule Manager tab, but it's None.")
 
-        QMessageBox.about(
-            self,
-            "About Altium Rule Generator",
-            f"<b>Altium XCEL to Query Builder</b><br><br>"
-            f"Version: {app_version}<br>"
-            f"Author: {author} ({author_email})<br><br>"
-            "This application helps generate Altium Designer rule queries "
-            "from structured data, typically imported from Excel files.<br><br>"
-            f'Provide feedback or report issues at: <a href="{repo_url}">{repo_url}</a><br><br>' # Use hardcoded URL
-            f"&copy; {datetime.now().year} {company_name}" # Use hardcoded company name
-        )
-        logger.info("--- Finished Showing About Dialog ---") # Added separator log
+    def _update_window_title(self, has_unsaved_changes: Optional[bool] = None):
+        """Updates the window title to indicate unsaved changes."""
+        base_title = "Altium Rule Generator"
+        unsaved_marker = " [*]"
 
-    def _check_unsaved_changes(self):
-        """Checks if any open tab has unsaved changes and updates window title."""
-        has_changes = False
-        # Iterate through all widgets in the tab widget
-        for i in range(self.tab_widget.count()):
-            widget = self.tab_widget.widget(i)
-            if widget and hasattr(widget, 'has_unsaved_changes') and widget.has_unsaved_changes():
-                has_changes = True
-                break # Found one, no need to check further
-        
-        # Update window title if unsaved changes exist
-        title = "Altium Rule Generator"
-        if has_changes:
-            title += " *"
-        self.setWindowTitle(title)
-        logger.debug(f"Overall unsaved changes status: {has_changes}")
-        return has_changes
+        # Determine if any tab has unsaved changes
+        # If has_unsaved_changes is provided by signal, use it directly for that tab
+        # Otherwise, check all relevant tabs
+        # For now, let's assume only Rule Manager tracks this
+        is_unsaved = False
+        if self.rules_manager_tab and self.rules_manager_tab.has_unsaved_changes():
+            is_unsaved = True
+        # Add checks for other tabs if they implement has_unsaved_changes()
+        # elif self.pivot_table_tab and self.pivot_table_tab.has_unsaved_changes():
+        #     is_unsaved = True
+
+        new_title = base_title + (unsaved_marker if is_unsaved else "")
+
+        if self.windowTitle() != new_title:
+            self.setWindowTitle(new_title)
+            logger.debug(f"Window title updated: {new_title}")
 
     def closeEvent(self, event):
-        """Handle window close event"""
-        if self._check_unsaved_changes():
-            reply = QMessageBox.question(self, 'Unsaved Changes',
-                                         "You have unsaved changes. Do you want to save before exiting?",
+        """Handle the window close event."""
+        # Check for unsaved changes before closing
+        unsaved = False
+        if self.rules_manager_tab and self.rules_manager_tab.has_unsaved_changes():
+            unsaved = True
+        # Add checks for other tabs
+
+        if unsaved:
+            reply = QMessageBox.question(self,
+                                         "Unsaved Changes",
+                                         "There are unsaved changes. Do you want to save before exiting?",
                                          QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel,
-                                         QMessageBox.Cancel) # Default to Cancel
+                                         QMessageBox.Cancel)
 
             if reply == QMessageBox.Save:
-                # Attempt to save ALL tabs with changes? Or just the current one?
-                # Let's try saving only the Rule Editor if it has changes, as it's the primary output.
-                save_successful = True # Assume success unless a save fails
-                if self.rule_editor_tab and hasattr(self.rule_editor_tab, 'has_unsaved_changes') and self.rule_editor_tab.has_unsaved_changes():
-                    save_successful = self._export_rul() # export_rul returns True on success/cancel, False on error
-                
-                # Add logic here if other tabs need saving (e.g., Pivot Table -> Excel)
-                # elif self.pivot_tab and hasattr(self.pivot_tab, 'has_unsaved_changes') and self.pivot_tab.has_unsaved_changes():
-                #    save_successful = self._export_excel()
-
-                if not save_successful:
-                    event.ignore() # Prevent closing if save failed
-                    return
-                # If save was successful or not needed for certain tabs, proceed to accept
-                event.accept()
-
+                # Attempt to save rules (assuming only rule manager needs saving)
+                if self.rules_manager_tab:
+                    # Ideally, trigger the save action of the relevant widget
+                    # For now, let's assume _save_rules shows a dialog
+                    self.rules_manager_tab._save_rules() # This might show its own dialog
+                    # Re-check if changes were actually saved
+                    if self.rules_manager_tab.has_unsaved_changes():
+                        event.ignore() # Ignore close event if save failed or was cancelled
+                        return
+                    else:
+                        event.accept() # Accept close event if save was successful
+                else:
+                    event.accept() # No rule manager tab to save
             elif reply == QMessageBox.Discard:
-                event.accept()
+                event.accept() # Discard changes and close
             else: # Cancel
-                event.ignore()
+                event.ignore() # Ignore the close event
                 return
         else:
-            event.accept()
-        
-        # Save geometry before closing if accepted
+            event.accept() # No unsaved changes, close normally
+
+        # Save window state if closing is accepted
         if event.isAccepted():
-            self._save_geometry()
+            self._save_geometry() # Renamed from _save_settings
             logger.info("Application closing.")
+            super().closeEvent(event)
 
     # Add placeholder methods if needed by other parts, assuming they exist in widgets:
     # def _on_data_saved(self): ... # Might be called after successful export
 
     def _export_rul(self):
         """Export the rules from the Rule Editor tab to an Altium RUL file."""
-        if self.rule_editor_tab is None or not hasattr(self.rule_editor_tab, 'get_rule_manager'):
-            QMessageBox.warning(self, "Export Error", "Rule Editor tab is not open or does not support exporting.")
-            logger.warning("Attempted to export RUL when Rule Editor tab is not available.")
+        # Use renamed variable
+        if self.rules_manager_tab is None or not hasattr(self.rules_manager_tab, 'get_rule_manager'):
+            QMessageBox.warning(self, "Export Error", "Rule Manager tab is not open or does not support exporting.")
+            logger.warning("Attempted to export RUL when Rule Manager tab is not available.")
             return False # Indicate failure/not applicable
 
-        rule_manager = self.rule_editor_tab.get_rule_manager()
+        # Use renamed variable
+        rule_manager = self.rules_manager_tab.get_rule_manager()
         if not rule_manager or not rule_manager.rules:
-            QMessageBox.warning(self, "Export Error", "No rules available in the Rule Editor to export.")
-            logger.warning("Attempted to export RUL with no rules loaded in the editor.")
+            QMessageBox.warning(self, "Export Error", "No rules available in the Rule Manager to export.")
+            logger.warning("Attempted to export RUL with no rules loaded in the manager.")
             return False # Indicate failure/nothing to save
 
         suggested_filename = "generated_rules.RUL"
         # You could potentially base the suggested name on an imported file if tracked
 
-        file_path, _ = QFileDialog.getSaveFileName(
-            self,
-            "Export Rules to Altium RUL File",
-            os.path.join(self.config.get("last_directory", ""), suggested_filename),
-            "Altium Rules Files (*.RUL);;All Files (*)"
+        file_path = self._get_file_path_dialog(
+            dialog_type="save",
+            title="Export Rules to Altium RUL File",
+            file_filter="RUL Files (*.RUL);;All Files (*)"
         )
 
         if not file_path:
@@ -1121,7 +1011,8 @@ class MainWindow(QMainWindow):
         if not file_path.lower().endswith('.rul'):
             file_path += '.RUL'
 
-        self.config.update_last_directory(os.path.dirname(file_path))
+        # Update last directory - Handled by _get_file_path_dialog now
+        # self.config.update_last_directory(os.path.dirname(file_path))
         self.status_bar.showMessage(f"Exporting rules to {os.path.basename(file_path)}...", 3000)
         logger.info(f"Exporting rules to RUL file: {file_path}")
 
@@ -1139,9 +1030,9 @@ class MainWindow(QMainWindow):
             logger.info(f"Successfully exported rules to {file_path}")
             QMessageBox.information(self, "Export Successful", f"Rules successfully exported to:\\n{file_path}")
 
-            # Mark the tab as saved
-            if hasattr(self.rule_editor_tab, 'mark_saved'):
-                self.rule_editor_tab.mark_saved()
+            # Mark the tab as saved - Needs implementation in RulesManagerWidget
+            # if hasattr(self.rules_manager_tab, 'mark_saved'):
+            #     self.rules_manager_tab.mark_saved()
             self._check_unsaved_changes() # Update window title
 
             return True # Indicate success
@@ -1177,3 +1068,93 @@ class MainWindow(QMainWindow):
             logger.info("Pivot table updated with data from rule editor.")
         else:
             logger.warning("Received pivot data update from rule editor, but pivot tab does not exist.")
+
+    def _show_rule_editor_tab(self):
+        """Creates or shows the Rule Manager tab."""
+        if self.rules_manager_tab is None:
+            try:
+                logger.info("Creating Rule Manager tab.")
+                self.rules_manager_tab = RulesManagerWidget(self) # Pass self as parent
+                # Connect signals
+                self.rules_manager_tab.unsaved_changes_changed.connect(self._update_window_title)
+                # Add other necessary signal connections here
+
+                tab_index = self.tab_widget.addTab(self.rules_manager_tab, "Rule Manager") # Corrected: self.tabs -> self.tab_widget
+                logger.info(f"Rule Manager tab created at index {tab_index}.")
+                # Rules are now loaded externally via set_and_load_rules, not here.
+            except Exception as e:
+                logger.error(f"Failed to create Rule Manager tab: {e}", exc_info=True)
+                QMessageBox.critical(self, "Error", f"Could not create the Rule Manager tab: {e}")
+                self.rules_manager_tab = None # Ensure it's None if creation failed
+                return # Stop here if creation failed
+
+        # Switch to the tab if it exists (even if just created)
+        if self.rules_manager_tab:
+            self.tab_widget.setCurrentWidget(self.rules_manager_tab) # Corrected: self.tabs -> self.tab_widget
+            logger.debug("Switched to Rule Manager tab.")
+        else:
+            logger.warning("Attempted to switch to Rule Manager tab, but it's None.")
+
+    def _check_unsaved_changes(self):
+        """Checks all open tabs for unsaved changes and updates the window title."""
+        has_changes = False
+        # Iterate through all widgets in the tab widget
+        for i in range(self.tab_widget.count()):
+            widget = self.tab_widget.widget(i)
+            if hasattr(widget, 'has_unsaved_changes') and widget.has_unsaved_changes():
+                has_changes = True
+                break # Found unsaved changes, no need to check further
+        
+        # Update window title if unsaved changes exist
+        base_title = "Altium Rule Generator"
+        if has_changes:
+            self.setWindowTitle(f"{base_title}*")
+        else:
+            self.setWindowTitle(base_title)
+        
+        # Emit signal if needed (though direct title update might be sufficient)
+        # self.unsaved_changes_changed.emit(has_changes)
+        logger.debug(f"Unsaved changes status checked: {has_changes}")
+
+    def closeEvent(self, event):
+        """Handle the window close event."""
+        # Check for unsaved changes before closing
+        unsaved = False
+        if self.rules_manager_tab and self.rules_manager_tab.has_unsaved_changes():
+            unsaved = True
+        # Add checks for other tabs
+
+        if unsaved:
+            reply = QMessageBox.question(self,
+                                         "Unsaved Changes",
+                                         "There are unsaved changes. Do you want to save before exiting?",
+                                         QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel,
+                                         QMessageBox.Cancel)
+
+            if reply == QMessageBox.Save:
+                # Attempt to save rules (assuming only rule manager needs saving)
+                if self.rules_manager_tab:
+                    # Ideally, trigger the save action of the relevant widget
+                    # For now, let's assume _save_rules shows a dialog
+                    self.rules_manager_tab._save_rules() # This might show its own dialog
+                    # Re-check if changes were actually saved
+                    if self.rules_manager_tab.has_unsaved_changes():
+                        event.ignore() # Ignore close event if save failed or was cancelled
+                        return
+                    else:
+                        event.accept() # Accept close event if save was successful
+                else:
+                    event.accept() # No rule manager tab to save
+            elif reply == QMessageBox.Discard:
+                event.accept() # Discard changes and close
+            else: # Cancel
+                event.ignore() # Ignore the close event
+                return
+        else:
+            event.accept() # No unsaved changes, close normally
+
+        # Save window state if closing is accepted
+        if event.isAccepted():
+            self._save_geometry() # Renamed from _save_settings
+            logger.info("Application closing.")
+            super().closeEvent(event)

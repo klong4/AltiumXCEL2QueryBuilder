@@ -3,959 +3,361 @@
 
 """
 Rule Editor Widget
-================
+==================
 
-Custom widget for displaying and editing Altium rule properties.
+Widget for viewing, editing, adding, and deleting Altium design rules.
 """
 
 import logging
-from typing import Dict, List, Optional, Union, Tuple
-
+from typing import Dict, List, Optional, Union, Tuple # Add List
 from PyQt5.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QLabel,
-    QLineEdit, QComboBox, QSpinBox, QDoubleSpinBox, QCheckBox,
-    QGroupBox, QPushButton, QTableView, QHeaderView, QMessageBox
+    QWidget, QVBoxLayout, QHBoxLayout, QTreeView, QPushButton, QMessageBox,
+    QAbstractItemView, QMenu, QListWidget, QListWidgetItem, QGroupBox, QLabel
 )
-from PyQt5.QtCore import Qt, QAbstractTableModel, QModelIndex, QVariant, pyqtSignal
-from PyQt5.QtGui import QColor, QBrush
+from PyQt5.QtCore import Qt, pyqtSignal, QAbstractItemModel, QModelIndex, QVariant
+from PyQt5.QtGui import QStandardItemModel, QStandardItem
 
-from models.rule_model import (
-    UnitType, RuleType, RuleScope, BaseRule,
-    ClearanceRule, ShortCircuitRule, UnRoutedNetRule,
-    # Add other specific rule types if they exist, e.g.:
-    # PowerPlaneConnectRule, PolygonConnectRule, etc.
-)
+# Assuming RuleManager and BaseRule are defined in models.rule_model
+from models.rule_model import BaseRule, RuleType, UnitType, RuleScope, ClearanceRule # Import BaseRule etc.
 
 logger = logging.getLogger(__name__)
 
-class RuleEditorWidget(QWidget):
-    """Base widget for editing rules"""
-    
-    rule_changed = pyqtSignal(BaseRule)
-    
-    def __init__(self, parent=None):
-        """Initialize rule editor widget"""
-        super().__init__(parent)
-        self.rule = None
-        
-        # Initialize UI
-        self._init_ui()
-        
-        logger.info("Rule editor widget initialized")
-    
-    def _init_ui(self):
-        """Initialize the UI components"""
-        # Main layout
-        self.main_layout = QVBoxLayout()
-        self.setLayout(self.main_layout)
-        
-        # Common properties group
-        common_group = QGroupBox("Rule Properties")
-        common_layout = QFormLayout()
-        common_group.setLayout(common_layout)
-        
-        # Rule name
-        self.name_edit = QLineEdit()
-        self.name_edit.textChanged.connect(self._on_property_changed)
-        common_layout.addRow("Rule Name:", self.name_edit)
-        
-        # Rule enabled
-        self.enabled_checkbox = QCheckBox("Enabled")
-        self.enabled_checkbox.setChecked(True)
-        self.enabled_checkbox.stateChanged.connect(self._on_property_changed)
-        common_layout.addRow("", self.enabled_checkbox)
-        
-        # Rule priority
-        self.priority_spin = QSpinBox()
-        self.priority_spin.setRange(1, 100)
-        self.priority_spin.setValue(1)
-        self.priority_spin.valueChanged.connect(self._on_property_changed)
-        common_layout.addRow("Priority:", self.priority_spin)
-        
-        # Rule comment
-        self.comment_edit = QLineEdit()
-        self.comment_edit.textChanged.connect(self._on_property_changed)
-        common_layout.addRow("Comment:", self.comment_edit)
-
-        self.main_layout.addWidget(common_group)
-
-        # GroupBox for rule-specific properties (layout cleared/populated dynamically)
-        self.rule_specific_group = QGroupBox("Rule Specific Properties")
-        self.rule_specific_layout = QFormLayout() # Use QFormLayout for consistency
-        self.rule_specific_group.setLayout(self.rule_specific_layout)
-        self.main_layout.addWidget(self.rule_specific_group)
-
-        # Add stretch to push widgets to the top
-        self.main_layout.addStretch(1)
-
-    def set_rule(self, rule: BaseRule):
-        """Set the rule to edit"""
-        self.rule = rule
-        
-        if rule:
-            # Update common properties
-            self.name_edit.setText(rule.name)
-            self.enabled_checkbox.setChecked(rule.enabled)
-            self.priority_spin.setValue(rule.priority)
-            self.comment_edit.setText(rule.comment)
-            
-            # Update rule-specific properties
-            self._update_rule_specific_properties()
-
-            # Ensure the specific properties group is visible AFTER updating
-            self.rule_specific_group.setVisible(True) # <-- Add this line
-
-            logger.info(f"Rule set in editor: {rule.name} ({rule.rule_type.value})")
-        else:
-            # Clear fields if no rule is selected
-            self.name_edit.clear()
-            self.enabled_checkbox.setChecked(True)
-            self.priority_spin.setValue(1)
-            self.comment_edit.clear()
-            self._clear_layout(self.rule_specific_layout)
-            self.rule_specific_group.setVisible(False)
-
-    def _clear_layout(self, layout):
-        """Removes all widgets from a layout."""
-        if layout is not None:
-            while layout.count():
-                item = layout.takeAt(0)
-                widget = item.widget()
-                if widget is not None:
-                    widget.deleteLater()
-                else:
-                    # Recursively clear nested layouts if necessary
-                    sub_layout = item.layout()
-                    if sub_layout is not None:
-                        self._clear_layout(sub_layout)
-
-    def _update_rule_specific_properties(self):
-        """Dynamically populate the rule-specific properties section based on rule type.
-        NOTE: This is primarily a fallback for unknown rule types where a specific
-        editor subclass wasn't created. Subclasses override this method.
-        """
-        # If this instance is actually a specific subclass, let its override handle this.
-        if type(self) is not RuleEditorWidget:
-            return
-
-        self._clear_layout(self.rule_specific_layout)
-        self.rule_specific_group.setVisible(True)
-
-        if not self.rule:
-            self.rule_specific_group.setVisible(False)
-            return
-
-        # --- Clearance Rule --- 
-        if isinstance(self.rule, ClearanceRule):
-            self.rule_specific_group.setTitle("Clearance Rule Properties")
-
-            # Min Clearance
-            self.min_clearance_spin = QDoubleSpinBox()
-            self.min_clearance_spin.setSuffix(f" {self.rule.unit.value}")
-            self.min_clearance_spin.setDecimals(3) # Adjust precision as needed
-            self.min_clearance_spin.setRange(0, 10000) # Set appropriate range
-            self.min_clearance_spin.setValue(self.rule.min_clearance)
-            self.min_clearance_spin.valueChanged.connect(self._on_property_changed)
-            self.rule_specific_layout.addRow("Minimum Clearance:", self.min_clearance_spin)
-
-            # Scope 1
-            self.scope1_combo = QComboBox()
-            self.scope1_combo.addItems([scope.value for scope in RuleScope])
-            self.scope1_combo.setCurrentText(self.rule.scope1.value)
-            self.scope1_combo.currentTextChanged.connect(self._on_property_changed)
-            self.rule_specific_layout.addRow("Scope 1:", self.scope1_combo)
-
-            # Scope 2
-            self.scope2_combo = QComboBox()
-            self.scope2_combo.addItems([scope.value for scope in RuleScope])
-            self.scope2_combo.setCurrentText(self.rule.scope2.value)
-            self.scope2_combo.currentTextChanged.connect(self._on_property_changed)
-            self.rule_specific_layout.addRow("Scope 2:", self.scope2_combo)
-
-        # --- Short Circuit Rule --- 
-        elif isinstance(self.rule, ShortCircuitRule):
-            self.rule_specific_group.setTitle("Short Circuit Rule Properties")
-            # Short circuit rules often just need scope (handled by common props?) or might have specific flags
-            # Add specific widgets if ShortCircuitRule has unique properties
-            # Example: self.allow_short_circuit_checkbox = QCheckBox("Allow Short Circuit")
-            # self.allow_short_circuit_checkbox.setChecked(self.rule.allow_short_circuit) # Assuming property exists
-            # self.allow_short_circuit_checkbox.stateChanged.connect(self._on_property_changed)
-            # self.rule_specific_layout.addRow("Options:", self.allow_short_circuit_checkbox)
-            pass # No specific properties defined in model yet
-
-        # --- Un-Routed Net Rule --- 
-        elif isinstance(self.rule, UnRoutedNetRule):
-            self.rule_specific_group.setTitle("Un-Routed Net Rule Properties")
-            # Un-routed net rules typically just need scope (handled by common props?)
-            # Add specific widgets if UnRoutedNetRule has unique properties
-            pass # No specific properties defined in model yet
-
-        # --- Add other rule types here --- 
-        # elif isinstance(self.rule, PowerPlaneConnectRule):
-        #    # ... add widgets for PowerPlaneConnectRule ...
-        # elif isinstance(self.rule, PolygonConnectRule):
-        #    # ... add widgets for PolygonConnectRule ...
-
-        else:
-            # Handle unknown or base rule type (maybe show nothing specific)
-            self.rule_specific_group.setTitle("Rule Specific Properties (N/A)")
-            self.rule_specific_group.setVisible(False)
-
-    def _on_property_changed(self, value=None):
-        """Update the internal rule object when a property changes in the UI."""
-        if not self.rule:
-            return
-
-        sender = self.sender()
-
-        try:
-            # Update common properties
-            if sender == self.name_edit:
-                self.rule.name = self.name_edit.text()
-            elif sender == self.enabled_checkbox:
-                self.rule.enabled = self.enabled_checkbox.isChecked()
-            elif sender == self.priority_spin:
-                self.rule.priority = self.priority_spin.value()
-            elif sender == self.comment_edit:
-                self.rule.comment = self.comment_edit.text()
-
-            # Emit signal that the rule has changed
-            self.rule_changed.emit(self.rule)
-            logger.debug(f"Rule property changed (Common): {self.rule.name}")
-
-        except Exception as e:
-            logger.error(f"Error updating rule property: {e}", exc_info=True)
-            # Optionally show an error to the user
-            # QMessageBox.warning(self, "Error", f"Failed to update property: {e}")
-
-
-class ClearanceRuleEditor(RuleEditorWidget):
-    """Widget for editing clearance rules"""
-    
-    def __init__(self, parent=None):
-        """Initialize clearance rule editor widget"""
-        super().__init__(parent)
-        
-        # Initialize rule-specific UI components
-        self._init_rule_specific_ui()
-    
-    def _init_rule_specific_ui(self):
-        """Initialize the rule-specific UI components"""
-        # Clear existing components
-        while self.rule_specific_layout.count():
-            item = self.rule_specific_layout.takeAt(0)
-            if item.widget():
-                item.widget().deleteLater()
-        
-        # Update group title
-        self.rule_specific_group.setTitle("Clearance Rule Properties")
-        
-        # Minimum clearance
-        self.clearance_spin = QDoubleSpinBox()
-        self.clearance_spin.setRange(0.001, 10000.0)
-        self.clearance_spin.setValue(10.0)
-        self.clearance_spin.setDecimals(3)
-        self.clearance_spin.valueChanged.connect(self._on_property_changed)
-        self.rule_specific_layout.addRow("Minimum Clearance:", self.clearance_spin)
-        
-        # Unit
-        self.unit_combo = QComboBox()
-        self.unit_combo.addItem("mil", UnitType.MIL.value)
-        self.unit_combo.addItem("mm", UnitType.MM.value)
-        self.unit_combo.addItem("inch", UnitType.INCH.value)
-        self.unit_combo.currentIndexChanged.connect(self._on_property_changed)
-        self.rule_specific_layout.addRow("Unit:", self.unit_combo)
-        
-        # Source scope
-        self.source_scope_group = QGroupBox("Source Scope")
-        source_scope_layout = QFormLayout()
-        self.source_scope_group.setLayout(source_scope_layout)
-        
-        self.source_scope_combo = QComboBox()
-        self.source_scope_combo.addItem("All", "All")
-        self.source_scope_combo.addItem("Net Class", "NetClass")
-        self.source_scope_combo.addItem("Net Classes", "NetClasses")
-        self.source_scope_combo.addItem("Custom", "Custom")
-        self.source_scope_combo.currentIndexChanged.connect(self._on_source_scope_type_changed)
-        source_scope_layout.addRow("Type:", self.source_scope_combo)
-        
-        self.source_scope_edit = QLineEdit()
-        self.source_scope_edit.setEnabled(False)
-        self.source_scope_edit.textChanged.connect(self._on_property_changed)
-        source_scope_layout.addRow("Items:", self.source_scope_edit)
-        
-        self.rule_specific_layout.addRow("", self.source_scope_group)
-        
-        # Target scope
-        self.target_scope_group = QGroupBox("Target Scope")
-        target_scope_layout = QFormLayout()
-        self.target_scope_group.setLayout(target_scope_layout)
-        
-        self.target_scope_combo = QComboBox()
-        self.target_scope_combo.addItem("All", "All")
-        self.target_scope_combo.addItem("Net Class", "NetClass")
-        self.target_scope_combo.addItem("Net Classes", "NetClasses")
-        self.target_scope_combo.addItem("Custom", "Custom")
-        self.target_scope_combo.currentIndexChanged.connect(self._on_target_scope_type_changed)
-        target_scope_layout.addRow("Type:", self.target_scope_combo)
-        
-        self.target_scope_edit = QLineEdit()
-        self.target_scope_edit.setEnabled(False)
-        self.target_scope_edit.textChanged.connect(self._on_property_changed)
-        target_scope_layout.addRow("Items:", self.target_scope_edit)
-        
-        self.rule_specific_layout.addRow("", self.target_scope_group)
-    
-    def _update_rule_specific_properties(self):
-        """Update UI with rule-specific properties"""
-        if not isinstance(self.rule, ClearanceRule):
-            logger.error(f"Expected ClearanceRule, got {type(self.rule).__name__}")
-            return
-        
-        # Update minimum clearance
-        self.clearance_spin.setValue(self.rule.min_clearance)
-        
-        # Update unit
-        index = self.unit_combo.findData(self.rule.unit.value)
-        if index >= 0:
-            self.unit_combo.setCurrentIndex(index)
-        
-        # Update source scope
-        source_scope_type = self.rule.source_scope.scope_type
-        source_index = self.source_scope_combo.findData(source_scope_type)
-        if source_index >= 0:
-            self.source_scope_combo.setCurrentIndex(source_index)
-        
-        if source_scope_type != "All":
-            self.source_scope_edit.setEnabled(True)
-            self.source_scope_edit.setText(";".join(self.rule.source_scope.items))
-        else:
-            self.source_scope_edit.setEnabled(False)
-            self.source_scope_edit.clear()
-        
-        # Update target scope
-        target_scope_type = self.rule.target_scope.scope_type
-        target_index = self.target_scope_combo.findData(target_scope_type)
-        if target_index >= 0:
-            self.target_scope_combo.setCurrentIndex(target_index)
-        
-        if target_scope_type != "All":
-            self.target_scope_edit.setEnabled(True)
-            self.target_scope_edit.setText(";".join(self.rule.target_scope.items))
-        else:
-            self.target_scope_edit.setEnabled(False)
-            self.target_scope_edit.clear()
-
-    def _on_property_changed(self, value=None):
-        """Handle property changes from UI elements."""
-        if not self.rule or not isinstance(self.rule, ClearanceRule):
-            # Let base class handle if rule type is wrong or null
-            super()._on_property_changed(value)
-            return
-
-        sender = self.sender()
-        rule_modified = False
-
-        # Handle specific properties
-        if sender == self.clearance_spin:
-            if self.rule.min_clearance != self.clearance_spin.value():
-                self.rule.min_clearance = self.clearance_spin.value()
-                rule_modified = True
-        elif sender == self.unit_combo:
-            unit_val = self.unit_combo.currentData()
-            if self.rule.unit.value != unit_val:
-                try:
-                    self.rule.unit = UnitType(unit_val)
-                    rule_modified = True
-                except ValueError:
-                    logger.error(f"Invalid unit selected: {unit_val}")
-        elif sender == self.source_scope_combo or sender == self.source_scope_edit:
-            scope_type = self.source_scope_combo.currentData()
-            items = []
-            if scope_type != "All":
-                items_str = self.source_scope_edit.text()
-                items = items_str.split(";") if items_str else []
-            new_scope = RuleScope(scope_type, items)
-            # Use __dict__ comparison for RuleScope if __eq__ is not defined
-            if self.rule.source_scope.__dict__ != new_scope.__dict__:
-                self.rule.source_scope = new_scope
-                rule_modified = True
-        elif sender == self.target_scope_combo or sender == self.target_scope_edit:
-            scope_type = self.target_scope_combo.currentData()
-            items = []
-            if scope_type != "All":
-                items_str = self.target_scope_edit.text()
-                items = items_str.split(";") if items_str else []
-            new_scope = RuleScope(scope_type, items)
-            # Use __dict__ comparison for RuleScope if __eq__ is not defined
-            if self.rule.target_scope.__dict__ != new_scope.__dict__:
-                self.rule.target_scope = new_scope
-                rule_modified = True
-        else:
-            # Not a specific property, let the base class handle common properties
-            super()._on_property_changed(value)
-            return # Base class emits signal
-
-        # If a specific property was modified, emit the signal
-        if rule_modified:
-            logger.debug(f"Rule property changed (Clearance Specific): {self.rule.name}")
-            self.rule_changed.emit(self.rule)
-
-    def _on_source_scope_type_changed(self, index):
-        """Handle source scope type changes"""
-        scope_type = self.source_scope_combo.currentData()
-        
-        if scope_type == "All":
-            self.source_scope_edit.setEnabled(False)
-            self.source_scope_edit.clear()
-        else:
-            self.source_scope_edit.setEnabled(True)
-        
-        self._on_property_changed()
-    
-    def _on_target_scope_type_changed(self, index):
-        """Handle target scope type changes"""
-        scope_type = self.target_scope_combo.currentData()
-        
-        if scope_type == "All":
-            self.target_scope_edit.setEnabled(False)
-            self.target_scope_edit.clear()
-        else:
-            self.target_scope_edit.setEnabled(True)
-        
-        self._on_property_changed()
-
-
-class ShortCircuitRuleEditor(RuleEditorWidget):
-    """Widget for editing short circuit rules"""
-    
-    def __init__(self, parent=None):
-        """Initialize short circuit rule editor widget"""
-        super().__init__(parent)
-        
-        # Initialize rule-specific UI components
-        self._init_rule_specific_ui()
-    
-    def _init_rule_specific_ui(self):
-        """Initialize the rule-specific UI components"""
-        # Clear existing components
-        while self.rule_specific_layout.count():
-            item = self.rule_specific_layout.takeAt(0)
-            if item.widget():
-                item.widget().deleteLater()
-        
-        # Update group title
-        self.rule_specific_group.setTitle("Short Circuit Rule Properties")
-        
-        # Scope
-        self.scope_group = QGroupBox("Scope")
-        scope_layout = QFormLayout()
-        self.scope_group.setLayout(scope_layout)
-        
-        self.scope_combo = QComboBox()
-        self.scope_combo.addItem("All", "All")
-        self.scope_combo.addItem("Net Class", "NetClass")
-        self.scope_combo.addItem("Net Classes", "NetClasses")
-        self.scope_combo.addItem("Custom", "Custom")
-        self.scope_combo.currentIndexChanged.connect(self._on_scope_type_changed)
-        scope_layout.addRow("Type:", self.scope_combo)
-        
-        self.scope_edit = QLineEdit()
-        self.scope_edit.setEnabled(False)
-        self.scope_edit.textChanged.connect(self._on_property_changed)
-        scope_layout.addRow("Items:", self.scope_edit)
-        
-        self.rule_specific_layout.addRow("", self.scope_group)
-    
-    def _update_rule_specific_properties(self):
-        """Update UI with rule-specific properties"""
-        if not isinstance(self.rule, ShortCircuitRule):
-            logger.error(f"Expected ShortCircuitRule, got {type(self.rule).__name__}")
-            return
-        
-        # Update scope
-        scope_type = self.rule.scope.scope_type
-        scope_index = self.scope_combo.findData(scope_type)
-        if scope_index >= 0:
-            self.scope_combo.setCurrentIndex(scope_index)
-        
-        if scope_type != "All":
-            self.scope_edit.setEnabled(True)
-            self.scope_edit.setText(";".join(self.rule.scope.items))
-        else:
-            self.scope_edit.setEnabled(False)
-            self.scope_edit.clear()
-    
-    def _on_property_changed(self, value=None):
-        """Handle property changes from UI elements."""
-        if not self.rule or not isinstance(self.rule, ShortCircuitRule):
-             # Let base class handle if rule type is wrong or null
-            super()._on_property_changed(value)
-            return
-
-        sender = self.sender()
-        rule_modified = False
-
-        # Handle specific properties (Scope)
-        if sender == self.scope_combo or sender == self.scope_edit:
-            scope_type = self.scope_combo.currentData()
-            items = []
-            if scope_type != "All":
-                items_str = self.scope_edit.text()
-                items = items_str.split(";") if items_str else []
-            new_scope = RuleScope(scope_type, items)
-            # Use __dict__ comparison for RuleScope if __eq__ is not defined
-            if self.rule.scope.__dict__ != new_scope.__dict__:
-                self.rule.scope = new_scope
-                rule_modified = True
-        else:
-            # Not a specific property, let the base class handle common properties
-            super()._on_property_changed(value)
-            return # Base class emits signal
-
-        # If a specific property was modified, emit the signal
-        if rule_modified:
-            logger.debug(f"Rule property changed (ShortCircuit Specific): {self.rule.name}")
-            self.rule_changed.emit(self.rule)
-
-    def _on_scope_type_changed(self, index):
-        """Handle scope type changes"""
-        scope_type = self.scope_combo.currentData()
-        
-        if scope_type == "All":
-            self.scope_edit.setEnabled(False)
-            self.scope_edit.clear()
-        else:
-            self.scope_edit.setEnabled(True)
-        
-        self._on_property_changed()
-
-
-class UnRoutedNetRuleEditor(RuleEditorWidget):
-    """Widget for editing unrouted net rules"""
-    
-    def __init__(self, parent=None):
-        """Initialize unrouted net rule editor widget"""
-        super().__init__(parent)
-        
-        # Initialize rule-specific UI components
-        self._init_rule_specific_ui()
-    
-    def _init_rule_specific_ui(self):
-        """Initialize the rule-specific UI components"""
-        # Clear existing components
-        while self.rule_specific_layout.count():
-            item = self.rule_specific_layout.takeAt(0)
-            if item.widget():
-                item.widget().deleteLater()
-        
-        # Update group title
-        self.rule_specific_group.setTitle("Unrouted Net Rule Properties")
-        
-        # Scope
-        self.scope_group = QGroupBox("Scope")
-        scope_layout = QFormLayout()
-        self.scope_group.setLayout(scope_layout)
-        
-        self.scope_combo = QComboBox()
-        self.scope_combo.addItem("All", "All")
-        self.scope_combo.addItem("Net Class", "NetClass")
-        self.scope_combo.addItem("Net Classes", "NetClasses")
-        self.scope_combo.addItem("Custom", "Custom")
-        self.scope_combo.currentIndexChanged.connect(self._on_scope_type_changed)
-        scope_layout.addRow("Type:", self.scope_combo)
-        
-        self.scope_edit = QLineEdit()
-        self.scope_edit.setEnabled(False)
-        self.scope_edit.textChanged.connect(self._on_property_changed)
-        scope_layout.addRow("Items:", self.scope_edit)
-        
-        self.rule_specific_layout.addRow("", self.scope_group)
-    
-    def _update_rule_specific_properties(self):
-        """Update UI with rule-specific properties"""
-        if not isinstance(self.rule, UnRoutedNetRule):
-            logger.error(f"Expected UnRoutedNetRule, got {type(self.rule).__name__}")
-            return
-        
-        # Update scope
-        scope_type = self.rule.scope.scope_type
-        scope_index = self.scope_combo.findData(scope_type)
-        if scope_index >= 0:
-            self.scope_combo.setCurrentIndex(scope_index)
-        
-        if scope_type != "All":
-            self.scope_edit.setEnabled(True)
-            self.scope_edit.setText(";".join(self.rule.scope.items))
-        else:
-            self.scope_edit.setEnabled(False)
-            self.scope_edit.clear()
-
-    def _on_property_changed(self, value=None):
-        """Handle property changes from UI elements."""
-        if not self.rule or not isinstance(self.rule, UnRoutedNetRule):
-             # Let base class handle if rule type is wrong or null
-            super()._on_property_changed(value)
-            return
-
-        sender = self.sender()
-        rule_modified = False
-
-        # Handle specific properties (Scope)
-        if sender == self.scope_combo or sender == self.scope_edit:
-            scope_type = self.scope_combo.currentData()
-            items = []
-            if scope_type != "All":
-                items_str = self.scope_edit.text()
-                items = items_str.split(";") if items_str else []
-            new_scope = RuleScope(scope_type, items)
-            # Use __dict__ comparison for RuleScope if __eq__ is not defined
-            if self.rule.scope.__dict__ != new_scope.__dict__:
-                self.rule.scope = new_scope
-                rule_modified = True
-        else:
-            # Not a specific property, let the base class handle common properties
-            super()._on_property_changed(value)
-            return # Base class emits signal
-
-        # If a specific property was modified, emit the signal
-        if rule_modified:
-            logger.debug(f"Rule property changed (UnRoutedNet Specific): {self.rule.name}")
-            self.rule_changed.emit(self.rule)
-
-    def _on_scope_type_changed(self, index):
-        """Handle scope type changes"""
-        scope_type = self.scope_combo.currentData()
-        
-        if scope_type == "All":
-            self.scope_edit.setEnabled(False)
-            self.scope_edit.clear()
-        else:
-            self.scope_edit.setEnabled(True)
-        
-        self._on_property_changed()
-
-
-class RuleTableModel(QAbstractTableModel):
-    """Model for displaying rules in a table"""
-    
-    HEADERS = ["Name", "Type", "Enabled", "Priority"]
-
-    def __init__(self, parent=None):
-        """Initialize rule table model"""
-        super().__init__(parent)
-        self._rules: List[BaseRule] = []
-        logger.debug("RuleTableModel initialized")
-    
-    def set_rules(self, rules: List[BaseRule]):
-        """Set the list of rules for the model"""
-        self.beginResetModel()
-        self._rules = sorted(rules, key=lambda r: r.priority) # Keep sorted by priority maybe? Or name?
-        self.endResetModel()
-        logger.debug(f"Model updated with {len(self._rules)} rules.")
-    
-    def rowCount(self, parent=QModelIndex()) -> int:
-        """Return number of rules"""
-        return len(self._rules) if not parent.isValid() else 0
-    
-    def columnCount(self, parent=QModelIndex()) -> int:
-        """Return number of columns"""
-        return len(self.HEADERS) if not parent.isValid() else 0
-    
-    def data(self, index: QModelIndex, role: int = Qt.DisplayRole) -> QVariant:
-        """Return data for a given index and role"""
-        if not index.isValid() or not (0 <= index.row() < len(self._rules)):
-            return QVariant()
-
-        rule = self._rules[index.row()]
-        column = index.column()
-
-        if role == Qt.DisplayRole:
-            if column == 0: # Name
-                return QVariant(rule.name)
-            elif column == 1: # Type
-                return QVariant(rule.rule_type.value) # Display enum value (string)
-            elif column == 2: # Enabled
-                return QVariant("Yes" if rule.enabled else "No")
-            elif column == 3: # Priority
-                return QVariant(rule.priority)
-        elif role == Qt.ToolTipRole:
-             return QVariant(f"Comment: {rule.comment}" if rule.comment else "No comment")
-        # Add other roles like Qt.BackgroundRole if needed
-
-        return QVariant() # Default return
-    
-    def headerData(self, section: int, orientation: Qt.Orientation, role: int = Qt.DisplayRole) -> QVariant:
-        """Return header data"""
-        if orientation == Qt.Horizontal and role == Qt.DisplayRole:
-            if 0 <= section < len(self.HEADERS):
-                return QVariant(self.HEADERS[section])
-        return QVariant() # Default return
-
-    def get_rule_at_row(self, row: int) -> Optional[BaseRule]:
-        """Get the rule object corresponding to a specific row."""
-        if 0 <= row < len(self._rules):
-            return self._rules[row]
-        return None
-
-
 class RulesManagerWidget(QWidget):
-    """Widget for managing multiple rules"""
-    
-    rules_changed = pyqtSignal()
-    pivot_data_updated = pyqtSignal(object)  # Emits ExcelPivotData
-    
+    """Widget to manage (view, edit, add, delete) Altium rules."""
+
+    # Signals
+    rules_updated = pyqtSignal(list) # Emits the current list of rules when changed
+    unsaved_changes_changed = pyqtSignal(bool) # Emits True if there are unsaved changes
+
     def __init__(self, parent=None):
         """Initialize rules manager widget"""
         super().__init__(parent)
-        self.rule_manager = None
-        self.current_editor_widget = None # To hold the active editor
-        self._init_ui()
-        logger.info("Rules manager widget initialized")
+        # self._rule_manager = parent # Removed: Manage rules internally
+        self._rules: List[BaseRule] = [] # Initialize internal rule list
+        self._unsaved_changes = False
 
-    def add_rules(self, new_rules: List[BaseRule]):
-        """Add new rules to the manager and update the view"""
-        if self.rule_manager:
-            for rule in new_rules:
-                self.rule_manager.add_rule(rule)
-            self.table_model.set_rules(self.rule_manager.get_all_rules())
-            self.rules_changed.emit() # Emit signal when rules are added
-            logger.info(f"Added {len(new_rules)} rules.")
-        else:
-            logger.warning("Rule manager not set. Cannot add rules.")
+        self._init_ui()
+        # self.load_rules() # Removed: Load rules explicitly via set_and_load_rules
 
     def _init_ui(self):
-        """Initialize the UI components"""
-        main_layout = QHBoxLayout()
-        self.setLayout(main_layout)
+        """Initialize the user interface."""
+        layout = QVBoxLayout(self)
 
-        # Left side: Rule list and buttons
-        left_panel = QWidget()
-        left_layout = QVBoxLayout()
-        left_panel.setLayout(left_layout)
+        # --- Rule View (Using QTreeView for potential hierarchy) ---
+        self.rules_list_widget = QListWidget()
+        self.rules_list_widget.setAlternatingRowColors(True)
+        self.rules_list_widget.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.rules_list_widget.setContextMenuPolicy(Qt.CustomContextMenu)
+        self.rules_list_widget.customContextMenuRequested.connect(self._show_context_menu)
+        layout.addWidget(self.rules_list_widget)
 
-        # Rule table view
-        self.table_view = QTableView()
-        self.table_model = RuleTableModel()
-        self.table_view.setModel(self.table_model)
-        self.table_view.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.table_view.setSelectionBehavior(QTableView.SelectRows)
-        self.table_view.setSelectionMode(QTableView.SingleSelection)
-        self.table_view.selectionModel().selectionChanged.connect(self._on_rule_selection_changed)
-        left_layout.addWidget(self.table_view)
-
-        # Buttons layout
+        # --- Action Buttons ---
         button_layout = QHBoxLayout()
         self.add_button = QPushButton("Add Rule")
-        self.add_button.clicked.connect(self._on_add_rule)
+        self.edit_button = QPushButton("Edit Rule")
         self.delete_button = QPushButton("Delete Rule")
-        self.delete_button.clicked.connect(self._on_delete_rule)
-        self.update_pivot_button = QPushButton("Update Pivot Table")
-        self.update_pivot_button.clicked.connect(self._on_update_pivot)
+        self.clear_button = QPushButton("Clear All Rules")
+        self.save_button = QPushButton("Save Rules")
+        self.export_button = QPushButton("Export Rules")
+
+        self.add_button.clicked.connect(self._add_rule)
+        self.edit_button.clicked.connect(self._edit_rule)
+        self.delete_button.clicked.connect(self._delete_rule)
+        self.clear_button.clicked.connect(self._clear_rules)
+        self.save_button.clicked.connect(self._save_rules)
+        self.export_button.clicked.connect(self._export_rules)
 
         button_layout.addWidget(self.add_button)
+        button_layout.addWidget(self.edit_button)
         button_layout.addWidget(self.delete_button)
+        button_layout.addWidget(self.clear_button)
+        button_layout.addWidget(self.save_button)
+        button_layout.addWidget(self.export_button)
         button_layout.addStretch()
-        button_layout.addWidget(self.update_pivot_button)
-        left_layout.addLayout(button_layout)
+        layout.addLayout(button_layout)
 
-        # Right side: Rule editor (placeholder layout)
-        self.editor_layout = QVBoxLayout() # Layout to hold the current editor
-        editor_container = QWidget()
-        editor_container.setLayout(self.editor_layout)
+        # Connect selection change to enable/disable buttons
+        self.rules_list_widget.selectionModel().selectionChanged.connect(self._update_button_states)
+        self._update_button_states() # Initial state
 
-        # Add panels to main layout
-        main_layout.addWidget(left_panel, 1) # Give list more space initially
-        main_layout.addWidget(editor_container, 1) # Editor takes equal space
+        # --- Rule Details ---
+        self.details_group = QGroupBox("Rule Details")
+        layout.addWidget(self.details_group)
+        self.details_layout = QVBoxLayout()
+        self.details_group.setLayout(self.details_layout)
 
-        # Initially, no editor is shown
-        self._show_editor(None)
+        # Connect selection change to load rule details
+        self.rules_list_widget.itemSelectionChanged.connect(self._on_selection_changed)
 
+    def _update_button_states(self):
+        """Enable/disable buttons based on selection state."""
+        has_selection = bool(self.rules_list_widget.selectedItems())
+        self.edit_button.setEnabled(has_selection)
+        self.delete_button.setEnabled(has_selection)
+        # Enable/disable other buttons based on selection or other criteria
+        self.clear_button.setEnabled(self.rules_list_widget.count() > 0)
+        self.save_button.setEnabled(self.rules_list_widget.count() > 0)
+        self.export_button.setEnabled(self.rules_list_widget.count() > 0)
 
-    def set_rule_manager(self, rule_manager):
-        """Set the rule manager instance"""
-        self.rule_manager = rule_manager
-        self.table_model.set_rules(self.rule_manager.get_all_rules())
-        logger.info("Rule manager set and table updated.")
+    def _show_context_menu(self, position):
+        """Show context menu for the rule list."""
+        # Placeholder: Implement context menu actions (e.g., Edit, Delete)
+        context_menu = QMenu(self)
+        edit_action = context_menu.addAction("Edit")
+        delete_action = context_menu.addAction("Delete")
+        # Add more actions as needed
 
-    def get_rule_manager(self):
-        """Get the rule manager instance"""
-        return self.rule_manager
+        action = context_menu.exec_(self.rules_list_widget.mapToGlobal(position))
 
-    def _show_editor(self, rule: Optional[BaseRule]):
-        """Creates or updates the editor widget for the given rule."""
-        # Remove the existing editor widget if it exists
-        if self.current_editor_widget:
-            self.editor_layout.removeWidget(self.current_editor_widget)
-            self.current_editor_widget.deleteLater()
-            self.current_editor_widget = None
+        if action == edit_action:
+            self._edit_rule()
+        elif action == delete_action:
+            self._delete_rule()
+        # Handle other actions
 
-        if rule:
-            # Create the appropriate editor for the rule type
-            try:
-                # Disconnect previous editor's signal if any (safety measure)
-                # This might not be strictly necessary if deleteLater works reliably
-                # if self.current_editor_widget:
-                #     try:
-                #         self.current_editor_widget.rule_changed.disconnect(self._on_rule_changed)
-                #     except TypeError: # Signal has no slots to disconnect
-                #         pass
-
-                self.current_editor_widget = create_rule_editor(rule.rule_type, self)
-                if self.current_editor_widget:
-                    self.current_editor_widget.set_rule(rule)
-                    self.current_editor_widget.rule_changed.connect(self._on_rule_changed)
-                    self.editor_layout.addWidget(self.current_editor_widget)
-                    logger.debug(f"Showing editor for rule: {rule.name}")
-                else:
-                    logger.warning(f"No specific editor found for rule type {rule.rule_type}. Cannot display editor.")
-                    # Optionally show a placeholder or message widget
-                    placeholder = QLabel(f"No editor available for rule type: {rule.rule_type.name}")
-                    placeholder.setAlignment(Qt.AlignCenter)
-                    self.current_editor_widget = placeholder # Assign placeholder to be removed later
-                    self.editor_layout.addWidget(self.current_editor_widget)
-
-            except Exception as e:
-                logger.error(f"Error creating/showing rule editor: {e}", exc_info=True)
-                QMessageBox.critical(self, "Error", f"Could not create editor for rule '{rule.name}':\\n{e}")
+    def set_and_load_rules(self, rules: List[BaseRule]):
+        """Set the internal rules list and load them into the list widget."""
+        self.rules_list_widget.clear()
+        if rules is not None:
+            logger.info(f"Loading {len(rules)} rules into the editor view.")
+            # Store the actual rule objects, making a copy
+            self._rules = list(rules)
+            for rule in self._rules:
+                item = QListWidgetItem(f"{rule.name} ({rule.rule_type.value})")
+                # Store the rule object with the item for later retrieval
+                item.setData(Qt.UserRole, rule)
+                self.rules_list_widget.addItem(item)
         else:
-            # Show a placeholder if no rule is selected
-            placeholder = QLabel("Select a rule to edit its properties.")
-            placeholder.setAlignment(Qt.AlignCenter)
-            self.current_editor_widget = placeholder # Assign placeholder to be removed later
-            self.editor_layout.addWidget(self.current_editor_widget)
-            logger.debug("No rule selected, showing placeholder.")
+            logger.warning("Received None or empty list, clearing rules view.")
+            self._rules = [] # Ensure _rules is an empty list
 
+        self._update_rule_details(None) # Clear details view
+        self._set_unsaved_changes(False) # Reset unsaved changes flag after loading
+        logger.debug(f"Rules loaded, unsaved changes set to {self._unsaved_changes}")
 
-    def _on_rule_selection_changed(self, selected, deselected):
-        """Handle rule selection changes in the table view"""
-        indexes = selected.indexes()
-        if indexes:
-            row = indexes[0].row()
-            selected_rule = self.table_model.get_rule_at_row(row) # Assuming this method exists in RuleTableModel
-            if selected_rule:
-                logger.info(f"Rule selected: {selected_rule.name}")
-                self._show_editor(selected_rule)
-            else:
-                logger.warning(f"Could not retrieve rule at selected row {row}.")
-                self._show_editor(None)
+    def _on_selection_changed(self):
+        """Handle selection changes in the rules list."""
+        selected_items = self.rules_list_widget.selectedItems()
+        if selected_items:
+            # Get the rule object stored in the item's data
+            selected_rule = selected_items[0].data(Qt.UserRole)
+            self._update_rule_details(selected_rule)
         else:
-            # No selection
-            logger.info("Rule selection cleared.")
-            self._show_editor(None)
+            self._update_rule_details(None)
 
-    def _on_add_rule(self):
-        """Handle add rule button click"""
-        # Example: Add a default ClearanceRule
-        # In a real app, you might show a dialog to choose rule type and initial name
-        if self.rule_manager:
-            default_rule = ClearanceRule(name="New Clearance Rule")
-            self.rule_manager.add_rule(default_rule)
-            self.table_model.set_rules(self.rule_manager.get_all_rules()) # Refresh model
-            
-            # Select the newly added rule in the table
-            new_row_index = self.table_model.rowCount() - 1
-            if new_row_index >= 0:
-                qt_index = self.table_model.index(new_row_index, 0)
-                self.table_view.setCurrentIndex(qt_index)
-                # Selection change should trigger _on_rule_selection_changed and show editor
+    def _update_rule_details(self, rule: Optional[BaseRule]):
+        """Update the details view with the selected rule's information."""
+        # Clear previous widgets in the details layout
+        for i in reversed(range(self.details_layout.count())):
+            widget = self.details_layout.itemAt(i).widget()
+            if widget is not None:
+                widget.deleteLater()
 
-            self.rules_changed.emit() # Emit signal
-            logger.info(f"Added new rule: {default_rule.name}")
-        else:
-            QMessageBox.warning(self, "Warning", "Rule manager not available.")
-            logger.warning("Cannot add rule: Rule manager not set.")
-
-    def _on_delete_rule(self):
-        """Handle delete rule button click"""
-        selected_indexes = self.table_view.selectionModel().selectedRows()
-        if not selected_indexes:
-            QMessageBox.information(self, "Delete Rule", "Please select a rule to delete.")
+        if rule is None:
+            self.details_layout.addWidget(QLabel("Select a rule to view details."))
             return
 
-        row = selected_indexes[0].row()
-        rule_to_delete = self.table_model.get_rule_at_row(row) # Assuming this method exists
-
-        if rule_to_delete and self.rule_manager:
-            reply = QMessageBox.question(self, "Confirm Delete",
-                                         f"Are you sure you want to delete the rule '{rule_to_delete.name}'?",
-                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
-
-            if reply == QMessageBox.Yes:
-                self.rule_manager.delete_rule(rule_to_delete.name)
-                self.table_model.set_rules(self.rule_manager.get_all_rules()) # Refresh model
-                self._show_editor(None) # Clear editor after deletion
-                self.rules_changed.emit() # Emit signal
-                logger.info(f"Deleted rule: {rule_to_delete.name}")
-        elif not self.rule_manager:
-             QMessageBox.warning(self, "Warning", "Rule manager not available.")
-             logger.warning("Cannot delete rule: Rule manager not set.")
+        # --- General Rule Properties ---
+        self.details_layout.addWidget(QLabel(f"Name: {rule.name}"))
+        self.details_layout.addWidget(QLabel(f"Type: {rule.rule_type.name}"))
+        # Display scope based on rule type
+        if isinstance(rule, ClearanceRule):
+            self.details_layout.addWidget(QLabel(f"Source Scope: {rule.source_scope.to_query_string()}"))
+            self.details_layout.addWidget(QLabel(f"Target Scope: {rule.target_scope.to_query_string()}"))
+            self.details_layout.addWidget(QLabel(f"Min Clearance: {rule.min_clearance} {rule.unit.value}"))
+        elif isinstance(rule, SingleScopeRule):
+            self.details_layout.addWidget(QLabel(f"Scope: {rule.scope.to_query_string()}"))
         else:
-            logger.error(f"Could not retrieve rule at row {row} for deletion.")
+            self.details_layout.addWidget(QLabel("Scope: (Not applicable or unknown)"))
 
+        # Remove generic value display, handled by specific types now
+        # value_str = "..." # Placeholder for complex value
+        # if hasattr(rule, 'value'):
+        #     value_str = str(rule.value)
+        # elif hasattr(rule, 'clearance'): # Example for ClearanceRule
+        #     value_str = str(rule.clearance)
+        # self.details_layout.addWidget(QLabel(f"Value: {value_str}"))
 
-    def _on_rule_changed(self, rule: BaseRule):
-        """Handle changes made in the rule editor"""
-        if self.rule_manager and rule:
-            # The rule object passed *is* the one from the manager,
-            # modifications are already applied by the editor's _on_property_changed.
-            # We just need to update the table view potentially and emit signal.
-            
-            # Find the row corresponding to the rule to update the view
-            row = self.rule_manager.get_rule_index(rule.name) # Assuming RuleManager has this
-            if row is not None and row >= 0:
-                # Notify the model that data has changed for this row
-                start_index = self.table_model.index(row, 0)
-                end_index = self.table_model.index(row, self.table_model.columnCount() - 1)
-                self.table_model.dataChanged.emit(start_index, end_index)
-                logger.debug(f"Table view notified of change for rule: {rule.name}")
+        # --- Rule Type Specific Properties (Add more details here if needed) ---
+        if isinstance(rule, ClearanceRule):
+            # Already added clearance value above
+            pass # Add more specific details if necessary
+        # Add elif blocks for other rule types (Width, ViaStyle, etc.)
+        # elif isinstance(rule, WidthRule):
+        #    # ... WidthRule specific fields ...
+        elif not isinstance(rule, SingleScopeRule): # If not Clearance or SingleScope
+            self.details_layout.addWidget(QLabel(f"Details view not fully implemented for rule type: {type(rule).__name__}"))
 
-            self.rules_changed.emit() # Emit signal that rules (potentially) changed
-            logger.info(f"Rule '{rule.name}' updated via editor.")
-        elif not self.rule_manager:
-             logger.warning("Cannot process rule change: Rule manager not set.")
+        # No need to set layout again, just add widgets
+        # self.details_group.setLayout(self.details_layout)
 
+    def _save_rule_details(self):
+        """Save changes from the details view back to the selected rule object."""
+        selected_items = self.rules_list_widget.selectedItems()
+        if not selected_items:
+            QMessageBox.warning(self, "Save Rule Details", "No rule selected.")
+            return
 
-    def _on_update_pivot(self):
-        """Handle update pivot table button click"""
-        if self.rule_manager:
+        # Get the selected rule object
+        selected_rule = selected_items[0].data(Qt.UserRole)
+
+        # --- Update General Properties ---
+        # Here you would collect data from the detail fields and update the selected_rule
+        # For example:
+        # selected_rule.name = self.name_edit.text()
+        # ... update other properties
+
+        # --- Update Rule Type Specific Properties ---
+        if isinstance(selected_rule, ClearanceRule):
+            # Update ClearanceRule specific fields
+            # selected_rule.min_clearance = self.min_clearance_edit.value()
+            # selected_rule.max_clearance = self.max_clearance_edit.value()
+            pass
+        # Add elif blocks for other rule types
+
+        # Update the list item text
+        selected_items[0].setText(f"{selected_rule.name} ({selected_rule.rule_type.value})")
+        self._set_unsaved_changes(True)
+        logger.info(f"Updated rule details for: {selected_rule.name}")
+
+    def _add_rule(self):
+        """Add a new default rule."""
+        # For now, add a default ClearanceRule
+        # TODO: Allow selecting rule type to add
+        new_rule_name = f"New_Rule_{len(self._rules) + 1}"
+        new_rule = ClearanceRule(name=new_rule_name)
+        self._rules.append(new_rule)
+
+        item = QListWidgetItem(f"{new_rule.name} ({new_rule.rule_type.value})")
+        item.setData(Qt.UserRole, new_rule)
+        self.rules_list_widget.addItem(item)
+        self.rules_list_widget.setCurrentItem(item) # Select the new rule
+        self._set_unsaved_changes(True)
+        logger.info(f"Added new rule: {new_rule_name}")
+
+    def _edit_rule(self):
+        """Placeholder for potentially opening a dedicated rule editor dialog."""
+        # Currently, editing happens directly in the details pane
+        # This button could open a more complex editor if needed
+        selected_items = self.rules_list_widget.selectedItems()
+        if not selected_items:
+            QMessageBox.warning(self, "Edit Rule", "Please select a rule to edit.")
+            return
+        # For now, just ensure details are saved if changed
+        self._save_rule_details() # Save any pending changes in the details view
+        QMessageBox.information(self, "Edit Rule", "Edit rule properties in the details pane and click 'Save Details'.")
+
+    def _delete_rule(self):
+        """Delete the selected rule(s)."""
+        selected_items = self.rules_list_widget.selectedItems()
+        if not selected_items:
+            QMessageBox.warning(self, "Delete Rule", "Please select rule(s) to delete.")
+            return
+
+        reply = QMessageBox.question(self, "Confirm Deletion",
+                                     f"Are you sure you want to delete {len(selected_items)} rule(s)?",
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+        if reply == QMessageBox.Yes:
+            rows_to_delete = []
+            for item in selected_items:
+                rule_to_delete = item.data(Qt.UserRole)
+                if rule_to_delete in self._rules:
+                    self._rules.remove(rule_to_delete)
+                rows_to_delete.append(self.rules_list_widget.row(item))
+
+            # Remove items from list widget (iterate backwards to avoid index issues)
+            for row in sorted(rows_to_delete, reverse=True):
+                self.rules_list_widget.takeItem(row)
+
+            logger.info(f"Deleted {len(selected_items)} rules. Remaining: {len(self._rules)}")
+            self._update_rule_details(None) # Clear details view
+            self._set_unsaved_changes(True)
+
+    def _clear_rules(self):
+        """Clear all rules from the manager."""
+        if not self._rules:
+            QMessageBox.information(self, "Clear Rules", "There are no rules to clear.")
+            return
+
+        reply = QMessageBox.question(self, "Confirm Clear All",
+                                     "Are you sure you want to clear all rules? This cannot be undone.",
+                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+        if reply == QMessageBox.Yes:
+            self._rules.clear()
+            self.rules_list_widget.clear()
+            self._update_rule_details(None)
+            self._set_unsaved_changes(True)
+            logger.info("Cleared all rules.")
+
+    def _save_rules(self):
+        """Save the current rules to a file (internal format, e.g., JSON/Pickle)."""
+        if not self._rules:
+            QMessageBox.warning(self, "Save Rules", "There are no rules to save.")
+            return
+
+        # Use self._rules directly
+        rules_to_save = self._rules
+        # TODO: Implement actual saving logic (e.g., to JSON or Pickle)
+        # For now, just simulate saving
+        file_path, _ = QFileDialog.getSaveFileName(
+            self, "Save Rules As", "", "Rule Files (*.json);;All Files (*)"
+        )
+        if file_path:
             try:
-                # Assuming rule_manager can generate pivot data
-                pivot_data = self.rule_manager.generate_pivot_data() # Placeholder method
-                if pivot_data:
-                    self.pivot_data_updated.emit(pivot_data)
-                    logger.info("Pivot data updated and signal emitted.")
-                else:
-                    logger.warning("Pivot data generation returned nothing.")
-            except AttributeError:
-                 logger.error("Rule manager does not have 'generate_pivot_data' method.")
-                 QMessageBox.critical(self, "Error", "Feature not implemented in Rule Manager.")
+                # Placeholder: Replace with actual serialization
+                with open(file_path, 'w') as f:
+                    import json
+                    # Need a way to serialize rule objects (e.g., custom encoder)
+                    # json.dump([rule.to_dict() for rule in rules_to_save], f, indent=4)
+                    f.write(f"Placeholder: {len(rules_to_save)} rules saved.")
+                logger.info(f"Saved {len(rules_to_save)} rules to {file_path}")
+                self._set_unsaved_changes(False)
+                QMessageBox.information(self, "Save Successful", f"Rules saved to:\n{file_path}")
             except Exception as e:
-                 logger.error(f"Error generating pivot data: {e}", exc_info=True)
-                 QMessageBox.critical(self, "Error", f"Failed to generate pivot data:\\n{e}")
-        else:
-            QMessageBox.warning(self, "Warning", "Rule manager not available.")
-            logger.warning("Cannot update pivot: Rule manager not set.")
+                logger.error(f"Error saving rules to {file_path}: {e}", exc_info=True)
+                QMessageBox.critical(self, "Save Error", f"Failed to save rules: {e}")
 
+    def _export_rules(self):
+        """Export the current rules to an Altium *.RUL file."""
+        if not self._rules:
+            QMessageBox.warning(self, "Export Rules", "There are no rules to export.")
+            return
 
-def create_rule_editor(rule_type: RuleType, parent=None) -> Optional[RuleEditorWidget]:
-    """Factory function to create appropriate rule editor based on rule type"""
-    editor_class = None
-    if rule_type == RuleType.CLEARANCE:
-        editor_class = ClearanceRuleEditor
-    elif rule_type == RuleType.SHORT_CIRCUIT:
-        editor_class = ShortCircuitRuleEditor
-    elif rule_type == RuleType.UNROUTED_NET:
-        editor_class = UnRoutedNetRuleEditor
-    # Add other rule types here
-    # elif rule_type == RuleType.POWER_PLANE_CONNECT:
-    #     editor_class = PowerPlaneConnectRuleEditor
-    # ... etc ...
+        # Use self._rules directly
+        rules_to_export = self._rules
+        file_path, _ = QFileDialog.getSaveFileName(
+            self, "Export Rules As", "", "Altium Rule Files (*.RUL);;All Files (*)"
+        )
+        if file_path:
+            try:
+                # Use RuleGenerator to format and export
+                RuleGenerator.export_rules(rules_to_export, file_path)
+                logger.info(f"Exported {len(rules_to_export)} rules to {file_path}")
+                # Exporting doesn't necessarily mean changes are 'saved' internally
+                # self._set_unsaved_changes(False) # Decide if export should reset this
+                QMessageBox.information(self, "Export Successful", f"Rules exported to:\n{file_path}")
+            except RuleGeneratorError as rge:
+                logger.error(f"Rule Generator Error during export: {rge}", exc_info=True)
+                QMessageBox.critical(self, "Export Error", f"Rule Generation Error: {rge}")
+            except Exception as e:
+                logger.error(f"Error exporting rules to {file_path}: {e}", exc_info=True)
+                QMessageBox.critical(self, "Export Error", f"Failed to export rules: {e}")
 
-    if editor_class:
-        return editor_class(parent)
-    else:
-        logger.warning(f"No specific editor class defined for rule type: {rule_type}")
-        # Return a generic base editor or None if preferred
-        # return RuleEditorWidget(parent) # Or return None
-        return None # Return None if no specific editor exists
+    def _set_unsaved_changes(self, changed: bool):
+        """Set the unsaved changes flag and emit signal if state changes."""
+        if self._unsaved_changes != changed:
+            self._unsaved_changes = changed
+            self.unsaved_changes_changed.emit(changed)
+            logger.debug(f"Unsaved changes status set to: {changed}")
+
+    def has_unsaved_changes(self) -> bool:
+        """Check if there are unsaved changes."""
+        # This relies on the _unsaved_changes flag which should be set correctly
+        # by methods like _add_rule, _delete_rule, _edit_rule, _clear_rules, _save_rule_details
+        return self._unsaved_changes
+
+    def get_current_rules(self) -> List[BaseRule]:
+        """Return the current list of rules being managed."""
+        return self._rules
