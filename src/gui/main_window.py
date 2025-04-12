@@ -57,7 +57,7 @@ class MainWindow(QMainWindow):
                 text-align: center; 
             }
             QMenu::item {
-                padding: 5px 20px 5px 20px; /* Top, Right, Bottom, Left padding */
+                padding: 5px 30px 5px 20px; /* Increased right padding (Top, Right, Bottom, Left) */
             }
             QMenuBar::item {
                 padding: 5px 10px; /* Adjust spacing for top-level menu bar items */
@@ -831,8 +831,8 @@ class MainWindow(QMainWindow):
             clicked_button = msgBox.clickedButton()
 
             if clicked_button == replaceButton:
-                # Call set_rules on the rule_model instead of table_model
-                self.rule_editor_tab.rule_model.set_rules(rules) 
+                # Call set_rules on the table_model
+                self.rule_editor_tab.table_model.set_rules(rules)
                 logger.info("Replaced rules in Rule Editor with generated rules.")
             elif clicked_button == appendButton:
                 self.rule_editor_tab.add_rules(rules)
@@ -989,7 +989,6 @@ class MainWindow(QMainWindow):
             self.status_bar.showMessage("Export failed", 5000)
             return False # Indicate failure
 
-
     def _show_preferences(self):
         """Show the application preferences dialog."""
         logging.info("Preferences action triggered.")
@@ -1003,50 +1002,44 @@ class MainWindow(QMainWindow):
             logger.error(f"Failed to open preferences dialog: {e}", exc_info=True)
             QMessageBox.critical(self, "Error", f"Could not open preferences dialog: {e}")
 
-
     def _show_about(self):
-        """Show the About dialog box."""
-        logging.info("About action triggered.")
-        app_version = "Unknown" # Default version
-        try:
-            # Attempt to read version from setup.py
-            setup_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'setup.py')
-            if os.path.exists(setup_path):
-                with open(setup_path, 'r', encoding='utf-8') as f:
-                    setup_content = f.read()
-                    # Use regex to find version = '...' or version = "..."
-                    match = re.search(r"^version\s*=\s*['\"]([^'\"]*)['\"]", setup_content, re.MULTILINE)
-                    if match:
-                        app_version = match.group(1)
-                    else:
-                        logger.warning("Could not find version pattern in setup.py")
-            else:
-                logger.warning(f"setup.py not found at expected path: {setup_path}")
-        except Exception as e:
-            logger.warning(f"Could not read version info from setup.py: {e}")
+        """Show the About dialog box with hardcoded information."""
+        logger.info("--- Showing About Dialog (Hardcoded Info) ---")
+
+        # Hardcoded information
+        app_version = "1.0.0"
+        author = "Karl Long (klong4)"
+        author_email = "klong@econtrols.com"
+        repo_url = "https://github.com/klong4/AltiumXCEL2QueryBuilder"
+        company_name = "EControls"
+
+        # Log the values being used
+        logger.info(f"Using hardcoded values for About dialog: Version='{app_version}', Author='{author}', Email='{author_email}', URL='{repo_url}', Company='{company_name}'")
 
         QMessageBox.about(
             self,
             "About Altium Rule Generator",
-            f"<b>Altium XCEL to Query Builder</b>\\n\\n"
-            f"Version: {app_version}\\n\\n"
+            f"<b>Altium XCEL to Query Builder</b><br><br>"
+            f"Version: {app_version}<br>"
+            f"Author: {author} ({author_email})<br><br>"
             "This application helps generate Altium Designer rule queries "
-            "from structured data, typically imported from Excel files.\\n\\n"
-            "Provide feedback or report issues at: [Your GitHub/Contact Link Here]\\n\\n" # Added feedback link placeholder
-            f"(c) {datetime.now().year} Your Name/Company" # Replace with actual copyright, use current year
+            "from structured data, typically imported from Excel files.<br><br>"
+            f'Provide feedback or report issues at: <a href="{repo_url}">{repo_url}</a><br><br>' # Use hardcoded URL
+            f"&copy; {datetime.now().year} {company_name}" # Use hardcoded company name
         )
+        logger.info("--- Finished Showing About Dialog ---") # Added separator log
 
     def _check_unsaved_changes(self):
         """Checks if any open tab has unsaved changes and updates window title."""
         has_changes = False
-        # Iterate through widgets in the tab widget
+        # Iterate through all widgets in the tab widget
         for i in range(self.tab_widget.count()):
             widget = self.tab_widget.widget(i)
             if widget and hasattr(widget, 'has_unsaved_changes') and widget.has_unsaved_changes():
                 has_changes = True
                 break # Found one, no need to check further
         
-        # Update window title
+        # Update window title if unsaved changes exist
         title = "Altium Rule Generator"
         if has_changes:
             title += " *"

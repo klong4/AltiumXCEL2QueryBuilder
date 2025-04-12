@@ -639,73 +639,64 @@ class UnRoutedNetRuleEditor(RuleEditorWidget):
 class RuleTableModel(QAbstractTableModel):
     """Model for displaying rules in a table"""
     
+    HEADERS = ["Name", "Type", "Enabled", "Priority"]
+
     def __init__(self, parent=None):
         """Initialize rule table model"""
         super().__init__(parent)
-        self.rules = []
-        self.column_headers = ["Name", "Type", "Enabled", "Priority"]
+        self._rules: List[BaseRule] = []
+        logger.debug("RuleTableModel initialized")
     
     def set_rules(self, rules: List[BaseRule]):
-        """Set the rules to display"""
+        """Set the list of rules for the model"""
         self.beginResetModel()
-        self.rules = rules
+        self._rules = sorted(rules, key=lambda r: r.priority) # Keep sorted by priority maybe? Or name?
         self.endResetModel()
-        logger.info(f"Rule table model updated with {len(rules)} rules")
+        logger.debug(f"Model updated with {len(self._rules)} rules.")
     
-    def rowCount(self, parent=None):
-        """Return number of rows in the model"""
-        return len(self.rules)
+    def rowCount(self, parent=QModelIndex()) -> int:
+        """Return number of rules"""
+        return len(self._rules) if not parent.isValid() else 0
     
-    def columnCount(self, parent=None):
-        """Return number of columns in the model"""
-        return len(self.column_headers)
+    def columnCount(self, parent=QModelIndex()) -> int:
+        """Return number of columns"""
+        return len(self.HEADERS) if not parent.isValid() else 0
     
-    def data(self, index, role=Qt.DisplayRole):
-        """Return data for the given index and role"""
-        if not index.isValid() or not self.rules:
+    def data(self, index: QModelIndex, role: int = Qt.DisplayRole) -> QVariant:
+        """Return data for a given index and role"""
+        if not index.isValid() or not (0 <= index.row() < len(self._rules)):
             return QVariant()
-        
-        row, col = index.row(), index.column()
-        
-        # Check if row and column are valid
-        if row < 0 or row >= self.rowCount() or col < 0 or col >= self.columnCount():
-            return QVariant()
-        
-        rule = self.rules[row]
-        
-        # Handle display role
+
+        rule = self._rules[index.row()]
+        column = index.column()
+
         if role == Qt.DisplayRole:
-            if col == 0:
-                return rule.name
-            elif col == 1:
-                return rule.rule_type.value
-            elif col == 2:
-                return "Yes" if rule.enabled else "No"
-            elif col == 3:
-                return str(rule.priority)
-        
-        # Handle background color role - alternate row colors
-        elif role == Qt.BackgroundRole:
-            if row % 2 == 0:
-                return QBrush(QColor("#323232"))
-            else:
-                return QBrush(QColor("#2d2d2d"))
-        
-        # Handle text alignment role
-        elif role == Qt.TextAlignmentRole:
-            return Qt.AlignCenter
-        
-        return QVariant()
+            if column == 0: # Name
+                return QVariant(rule.name)
+            elif column == 1: # Type
+                return QVariant(rule.rule_type.value) # Display enum value (string)
+            elif column == 2: # Enabled
+                return QVariant("Yes" if rule.enabled else "No")
+            elif column == 3: # Priority
+                return QVariant(rule.priority)
+        elif role == Qt.ToolTipRole:
+             return QVariant(f"Comment: {rule.comment}" if rule.comment else "No comment")
+        # Add other roles like Qt.BackgroundRole if needed
+
+        return QVariant() # Default return
     
-    def headerData(self, section, orientation, role=Qt.DisplayRole):
-        """Return header data for the given section and orientation"""
-        if role != Qt.DisplayRole:
-            return QVariant()
-        
-        if orientation == Qt.Horizontal and section < len(self.column_headers):
-            return self.column_headers[section]
-        
-        return QVariant()
+    def headerData(self, section: int, orientation: Qt.Orientation, role: int = Qt.DisplayRole) -> QVariant:
+        """Return header data"""
+        if orientation == Qt.Horizontal and role == Qt.DisplayRole:
+            if 0 <= section < len(self.HEADERS):
+                return QVariant(self.HEADERS[section])
+        return QVariant() # Default return
+
+    def get_rule_at_row(self, row: int) -> Optional[BaseRule]:
+        """Get the rule object corresponding to a specific row."""
+        if 0 <= row < len(self._rules):
+            return self._rules[row]
+        return None
 
 
 class RulesManagerWidget(QWidget):
@@ -718,328 +709,253 @@ class RulesManagerWidget(QWidget):
         """Initialize rules manager widget"""
         super().__init__(parent)
         self.rule_manager = None
-        self.current_rule = None
-        self.current_editor = None
-        
-        # Initialize UI
+        self.current_editor_widget = None # To hold the active editor
         self._init_ui()
-        
-        # Create empty rule manager
-        self.set_rule_manager(None)
-        
         logger.info("Rules manager widget initialized")
 
     def add_rules(self, new_rules: List[BaseRule]):
-        """Appends new rules to the existing list in the table model."""
-        if not self.rule_model: # Check rule_model instead of table_model
-            logger.warning("Rule table model not initialized. Cannot add rules.")
-            return
-
-        current_rules = self.rule_model.rules # Get rules from rule_model
-        combined_rules = current_rules + new_rules
-        self.rule_model.set_rules(combined_rules) # Set rules on rule_model
-        logger.info(f"Appended {len(new_rules)} rules. Total rules: {len(combined_rules)}")
+        """Add new rules to the manager and update the view"""
+        if self.rule_manager:
+            for rule in new_rules:
+                self.rule_manager.add_rule(rule)
+            self.table_model.set_rules(self.rule_manager.get_all_rules())
+            self.rules_changed.emit() # Emit signal when rules are added
+            logger.info(f"Added {len(new_rules)} rules.")
+        else:
+            logger.warning("Rule manager not set. Cannot add rules.")
 
     def _init_ui(self):
         """Initialize the UI components"""
-        # Main layout
         main_layout = QHBoxLayout()
         self.setLayout(main_layout)
-        
-        # Left panel - rule list
-        left_panel = QVBoxLayout()
-        
-        # Rule type selection for new rules
-        rule_type_group = QGroupBox("New Rule Type")
-        rule_type_layout = QFormLayout()
-        rule_type_group.setLayout(rule_type_layout)
-        
-        self.rule_type_combo = QComboBox()
-        self.rule_type_combo.addItem("Electrical Clearance", RuleType.CLEARANCE.value)
-        self.rule_type_combo.addItem("Short Circuit", RuleType.SHORT_CIRCUIT.value)
-        self.rule_type_combo.addItem("Unrouted Net", RuleType.UNROUTED_NET.value)
-        rule_type_layout.addRow("Rule Type:", self.rule_type_combo)
-        
-        # Add button for new rules
-        self.add_rule_button = QPushButton("Add New Rule")
-        self.add_rule_button.clicked.connect(self._on_add_rule)
-        rule_type_layout.addRow("", self.add_rule_button)
-        
-        left_panel.addWidget(rule_type_group)
-        
-        # Rule list
-        list_group = QGroupBox("Rules")
-        list_layout = QVBoxLayout()
-        list_group.setLayout(list_layout)
-        
-        # Rule table
-        self.rule_table = QTableView()
-        self.rule_model = RuleTableModel()
-        self.rule_table.setModel(self.rule_model)
-        
-        # Configure table
-        self.rule_table.setSelectionBehavior(QTableView.SelectRows)
-        self.rule_table.setSelectionMode(QTableView.SingleSelection)
-        self.rule_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        self.rule_table.verticalHeader().setVisible(False)
-        self.rule_table.setAlternatingRowColors(True)
-        
-        # Connect selection change
-        self.rule_table.selectionModel().selectionChanged.connect(self._on_rule_selection_changed)
-        
-        list_layout.addWidget(self.rule_table)
-        
-        # Buttons for rule management
+
+        # Left side: Rule list and buttons
+        left_panel = QWidget()
+        left_layout = QVBoxLayout()
+        left_panel.setLayout(left_layout)
+
+        # Rule table view
+        self.table_view = QTableView()
+        self.table_model = RuleTableModel()
+        self.table_view.setModel(self.table_model)
+        self.table_view.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.table_view.setSelectionBehavior(QTableView.SelectRows)
+        self.table_view.setSelectionMode(QTableView.SingleSelection)
+        self.table_view.selectionModel().selectionChanged.connect(self._on_rule_selection_changed)
+        left_layout.addWidget(self.table_view)
+
+        # Buttons layout
         button_layout = QHBoxLayout()
-        
-        self.delete_rule_button = QPushButton("Delete Rule")
-        self.delete_rule_button.clicked.connect(self._on_delete_rule)
-        self.delete_rule_button.setEnabled(False)
-        button_layout.addWidget(self.delete_rule_button)
-        
-        self.to_pivot_button = QPushButton("Update Pivot")
-        self.to_pivot_button.clicked.connect(self._on_update_pivot)
-        button_layout.addWidget(self.to_pivot_button)
-        
-        list_layout.addLayout(button_layout)
-        
-        left_panel.addWidget(list_group)
-        main_layout.addLayout(left_panel, 1)
-        
-        # Right panel - rule editor
-        self.rule_editor_container = QVBoxLayout()
-        
-        # Default message
-        self.no_rule_label = QLabel("Select a rule to edit or add a new rule.")
-        self.no_rule_label.setAlignment(Qt.AlignCenter)
-        self.rule_editor_container.addWidget(self.no_rule_label)
-        
-        main_layout.addLayout(self.rule_editor_container, 2)
-    
+        self.add_button = QPushButton("Add Rule")
+        self.add_button.clicked.connect(self._on_add_rule)
+        self.delete_button = QPushButton("Delete Rule")
+        self.delete_button.clicked.connect(self._on_delete_rule)
+        self.update_pivot_button = QPushButton("Update Pivot Table")
+        self.update_pivot_button.clicked.connect(self._on_update_pivot)
+
+        button_layout.addWidget(self.add_button)
+        button_layout.addWidget(self.delete_button)
+        button_layout.addStretch()
+        button_layout.addWidget(self.update_pivot_button)
+        left_layout.addLayout(button_layout)
+
+        # Right side: Rule editor (placeholder layout)
+        self.editor_layout = QVBoxLayout() # Layout to hold the current editor
+        editor_container = QWidget()
+        editor_container.setLayout(self.editor_layout)
+
+        # Add panels to main layout
+        main_layout.addWidget(left_panel, 1) # Give list more space initially
+        main_layout.addWidget(editor_container, 1) # Editor takes equal space
+
+        # Initially, no editor is shown
+        self._show_editor(None)
+
+
     def set_rule_manager(self, rule_manager):
-        """Set the rule manager to use"""
-        if rule_manager is None:
-            from models.rule_model import RuleManager
-            self.rule_manager = RuleManager()
-        else:
-            self.rule_manager = rule_manager
-        
-        # Update rule table
-        self.rule_model.set_rules(self.rule_manager.rules)
-        
-        # Clear current rule selection
-        self.current_rule = None
-        self._update_rule_editor()
-        
-        logger.info(f"Rule manager set with {len(self.rule_manager.rules)} rules")
-    
+        """Set the rule manager instance"""
+        self.rule_manager = rule_manager
+        self.table_model.set_rules(self.rule_manager.get_all_rules())
+        logger.info("Rule manager set and table updated.")
+
     def get_rule_manager(self):
-        """Get the current rule manager"""
+        """Get the rule manager instance"""
         return self.rule_manager
-    
-    def _update_rule_editor(self):
-        """Update the rule editor based on the current rule"""
-        # Clear the editor container
-        while self.rule_editor_container.count():
-            item = self.rule_editor_container.takeAt(0)
-            if item.widget():
-                item.widget().deleteLater()
-        
-        if self.current_rule:
-            # Create appropriate editor for the rule type
-            self.current_editor = create_rule_editor(self.current_rule.rule_type, self)
-            self.current_editor.set_rule(self.current_rule)
-            self.current_editor.rule_changed.connect(self._on_rule_changed)
-            self.rule_editor_container.addWidget(self.current_editor)
-            
-            # Enable delete button
-            self.delete_rule_button.setEnabled(True)
-            
-            logger.info(f"Editing rule: {self.current_rule.name}")
+
+    def _show_editor(self, rule: Optional[BaseRule]):
+        """Creates or updates the editor widget for the given rule."""
+        # Remove the existing editor widget if it exists
+        if self.current_editor_widget:
+            self.editor_layout.removeWidget(self.current_editor_widget)
+            self.current_editor_widget.deleteLater()
+            self.current_editor_widget = None
+
+        if rule:
+            # Create the appropriate editor for the rule type
+            try:
+                # Disconnect previous editor's signal if any (safety measure)
+                # This might not be strictly necessary if deleteLater works reliably
+                # if self.current_editor_widget:
+                #     try:
+                #         self.current_editor_widget.rule_changed.disconnect(self._on_rule_changed)
+                #     except TypeError: # Signal has no slots to disconnect
+                #         pass
+
+                self.current_editor_widget = create_rule_editor(rule.rule_type, self)
+                if self.current_editor_widget:
+                    self.current_editor_widget.set_rule(rule)
+                    self.current_editor_widget.rule_changed.connect(self._on_rule_changed)
+                    self.editor_layout.addWidget(self.current_editor_widget)
+                    logger.debug(f"Showing editor for rule: {rule.name}")
+                else:
+                    logger.warning(f"No specific editor found for rule type {rule.rule_type}. Cannot display editor.")
+                    # Optionally show a placeholder or message widget
+                    placeholder = QLabel(f"No editor available for rule type: {rule.rule_type.name}")
+                    placeholder.setAlignment(Qt.AlignCenter)
+                    self.current_editor_widget = placeholder # Assign placeholder to be removed later
+                    self.editor_layout.addWidget(self.current_editor_widget)
+
+            except Exception as e:
+                logger.error(f"Error creating/showing rule editor: {e}", exc_info=True)
+                QMessageBox.critical(self, "Error", f"Could not create editor for rule '{rule.name}':\\n{e}")
         else:
-            # Show default message
-            self.no_rule_label = QLabel("Select a rule to edit or add a new rule.")
-            self.no_rule_label.setAlignment(Qt.AlignCenter)
-            self.rule_editor_container.addWidget(self.no_rule_label)
-            
-            # Disable delete button
-            self.delete_rule_button.setEnabled(False)
-    
+            # Show a placeholder if no rule is selected
+            placeholder = QLabel("Select a rule to edit its properties.")
+            placeholder.setAlignment(Qt.AlignCenter)
+            self.current_editor_widget = placeholder # Assign placeholder to be removed later
+            self.editor_layout.addWidget(self.current_editor_widget)
+            logger.debug("No rule selected, showing placeholder.")
+
+
     def _on_rule_selection_changed(self, selected, deselected):
-        """Handle rule selection changes"""
+        """Handle rule selection changes in the table view"""
         indexes = selected.indexes()
-        
         if indexes:
-            # Get the selected row
             row = indexes[0].row()
-            
-            # Set the current rule
-            if 0 <= row < len(self.rule_manager.rules):
-                self.current_rule = self.rule_manager.rules[row]
-                self._update_rule_editor()
-    
-    def _on_add_rule(self):
-        """Handle add rule button"""
-        # Get the selected rule type
-        rule_type_str = self.rule_type_combo.currentData()
-        try:
-            rule_type = RuleType(rule_type_str)
-        except ValueError:
-            logger.error(f"Invalid rule type: {rule_type_str}")
-            return
-        
-        # Create a new rule based on the type
-        rule = None
-        name = f"New_{rule_type.value}_Rule_{len(self.rule_manager.rules) + 1}"
-        
-        if rule_type == RuleType.CLEARANCE:
-            rule = ClearanceRule(name=name)
-        elif rule_type == RuleType.SHORT_CIRCUIT:
-            rule = ShortCircuitRule(name=name)
-        elif rule_type == RuleType.UNROUTED_NET:
-            rule = UnRoutedNetRule(name=name)
+            selected_rule = self.table_model.get_rule_at_row(row) # Assuming this method exists in RuleTableModel
+            if selected_rule:
+                logger.info(f"Rule selected: {selected_rule.name}")
+                self._show_editor(selected_rule)
+            else:
+                logger.warning(f"Could not retrieve rule at selected row {row}.")
+                self._show_editor(None)
         else:
-            logger.error(f"Unsupported rule type: {rule_type.value}")
-            return
-        
-        # Add the rule to the manager
-        self.rule_manager.add_rule(rule)
-        
-        # Update rule table
-        self.rule_model.set_rules(self.rule_manager.rules)
-        
-        # Select the new rule
-        self.current_rule = rule
-        self._update_rule_editor()
-        
-        # Select the new rule in the table
-        row = self.rule_manager.rules.index(rule)
-        self.rule_table.selectRow(row)
-        
-        # Emit rules changed signal
-        self.rules_changed.emit()
-        
-        logger.info(f"Added new rule: {rule.name} ({rule.rule_type.value})")
-    
+            # No selection
+            logger.info("Rule selection cleared.")
+            self._show_editor(None)
+
+    def _on_add_rule(self):
+        """Handle add rule button click"""
+        # Example: Add a default ClearanceRule
+        # In a real app, you might show a dialog to choose rule type and initial name
+        if self.rule_manager:
+            default_rule = ClearanceRule(name="New Clearance Rule")
+            self.rule_manager.add_rule(default_rule)
+            self.table_model.set_rules(self.rule_manager.get_all_rules()) # Refresh model
+            
+            # Select the newly added rule in the table
+            new_row_index = self.table_model.rowCount() - 1
+            if new_row_index >= 0:
+                qt_index = self.table_model.index(new_row_index, 0)
+                self.table_view.setCurrentIndex(qt_index)
+                # Selection change should trigger _on_rule_selection_changed and show editor
+
+            self.rules_changed.emit() # Emit signal
+            logger.info(f"Added new rule: {default_rule.name}")
+        else:
+            QMessageBox.warning(self, "Warning", "Rule manager not available.")
+            logger.warning("Cannot add rule: Rule manager not set.")
+
     def _on_delete_rule(self):
-        """Handle delete rule button"""
-        if not self.current_rule:
+        """Handle delete rule button click"""
+        selected_indexes = self.table_view.selectionModel().selectedRows()
+        if not selected_indexes:
+            QMessageBox.information(self, "Delete Rule", "Please select a rule to delete.")
             return
-        
-        # Confirm deletion
-        reply = QMessageBox.question(
-            self,
-            "Confirm Deletion",
-            f"Are you sure you want to delete the rule '{self.current_rule.name}'?",
-            QMessageBox.Yes | QMessageBox.No,
-            QMessageBox.No
-        )
-        
-        if reply != QMessageBox.Yes:
-            return
-        
-        # Get the index of the current rule
-        current_index = self.rule_manager.rules.index(self.current_rule)
-        
-        # Remove the rule from the manager
-        self.rule_manager.rules.remove(self.current_rule)
-        
-        # Update rule table
-        self.rule_model.set_rules(self.rule_manager.rules)
-        
-        # Select a new rule if available
-        self.current_rule = None
-        if self.rule_manager.rules:
-            # Select the same index if possible, otherwise the last rule
-            new_index = min(current_index, len(self.rule_manager.rules) - 1)
-            self.current_rule = self.rule_manager.rules[new_index]
-            self.rule_table.selectRow(new_index)
-        
-        # Update the editor
-        self._update_rule_editor()
-        
-        # Emit rules changed signal
-        self.rules_changed.emit()
-        
-        logger.info(f"Deleted rule at index {current_index}")
-    
-    def _on_rule_changed(self, rule):
-        """Handle when a rule is modified in the editor"""
-        if not rule:
-            return
-        
-        # Ensure the rule is in the manager
-        if rule not in self.rule_manager.rules:
-            return
-        
-        # Update the rule table model to reflect changes
-        self.rule_model.set_rules(self.rule_manager.rules)
-        
-        # Emit rules changed signal
-        self.rules_changed.emit()
-        
-        logger.debug(f"Rule updated: {rule.name}")
-    
+
+        row = selected_indexes[0].row()
+        rule_to_delete = self.table_model.get_rule_at_row(row) # Assuming this method exists
+
+        if rule_to_delete and self.rule_manager:
+            reply = QMessageBox.question(self, "Confirm Delete",
+                                         f"Are you sure you want to delete the rule '{rule_to_delete.name}'?",
+                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+            if reply == QMessageBox.Yes:
+                self.rule_manager.delete_rule(rule_to_delete.name)
+                self.table_model.set_rules(self.rule_manager.get_all_rules()) # Refresh model
+                self._show_editor(None) # Clear editor after deletion
+                self.rules_changed.emit() # Emit signal
+                logger.info(f"Deleted rule: {rule_to_delete.name}")
+        elif not self.rule_manager:
+             QMessageBox.warning(self, "Warning", "Rule manager not available.")
+             logger.warning("Cannot delete rule: Rule manager not set.")
+        else:
+            logger.error(f"Could not retrieve rule at row {row} for deletion.")
+
+
+    def _on_rule_changed(self, rule: BaseRule):
+        """Handle changes made in the rule editor"""
+        if self.rule_manager and rule:
+            # The rule object passed *is* the one from the manager,
+            # modifications are already applied by the editor's _on_property_changed.
+            # We just need to update the table view potentially and emit signal.
+            
+            # Find the row corresponding to the rule to update the view
+            row = self.rule_manager.get_rule_index(rule.name) # Assuming RuleManager has this
+            if row is not None and row >= 0:
+                # Notify the model that data has changed for this row
+                start_index = self.table_model.index(row, 0)
+                end_index = self.table_model.index(row, self.table_model.columnCount() - 1)
+                self.table_model.dataChanged.emit(start_index, end_index)
+                logger.debug(f"Table view notified of change for rule: {rule.name}")
+
+            self.rules_changed.emit() # Emit signal that rules (potentially) changed
+            logger.info(f"Rule '{rule.name}' updated via editor.")
+        elif not self.rule_manager:
+             logger.warning("Cannot process rule change: Rule manager not set.")
+
+
     def _on_update_pivot(self):
-        """Convert the rules to pivot data and emit the pivot_data_updated signal"""
-        try:
-            # Check if we have any clearance rules to convert
-            clearance_rules = []
-            for rule in self.rule_manager.rules:
-                if rule.rule_type == RuleType.CLEARANCE:
-                    clearance_rules.append(rule)
-            
-            if not clearance_rules:
-                QMessageBox.warning(
-                    self,
-                    "No Clearance Rules",
-                    "No clearance rules found to convert to pivot data.\n"
-                    "Only clearance rules can be converted to pivot table format."
-                )
-                return
-            
-            # Import the ExcelPivotData class
-            from models.excel_data import ExcelPivotData
-            
-            # Create pivot data from clearance rules
-            pivot_data = ExcelPivotData.from_clearance_rules(clearance_rules)
-            
-            if not pivot_data:
-                QMessageBox.warning(
-                    self,
-                    "Conversion Failed",
-                    "Failed to convert rules to pivot data. Check the log for details."
-                )
-                return
-            
-            # Emit the pivot data updated signal with the new pivot data
-            self.pivot_data_updated.emit(pivot_data)
-            
-            # Show success message
-            QMessageBox.information(
-                self,
-                "Success",
-                f"Successfully converted {len(clearance_rules)} clearance rules to pivot data.\n"
-                "The pivot table has been updated."
-            )
-            
-            logger.info(f"Converted {len(clearance_rules)} rules to pivot data")
-        
-        except Exception as e:
-            error_msg = f"Error converting rules to pivot data: {str(e)}"
-            logger.error(error_msg)
-            QMessageBox.critical(self, "Conversion Error", error_msg)
+        """Handle update pivot table button click"""
+        if self.rule_manager:
+            try:
+                # Assuming rule_manager can generate pivot data
+                pivot_data = self.rule_manager.generate_pivot_data() # Placeholder method
+                if pivot_data:
+                    self.pivot_data_updated.emit(pivot_data)
+                    logger.info("Pivot data updated and signal emitted.")
+                else:
+                    logger.warning("Pivot data generation returned nothing.")
+            except AttributeError:
+                 logger.error("Rule manager does not have 'generate_pivot_data' method.")
+                 QMessageBox.critical(self, "Error", "Feature not implemented in Rule Manager.")
+            except Exception as e:
+                 logger.error(f"Error generating pivot data: {e}", exc_info=True)
+                 QMessageBox.critical(self, "Error", f"Failed to generate pivot data:\\n{e}")
+        else:
+            QMessageBox.warning(self, "Warning", "Rule manager not available.")
+            logger.warning("Cannot update pivot: Rule manager not set.")
 
 
-def create_rule_editor(rule_type: RuleType, parent=None) -> RuleEditorWidget:
+def create_rule_editor(rule_type: RuleType, parent=None) -> Optional[RuleEditorWidget]:
     """Factory function to create appropriate rule editor based on rule type"""
+    editor_class = None
     if rule_type == RuleType.CLEARANCE:
-        return ClearanceRuleEditor(parent)
+        editor_class = ClearanceRuleEditor
     elif rule_type == RuleType.SHORT_CIRCUIT:
-        return ShortCircuitRuleEditor(parent)
+        editor_class = ShortCircuitRuleEditor
     elif rule_type == RuleType.UNROUTED_NET:
-        return UnRoutedNetRuleEditor(parent)
-    # Add more rule types as needed
+        editor_class = UnRoutedNetRuleEditor
+    # Add other rule types here
+    # elif rule_type == RuleType.POWER_PLANE_CONNECT:
+    #     editor_class = PowerPlaneConnectRuleEditor
+    # ... etc ...
+
+    if editor_class:
+        return editor_class(parent)
     else:
-        logger.warning(f"No specific editor for rule type: {rule_type.value}, using base editor")
-        return RuleEditorWidget(parent)
+        logger.warning(f"No specific editor class defined for rule type: {rule_type}")
+        # Return a generic base editor or None if preferred
+        # return RuleEditorWidget(parent) # Or return None
+        return None # Return None if no specific editor exists

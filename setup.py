@@ -18,9 +18,9 @@ setup(
     description="Altium Designer Rule Generator - Excel to RUL Converter",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    author="AltiumTools",
-    author_email="info@altiumtools.com",
-    url="https://github.com/altiumtools/altium-rule-generator",
+    author="Karl Long (klong4)", # Updated author
+    author_email="klong@econtrols.com", # Updated email
+    url="https://github.com/klong4/AltiumXCEL2QueryBuilder", # Updated URL
     packages=find_packages(where="src"),
     package_dir={"": "src"},
     include_package_data=True,

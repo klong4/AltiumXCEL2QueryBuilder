@@ -2827,3 +2827,600 @@ AttributeError: 'ClearanceRuleEditor' object has no attribute 'min_clearance_spi
 2025-04-11 23:03:37,728 - utils.config - INFO - Configuration saved successfully
 2025-04-11 23:03:37,729 - gui.main_window - INFO - Saved window geometry and state
 2025-04-11 23:03:37,729 - gui.main_window - INFO - Application closing.
+2025-04-11 23:09:44,420 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 23:09:44,471 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 23:09:44,472 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 23:09:44,472 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 23:09:44,474 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 23:09:44,900 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 23:09:44,900 - gui.main_window - INFO - Main window initialized
+2025-04-11 23:09:50,764 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 23:09:50,811 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 23:09:50,811 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 23:09:50,812 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 23:09:56,483 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 23:10:00,980 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 23:10:00,981 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-11 23:10:00,982 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-11 23:10:00,982 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 23:10:00,982 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-11 23:10:00,983 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-11 23:10:01,007 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-11 23:10:01,007 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-11 23:10:03,218 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 23:10:03,248 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mil, Prefix: 'Rule_'
+2025-04-11 23:10:03,249 - models.excel_data - INFO - Created 66 clearance rules from pivot data
+2025-04-11 23:10:03,250 - gui.pivot_table_widget - INFO - Successfully generated 66 rules.
+2025-04-11 23:10:03,250 - gui.main_window - INFO - Received 66 generated rules from pivot table.
+2025-04-11 23:10:03,282 - gui.main_window - ERROR - Failed to create Rule Editor tab: unexpected character after line continuation character (rule_editor_widget.py, line 642)
+Traceback (most recent call last):
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\main_window.py", line 278, in _show_rule_editor_tab
+    from gui.rule_editor_widget import RulesManagerWidget
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\rule_editor_widget.py", line 642
+    HEADERS = [\"Name\", \"Type\", \"Enabled\", \"Priority\"]
+                ^
+SyntaxError: unexpected character after line continuation character
+2025-04-11 23:10:04,777 - gui.main_window - ERROR - Failed to show or access the Rule Editor tab to add generated rules.
+2025-04-11 23:10:07,890 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:10:07,892 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:10:07,893 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:10:07,893 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 23:10:07,893 - gui.main_window - INFO - Application closing.
+2025-04-11 23:12:13,653 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 23:12:13,691 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 23:12:13,692 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 23:12:13,692 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 23:12:13,694 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 23:12:14,159 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 23:12:14,160 - gui.main_window - INFO - Main window initialized
+2025-04-11 23:12:19,487 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 23:12:19,537 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 23:12:19,538 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 23:12:19,538 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 23:12:26,217 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 23:12:30,766 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 23:12:30,768 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-11 23:12:30,768 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-11 23:12:30,768 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 23:12:30,769 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-11 23:12:30,769 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-11 23:12:30,796 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-11 23:12:30,796 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-11 23:12:33,129 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 23:12:33,157 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mil, Prefix: 'Rule_'
+2025-04-11 23:12:33,158 - models.excel_data - INFO - Created 66 clearance rules from pivot data
+2025-04-11 23:12:33,159 - gui.pivot_table_widget - INFO - Successfully generated 66 rules.
+2025-04-11 23:12:33,159 - gui.main_window - INFO - Received 66 generated rules from pivot table.
+2025-04-11 23:12:33,206 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 23:12:33,213 - gui.main_window - INFO - Rule Editor tab created and shown.
+2025-04-11 23:14:14,406 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 23:14:14,442 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 23:14:14,443 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 23:14:14,444 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 23:14:14,446 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 23:14:14,952 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 23:14:14,952 - gui.main_window - INFO - Main window initialized
+2025-04-11 23:14:33,906 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 23:14:33,955 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 23:14:33,956 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 23:14:33,956 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 23:14:41,509 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 23:14:45,955 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 23:14:45,956 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-11 23:14:45,957 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-11 23:14:45,957 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 23:14:45,957 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-11 23:14:45,958 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-11 23:14:45,985 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-11 23:14:45,986 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-11 23:14:48,104 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 23:14:48,140 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mil, Prefix: 'Rule_'
+2025-04-11 23:14:48,142 - models.excel_data - INFO - Created 66 clearance rules from pivot data
+2025-04-11 23:14:48,142 - gui.pivot_table_widget - INFO - Successfully generated 66 rules.
+2025-04-11 23:14:48,143 - gui.main_window - INFO - Received 66 generated rules from pivot table.
+2025-04-11 23:14:48,153 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 23:14:48,159 - gui.main_window - INFO - Rule Editor tab created and shown.
+2025-04-11 23:27:08,679 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 23:27:08,727 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 23:27:08,728 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 23:27:08,728 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 23:27:08,742 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 23:27:09,261 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 23:27:09,262 - gui.main_window - INFO - Main window initialized
+2025-04-11 23:27:16,038 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-11 23:27:16,089 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 23:27:16,089 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-11 23:27:16,090 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-11 23:27:21,448 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-11 23:27:25,925 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-11 23:27:25,927 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-11 23:27:25,927 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-11 23:27:25,928 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-11 23:27:25,928 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-11 23:27:25,929 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-11 23:27:25,955 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-11 23:27:25,956 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-11 23:27:28,361 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-11 23:27:28,390 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mil, Prefix: 'Rule_'
+2025-04-11 23:27:28,392 - models.excel_data - INFO - Created 66 clearance rules from pivot data
+2025-04-11 23:27:28,393 - gui.pivot_table_widget - INFO - Successfully generated 66 rules.
+2025-04-11 23:27:28,393 - gui.main_window - INFO - Received 66 generated rules from pivot table.
+2025-04-11 23:27:28,405 - gui.rule_editor_widget - INFO - Rules manager widget initialized
+2025-04-11 23:27:28,412 - gui.main_window - INFO - Rule Editor tab created and shown.
+2025-04-11 23:27:29,492 - gui.main_window - INFO - Replaced rules in Rule Editor with generated rules.
+2025-04-11 23:27:29,493 - gui.main_window - INFO - Switched to existing Rule Editor tab.
+2025-04-11 23:27:33,018 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_Line_to_MAINS_Line
+2025-04-11 23:27:33,020 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:33,030 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_Line_to_MAINS_Line (Clearance)
+2025-04-11 23:27:33,935 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_Neutral_to_MAINS_Line
+2025-04-11 23:27:33,937 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:33,947 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_Neutral_to_MAINS_Line (Clearance)
+2025-04-11 23:27:36,866 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_Neutral_to_MAINS_Neutral
+2025-04-11 23:27:36,867 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:36,877 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_Neutral_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:37,602 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_BoostSwNode_to_MAINS_Line
+2025-04-11 23:27:37,605 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:37,614 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_BoostSwNode_to_MAINS_Line (Clearance)
+2025-04-11 23:27:38,302 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_BoostSwNode_to_MAINS_Neutral
+2025-04-11 23:27:38,304 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:38,315 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_BoostSwNode_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:38,922 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_BoostSwNode_to_MAINS_BoostSwNode
+2025-04-11 23:27:38,924 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:38,936 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_BoostSwNode_to_MAINS_BoostSwNode (Clearance)
+2025-04-11 23:27:39,455 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_BUS_to_MAINS_Line
+2025-04-11 23:27:39,458 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:39,469 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_BUS_to_MAINS_Line (Clearance)
+2025-04-11 23:27:39,805 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_BUS_to_MAINS_Neutral
+2025-04-11 23:27:39,807 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:39,818 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_BUS_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:40,131 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_BUS_to_MAINS_BoostSwNode
+2025-04-11 23:27:40,133 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:40,143 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_BUS_to_MAINS_BoostSwNode (Clearance)
+2025-04-11 23:27:40,335 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_BUS_to_MAINS_BUS
+2025-04-11 23:27:40,337 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:40,347 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_BUS_to_MAINS_BUS (Clearance)
+2025-04-11 23:27:40,576 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_LowVoltage_to_MAINS_Line
+2025-04-11 23:27:40,578 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:40,589 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_LowVoltage_to_MAINS_Line (Clearance)
+2025-04-11 23:27:40,801 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_LowVoltage_to_MAINS_Neutral
+2025-04-11 23:27:40,803 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:40,813 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_LowVoltage_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:41,025 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_LowVoltage_to_MAINS_BoostSwNode
+2025-04-11 23:27:41,027 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:41,037 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_LowVoltage_to_MAINS_BoostSwNode (Clearance)
+2025-04-11 23:27:41,259 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_LowVoltage_to_MAINS_BUS
+2025-04-11 23:27:41,261 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:41,272 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_LowVoltage_to_MAINS_BUS (Clearance)
+2025-04-11 23:27:41,535 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_LowVoltage_to_MAINS_LowVoltage
+2025-04-11 23:27:41,537 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:41,549 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_LowVoltage_to_MAINS_LowVoltage (Clearance)
+2025-04-11 23:27:41,740 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_A_to_MAINS_Line
+2025-04-11 23:27:41,742 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:41,754 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_A_to_MAINS_Line (Clearance)
+2025-04-11 23:27:41,995 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_A_to_MAINS_Neutral
+2025-04-11 23:27:41,997 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:42,009 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_A_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:42,181 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_A_to_MAINS_BoostSwNode
+2025-04-11 23:27:42,183 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:42,193 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_A_to_MAINS_BoostSwNode (Clearance)
+2025-04-11 23:27:42,682 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_A_to_MAINS_BUS
+2025-04-11 23:27:42,684 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:42,693 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_A_to_MAINS_BUS (Clearance)
+2025-04-11 23:27:42,729 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_A_to_MAINS_LowVoltage
+2025-04-11 23:27:42,730 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:42,742 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_A_to_MAINS_LowVoltage (Clearance)
+2025-04-11 23:27:42,782 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_A_to_MAINS_HB_A
+2025-04-11 23:27:42,784 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:42,794 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_A_to_MAINS_HB_A (Clearance)
+2025-04-11 23:27:42,833 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_B_to_MAINS_Line
+2025-04-11 23:27:42,835 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:42,847 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_B_to_MAINS_Line (Clearance)
+2025-04-11 23:27:42,887 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_B_to_MAINS_Neutral
+2025-04-11 23:27:42,889 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:42,899 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_B_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:42,906 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_B_to_MAINS_BoostSwNode
+2025-04-11 23:27:42,908 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:42,919 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_B_to_MAINS_BoostSwNode (Clearance)
+2025-04-11 23:27:42,961 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_B_to_MAINS_BUS
+2025-04-11 23:27:42,963 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:42,974 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_B_to_MAINS_BUS (Clearance)
+2025-04-11 23:27:43,015 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_B_to_MAINS_LowVoltage
+2025-04-11 23:27:43,017 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:43,028 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_B_to_MAINS_LowVoltage (Clearance)
+2025-04-11 23:27:43,068 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_B_to_MAINS_HB_A
+2025-04-11 23:27:43,069 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:43,079 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_B_to_MAINS_HB_A (Clearance)
+2025-04-11 23:27:43,116 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_B_to_MAINS_HB_B
+2025-04-11 23:27:43,117 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:43,127 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_B_to_MAINS_HB_B (Clearance)
+2025-04-11 23:27:43,132 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_FlyBackSwNode_to_MAINS_Line
+2025-04-11 23:27:43,133 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:43,143 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_FlyBackSwNode_to_MAINS_Line (Clearance)
+2025-04-11 23:27:43,183 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_FlyBackSwNode_to_MAINS_Neutral
+2025-04-11 23:27:43,185 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:43,196 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_FlyBackSwNode_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:43,313 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_FlyBackSwNode_to_MAINS_BoostSwNode
+2025-04-11 23:27:43,314 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:43,324 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_FlyBackSwNode_to_MAINS_BoostSwNode (Clearance)
+2025-04-11 23:27:43,818 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_FlyBackSwNode_to_MAINS_BUS
+2025-04-11 23:27:43,820 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:43,830 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_FlyBackSwNode_to_MAINS_BUS (Clearance)
+2025-04-11 23:27:43,869 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_FlyBackSwNode_to_MAINS_LowVoltage
+2025-04-11 23:27:43,871 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:43,880 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_FlyBackSwNode_to_MAINS_LowVoltage (Clearance)
+2025-04-11 23:27:43,919 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_FlyBackSwNode_to_MAINS_HB_A
+2025-04-11 23:27:43,921 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:43,932 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_FlyBackSwNode_to_MAINS_HB_A (Clearance)
+2025-04-11 23:27:43,969 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_FlyBackSwNode_to_MAINS_HB_B
+2025-04-11 23:27:43,971 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:43,981 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_FlyBackSwNode_to_MAINS_HB_B (Clearance)
+2025-04-11 23:27:44,020 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_FlyBackSwNode_to_MAINS_FlyBackSwNode
+2025-04-11 23:27:44,022 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,031 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_FlyBackSwNode_to_MAINS_FlyBackSwNode (Clearance)
+2025-04-11 23:27:44,070 - gui.rule_editor_widget - INFO - Rule selected: Rule_CHSGND_to_MAINS_Line
+2025-04-11 23:27:44,072 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,083 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_CHSGND_to_MAINS_Line (Clearance)
+2025-04-11 23:27:44,123 - gui.rule_editor_widget - INFO - Rule selected: Rule_CHSGND_to_MAINS_Neutral
+2025-04-11 23:27:44,124 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,135 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_CHSGND_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:44,176 - gui.rule_editor_widget - INFO - Rule selected: Rule_CHSGND_to_MAINS_BoostSwNode
+2025-04-11 23:27:44,178 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,189 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_CHSGND_to_MAINS_BoostSwNode (Clearance)
+2025-04-11 23:27:44,226 - gui.rule_editor_widget - INFO - Rule selected: Rule_CHSGND_to_MAINS_BUS
+2025-04-11 23:27:44,228 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,240 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_CHSGND_to_MAINS_BUS (Clearance)
+2025-04-11 23:27:44,278 - gui.rule_editor_widget - INFO - Rule selected: Rule_CHSGND_to_MAINS_LowVoltage
+2025-04-11 23:27:44,279 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,291 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_CHSGND_to_MAINS_LowVoltage (Clearance)
+2025-04-11 23:27:44,329 - gui.rule_editor_widget - INFO - Rule selected: Rule_CHSGND_to_MAINS_HB_A
+2025-04-11 23:27:44,331 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,342 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_CHSGND_to_MAINS_HB_A (Clearance)
+2025-04-11 23:27:44,383 - gui.rule_editor_widget - INFO - Rule selected: Rule_CHSGND_to_MAINS_HB_B
+2025-04-11 23:27:44,385 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,395 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_CHSGND_to_MAINS_HB_B (Clearance)
+2025-04-11 23:27:44,435 - gui.rule_editor_widget - INFO - Rule selected: Rule_CHSGND_to_MAINS_FlyBackSwNode
+2025-04-11 23:27:44,436 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,447 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_CHSGND_to_MAINS_FlyBackSwNode (Clearance)
+2025-04-11 23:27:44,487 - gui.rule_editor_widget - INFO - Rule selected: Rule_CHSGND_to_CHSGND
+2025-04-11 23:27:44,489 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,498 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_CHSGND_to_CHSGND (Clearance)
+2025-04-11 23:27:44,535 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_MAINS_Line
+2025-04-11 23:27:44,536 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,546 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_MAINS_Line (Clearance)
+2025-04-11 23:27:44,584 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_MAINS_Neutral
+2025-04-11 23:27:44,586 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,596 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:44,633 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_MAINS_BoostSwNode
+2025-04-11 23:27:44,635 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,647 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_MAINS_BoostSwNode (Clearance)
+2025-04-11 23:27:44,686 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_MAINS_BUS
+2025-04-11 23:27:44,688 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,698 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_MAINS_BUS (Clearance)
+2025-04-11 23:27:44,739 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_MAINS_LowVoltage
+2025-04-11 23:27:44,740 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,751 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_MAINS_LowVoltage (Clearance)
+2025-04-11 23:27:44,793 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_MAINS_HB_A
+2025-04-11 23:27:44,795 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,807 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_MAINS_HB_A (Clearance)
+2025-04-11 23:27:44,846 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_MAINS_HB_B
+2025-04-11 23:27:44,848 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,857 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_MAINS_HB_B (Clearance)
+2025-04-11 23:27:44,862 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_MAINS_FlyBackSwNode
+2025-04-11 23:27:44,863 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,873 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_MAINS_FlyBackSwNode (Clearance)
+2025-04-11 23:27:44,916 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_CHSGND
+2025-04-11 23:27:44,918 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,928 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_CHSGND (Clearance)
+2025-04-11 23:27:44,965 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_ISO_LowVoltage
+2025-04-11 23:27:44,967 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:44,977 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_ISO_LowVoltage (Clearance)
+2025-04-11 23:27:45,013 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_MAINS_Line
+2025-04-11 23:27:45,014 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:45,024 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_MAINS_Line (Clearance)
+2025-04-11 23:27:45,062 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_MAINS_Neutral
+2025-04-11 23:27:45,063 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:45,072 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:45,107 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_MAINS_BoostSwNode
+2025-04-11 23:27:45,109 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:45,119 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_MAINS_BoostSwNode (Clearance)
+2025-04-11 23:27:45,156 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_MAINS_BUS
+2025-04-11 23:27:45,158 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:45,167 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_MAINS_BUS (Clearance)
+2025-04-11 23:27:45,203 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_MAINS_LowVoltage
+2025-04-11 23:27:45,205 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:45,214 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_MAINS_LowVoltage (Clearance)
+2025-04-11 23:27:45,250 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_MAINS_HB_A
+2025-04-11 23:27:45,252 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:45,262 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_MAINS_HB_A (Clearance)
+2025-04-11 23:27:45,299 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_MAINS_HB_B
+2025-04-11 23:27:45,301 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:45,311 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_MAINS_HB_B (Clearance)
+2025-04-11 23:27:45,347 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_MAINS_FlyBackSwNode
+2025-04-11 23:27:45,348 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:45,359 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_MAINS_FlyBackSwNode (Clearance)
+2025-04-11 23:27:45,394 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_CHSGND
+2025-04-11 23:27:45,396 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:45,406 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_CHSGND (Clearance)
+2025-04-11 23:27:45,444 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_ISO_LowVoltage
+2025-04-11 23:27:45,446 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:45,455 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_ISO_LowVoltage (Clearance)
+2025-04-11 23:27:45,491 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_Other_Net_Class
+2025-04-11 23:27:45,493 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:45,503 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_Other_Net_Class (Clearance)
+2025-04-11 23:27:46,315 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_ISO_LowVoltage
+2025-04-11 23:27:46,316 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:46,327 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_ISO_LowVoltage (Clearance)
+2025-04-11 23:27:46,827 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_CHSGND
+2025-04-11 23:27:46,829 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:46,840 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_CHSGND (Clearance)
+2025-04-11 23:27:46,866 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_MAINS_FlyBackSwNode
+2025-04-11 23:27:46,868 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:46,878 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_MAINS_FlyBackSwNode (Clearance)
+2025-04-11 23:27:46,915 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_MAINS_HB_B
+2025-04-11 23:27:46,917 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:46,927 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_MAINS_HB_B (Clearance)
+2025-04-11 23:27:46,965 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_MAINS_HB_A
+2025-04-11 23:27:46,966 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:46,978 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_MAINS_HB_A (Clearance)
+2025-04-11 23:27:47,017 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_MAINS_LowVoltage
+2025-04-11 23:27:47,018 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,029 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_MAINS_LowVoltage (Clearance)
+2025-04-11 23:27:47,066 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_MAINS_BUS
+2025-04-11 23:27:47,068 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,078 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_MAINS_BUS (Clearance)
+2025-04-11 23:27:47,117 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_MAINS_BoostSwNode
+2025-04-11 23:27:47,119 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,129 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_MAINS_BoostSwNode (Clearance)
+2025-04-11 23:27:47,170 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_MAINS_Neutral
+2025-04-11 23:27:47,171 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,182 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:47,234 - gui.rule_editor_widget - INFO - Rule selected: Rule_Other_Net_Classes_to_MAINS_Line
+2025-04-11 23:27:47,236 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,249 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_Other_Net_Classes_to_MAINS_Line (Clearance)
+2025-04-11 23:27:47,295 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_ISO_LowVoltage
+2025-04-11 23:27:47,298 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,310 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_ISO_LowVoltage (Clearance)
+2025-04-11 23:27:47,349 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_CHSGND
+2025-04-11 23:27:47,352 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,361 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_CHSGND (Clearance)
+2025-04-11 23:27:47,366 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_MAINS_FlyBackSwNode
+2025-04-11 23:27:47,369 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,379 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_MAINS_FlyBackSwNode (Clearance)
+2025-04-11 23:27:47,424 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_MAINS_HB_B
+2025-04-11 23:27:47,425 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,435 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_MAINS_HB_B (Clearance)
+2025-04-11 23:27:47,475 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_MAINS_HB_A
+2025-04-11 23:27:47,477 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,486 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_MAINS_HB_A (Clearance)
+2025-04-11 23:27:47,526 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_MAINS_LowVoltage
+2025-04-11 23:27:47,528 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,538 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_MAINS_LowVoltage (Clearance)
+2025-04-11 23:27:47,575 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_MAINS_BUS
+2025-04-11 23:27:47,577 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,588 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_MAINS_BUS (Clearance)
+2025-04-11 23:27:47,625 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_MAINS_BoostSwNode
+2025-04-11 23:27:47,627 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,637 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_MAINS_BoostSwNode (Clearance)
+2025-04-11 23:27:47,676 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_MAINS_Neutral
+2025-04-11 23:27:47,678 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,687 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:47,723 - gui.rule_editor_widget - INFO - Rule selected: Rule_ISO_LowVoltage_to_MAINS_Line
+2025-04-11 23:27:47,725 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,734 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_ISO_LowVoltage_to_MAINS_Line (Clearance)
+2025-04-11 23:27:47,777 - gui.rule_editor_widget - INFO - Rule selected: Rule_CHSGND_to_CHSGND
+2025-04-11 23:27:47,779 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,789 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_CHSGND_to_CHSGND (Clearance)
+2025-04-11 23:27:47,825 - gui.rule_editor_widget - INFO - Rule selected: Rule_CHSGND_to_MAINS_FlyBackSwNode
+2025-04-11 23:27:47,827 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,837 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_CHSGND_to_MAINS_FlyBackSwNode (Clearance)
+2025-04-11 23:27:47,875 - gui.rule_editor_widget - INFO - Rule selected: Rule_CHSGND_to_MAINS_HB_B
+2025-04-11 23:27:47,877 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,887 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_CHSGND_to_MAINS_HB_B (Clearance)
+2025-04-11 23:27:47,926 - gui.rule_editor_widget - INFO - Rule selected: Rule_CHSGND_to_MAINS_HB_A
+2025-04-11 23:27:47,928 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,938 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_CHSGND_to_MAINS_HB_A (Clearance)
+2025-04-11 23:27:47,974 - gui.rule_editor_widget - INFO - Rule selected: Rule_CHSGND_to_MAINS_LowVoltage
+2025-04-11 23:27:47,975 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:47,985 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_CHSGND_to_MAINS_LowVoltage (Clearance)
+2025-04-11 23:27:48,021 - gui.rule_editor_widget - INFO - Rule selected: Rule_CHSGND_to_MAINS_BUS
+2025-04-11 23:27:48,023 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,032 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_CHSGND_to_MAINS_BUS (Clearance)
+2025-04-11 23:27:48,071 - gui.rule_editor_widget - INFO - Rule selected: Rule_CHSGND_to_MAINS_BoostSwNode
+2025-04-11 23:27:48,073 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,085 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_CHSGND_to_MAINS_BoostSwNode (Clearance)
+2025-04-11 23:27:48,122 - gui.rule_editor_widget - INFO - Rule selected: Rule_CHSGND_to_MAINS_Neutral
+2025-04-11 23:27:48,124 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,133 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_CHSGND_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:48,172 - gui.rule_editor_widget - INFO - Rule selected: Rule_CHSGND_to_MAINS_Line
+2025-04-11 23:27:48,173 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,183 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_CHSGND_to_MAINS_Line (Clearance)
+2025-04-11 23:27:48,223 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_FlyBackSwNode_to_MAINS_FlyBackSwNode
+2025-04-11 23:27:48,226 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,235 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_FlyBackSwNode_to_MAINS_FlyBackSwNode (Clearance)
+2025-04-11 23:27:48,272 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_FlyBackSwNode_to_MAINS_HB_B
+2025-04-11 23:27:48,273 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,283 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_FlyBackSwNode_to_MAINS_HB_B (Clearance)
+2025-04-11 23:27:48,327 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_FlyBackSwNode_to_MAINS_HB_A
+2025-04-11 23:27:48,328 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,338 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_FlyBackSwNode_to_MAINS_HB_A (Clearance)
+2025-04-11 23:27:48,376 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_FlyBackSwNode_to_MAINS_LowVoltage
+2025-04-11 23:27:48,378 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,387 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_FlyBackSwNode_to_MAINS_LowVoltage (Clearance)
+2025-04-11 23:27:48,393 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_FlyBackSwNode_to_MAINS_BUS
+2025-04-11 23:27:48,394 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,404 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_FlyBackSwNode_to_MAINS_BUS (Clearance)
+2025-04-11 23:27:48,447 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_FlyBackSwNode_to_MAINS_BoostSwNode
+2025-04-11 23:27:48,448 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,459 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_FlyBackSwNode_to_MAINS_BoostSwNode (Clearance)
+2025-04-11 23:27:48,496 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_FlyBackSwNode_to_MAINS_Neutral
+2025-04-11 23:27:48,497 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,507 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_FlyBackSwNode_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:48,550 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_FlyBackSwNode_to_MAINS_Line
+2025-04-11 23:27:48,551 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,561 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_FlyBackSwNode_to_MAINS_Line (Clearance)
+2025-04-11 23:27:48,600 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_B_to_MAINS_HB_B
+2025-04-11 23:27:48,602 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,613 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_B_to_MAINS_HB_B (Clearance)
+2025-04-11 23:27:48,655 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_B_to_MAINS_HB_A
+2025-04-11 23:27:48,656 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,666 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_B_to_MAINS_HB_A (Clearance)
+2025-04-11 23:27:48,704 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_B_to_MAINS_LowVoltage
+2025-04-11 23:27:48,706 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,715 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_B_to_MAINS_LowVoltage (Clearance)
+2025-04-11 23:27:48,753 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_B_to_MAINS_BUS
+2025-04-11 23:27:48,755 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,768 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_B_to_MAINS_BUS (Clearance)
+2025-04-11 23:27:48,813 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_B_to_MAINS_BoostSwNode
+2025-04-11 23:27:48,815 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,826 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_B_to_MAINS_BoostSwNode (Clearance)
+2025-04-11 23:27:48,863 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_B_to_MAINS_Neutral
+2025-04-11 23:27:48,865 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,875 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_B_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:48,912 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_B_to_MAINS_Line
+2025-04-11 23:27:48,913 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,925 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_B_to_MAINS_Line (Clearance)
+2025-04-11 23:27:48,961 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_A_to_MAINS_HB_A
+2025-04-11 23:27:48,963 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:48,975 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_A_to_MAINS_HB_A (Clearance)
+2025-04-11 23:27:49,019 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_A_to_MAINS_LowVoltage
+2025-04-11 23:27:49,020 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,031 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_A_to_MAINS_LowVoltage (Clearance)
+2025-04-11 23:27:49,071 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_A_to_MAINS_BUS
+2025-04-11 23:27:49,073 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,083 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_A_to_MAINS_BUS (Clearance)
+2025-04-11 23:27:49,122 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_A_to_MAINS_BoostSwNode
+2025-04-11 23:27:49,124 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,134 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_A_to_MAINS_BoostSwNode (Clearance)
+2025-04-11 23:27:49,173 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_A_to_MAINS_Neutral
+2025-04-11 23:27:49,175 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,187 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_A_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:49,223 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_HB_A_to_MAINS_Line
+2025-04-11 23:27:49,225 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,236 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_HB_A_to_MAINS_Line (Clearance)
+2025-04-11 23:27:49,272 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_LowVoltage_to_MAINS_LowVoltage
+2025-04-11 23:27:49,274 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,283 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_LowVoltage_to_MAINS_LowVoltage (Clearance)
+2025-04-11 23:27:49,318 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_LowVoltage_to_MAINS_BUS
+2025-04-11 23:27:49,320 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,330 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_LowVoltage_to_MAINS_BUS (Clearance)
+2025-04-11 23:27:49,364 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_LowVoltage_to_MAINS_BoostSwNode
+2025-04-11 23:27:49,366 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,376 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_LowVoltage_to_MAINS_BoostSwNode (Clearance)
+2025-04-11 23:27:49,411 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_LowVoltage_to_MAINS_Neutral
+2025-04-11 23:27:49,412 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,422 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_LowVoltage_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:49,459 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_LowVoltage_to_MAINS_Line
+2025-04-11 23:27:49,460 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,471 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_LowVoltage_to_MAINS_Line (Clearance)
+2025-04-11 23:27:49,510 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_BUS_to_MAINS_BUS
+2025-04-11 23:27:49,511 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,522 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_BUS_to_MAINS_BUS (Clearance)
+2025-04-11 23:27:49,561 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_BUS_to_MAINS_BoostSwNode
+2025-04-11 23:27:49,563 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,573 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_BUS_to_MAINS_BoostSwNode (Clearance)
+2025-04-11 23:27:49,611 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_BUS_to_MAINS_Neutral
+2025-04-11 23:27:49,613 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,624 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_BUS_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:49,663 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_BUS_to_MAINS_Line
+2025-04-11 23:27:49,664 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,676 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_BUS_to_MAINS_Line (Clearance)
+2025-04-11 23:27:49,715 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_BoostSwNode_to_MAINS_BoostSwNode
+2025-04-11 23:27:49,717 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,727 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_BoostSwNode_to_MAINS_BoostSwNode (Clearance)
+2025-04-11 23:27:49,769 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_BoostSwNode_to_MAINS_Neutral
+2025-04-11 23:27:49,770 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,781 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_BoostSwNode_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:49,817 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_BoostSwNode_to_MAINS_Line
+2025-04-11 23:27:49,818 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,829 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_BoostSwNode_to_MAINS_Line (Clearance)
+2025-04-11 23:27:49,868 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_Neutral_to_MAINS_Neutral
+2025-04-11 23:27:49,870 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,880 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_Neutral_to_MAINS_Neutral (Clearance)
+2025-04-11 23:27:49,919 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_Neutral_to_MAINS_Line
+2025-04-11 23:27:49,921 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,930 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_Neutral_to_MAINS_Line (Clearance)
+2025-04-11 23:27:49,972 - gui.rule_editor_widget - INFO - Rule selected: Rule_MAINS_Line_to_MAINS_Line
+2025-04-11 23:27:49,974 - gui.rule_editor_widget - INFO - Rule editor widget initialized
+2025-04-11 23:27:49,984 - gui.rule_editor_widget - INFO - Rule set in editor: Rule_MAINS_Line_to_MAINS_Line (Clearance)
+2025-04-11 23:28:13,681 - root - INFO - About action triggered.
+2025-04-11 23:28:13,703 - gui.main_window - WARNING - Could not find version pattern in setup.py
+2025-04-11 23:28:28,787 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:28:28,789 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:28:28,790 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:28:28,791 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 23:28:28,791 - gui.main_window - INFO - Application closing.
+2025-04-11 23:32:37,778 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 23:32:37,832 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 23:32:37,832 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 23:32:37,833 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 23:32:37,835 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 23:32:38,302 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 23:32:38,303 - gui.main_window - INFO - Main window initialized
+2025-04-11 23:32:41,249 - root - INFO - About action triggered.
+2025-04-11 23:32:41,251 - gui.main_window - WARNING - Could not find version pattern in setup.py
+2025-04-11 23:32:51,696 - root - INFO - About action triggered.
+2025-04-11 23:32:51,697 - gui.main_window - WARNING - Could not find version pattern in setup.py
+2025-04-11 23:33:09,602 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:33:09,604 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:33:09,606 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:33:09,606 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 23:33:09,606 - gui.main_window - INFO - Application closing.
+2025-04-11 23:34:02,264 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 23:34:02,314 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 23:34:02,314 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 23:34:02,315 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 23:34:02,316 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 23:34:02,759 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 23:34:02,759 - gui.main_window - INFO - Main window initialized
+2025-04-11 23:34:05,119 - root - INFO - About action triggered.
+2025-04-11 23:34:05,120 - gui.main_window - WARNING - Could not find version pattern in setup.py
+2025-04-11 23:34:12,539 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:34:12,541 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:34:12,542 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:34:12,542 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 23:34:12,542 - gui.main_window - INFO - Application closing.
+2025-04-11 23:35:23,652 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 23:35:23,695 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 23:35:23,695 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 23:35:23,696 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 23:35:23,697 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 23:35:24,190 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 23:35:24,191 - gui.main_window - INFO - Main window initialized
+2025-04-11 23:35:26,788 - gui.main_window - INFO - --- Showing About Dialog ---
+2025-04-11 23:35:26,788 - gui.main_window - INFO - Calculated setup.py path: C:\code\AltiumXCEL2QueryBuilder\setup.py
+2025-04-11 23:35:26,789 - gui.main_window - INFO - setup.py found at: C:\code\AltiumXCEL2QueryBuilder\setup.py
+2025-04-11 23:35:26,790 - gui.main_window - INFO - Read setup.py content (first 100 chars): #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+from setuptools import setup, find_packages
+import o...
+2025-04-11 23:35:26,792 - gui.main_window - WARNING - Could not find version pattern in setup.py
+2025-04-11 23:35:26,793 - gui.main_window - WARNING - Could not find author pattern in setup.py
+2025-04-11 23:35:26,793 - gui.main_window - WARNING - Could not find url pattern in setup.py
+2025-04-11 23:35:26,794 - gui.main_window - WARNING - Could not find author_email pattern in setup.py
+2025-04-11 23:35:26,794 - gui.main_window - INFO - Final values for About dialog: Version='Unknown', Author='Unknown Author', Email='Unknown Email', URL='Unknown URL', Company='EControls'
+2025-04-11 23:35:31,538 - gui.main_window - INFO - --- Finished Showing About Dialog ---
+2025-04-11 23:35:32,838 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:35:32,840 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:35:32,841 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:35:32,842 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 23:35:32,842 - gui.main_window - INFO - Application closing.
+2025-04-11 23:37:35,290 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-11 23:37:35,326 - utils.config - INFO - Configuration loaded successfully
+2025-04-11 23:37:35,326 - themes.theme_manager - INFO - Theme manager initialized with theme: dark
+2025-04-11 23:37:35,327 - themes.theme_manager - INFO - Attempting to load theme file: C:\code\AltiumXCEL2QueryBuilder\src\..\styles\dark.qss
+2025-04-11 23:37:35,328 - themes.theme_manager - INFO - Applied theme 'dark' from C:/code/AltiumXCEL2QueryBuilder/src/../styles/dark.qss
+2025-04-11 23:37:35,764 - gui.main_window - INFO - Restored window geometry and state
+2025-04-11 23:37:35,765 - gui.main_window - INFO - Main window initialized
+2025-04-11 23:37:37,863 - gui.main_window - INFO - --- Showing About Dialog (Hardcoded Info) ---
+2025-04-11 23:37:37,864 - gui.main_window - INFO - Using hardcoded values for About dialog: Version='1.0.0', Author='Karl Long (klong4)', Email='klong@econtrols.com', URL='https://github.com/klong4/AltiumXCEL2QueryBuilder', Company='EControls'
+2025-04-11 23:37:54,211 - gui.main_window - INFO - --- Finished Showing About Dialog ---
+2025-04-11 23:38:02,271 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:38:02,273 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:38:02,275 - utils.config - INFO - Configuration saved successfully
+2025-04-11 23:38:02,275 - gui.main_window - INFO - Saved window geometry and state
+2025-04-11 23:38:02,275 - gui.main_window - INFO - Application closing.
