@@ -12,13 +12,17 @@ import logging
 from typing import Dict, List, Optional, Union, Tuple # Add List
 from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QTreeView, QPushButton, QMessageBox,
-    QAbstractItemView, QMenu, QListWidget, QListWidgetItem, QGroupBox, QLabel
+    QAbstractItemView, QMenu, QListWidget, QListWidgetItem, QGroupBox, QLabel,
+    QFileDialog, QDialog # Added QDialog
 )
 from PyQt5.QtCore import Qt, pyqtSignal, QAbstractItemModel, QModelIndex, QVariant
-from PyQt5.QtGui import QStandardItemModel, QStandardItem
+from PyQt5.QtGui import QStandardItemModel, QStandardItem, QColor, QBrush
 
-# Assuming RuleManager and BaseRule are defined in models.rule_model
-from models.rule_model import BaseRule, RuleType, UnitType, RuleScope, ClearanceRule # Import BaseRule etc.
+# Import RuleManager and specific rule types
+from models.rule_model import BaseRule, RuleManager, RuleType, UnitType, RuleScope, ClearanceRule, SingleScopeRule
+from services.rule_generator import RuleGeneratorError # Keep this for the except block
+# Import the new dialog
+from .rule_edit_dialog import RuleEditDialog
 
 logger = logging.getLogger(__name__)
 
@@ -191,35 +195,6 @@ class RulesManagerWidget(QWidget):
         # No need to set layout again, just add widgets
         # self.details_group.setLayout(self.details_layout)
 
-    def _save_rule_details(self):
-        """Save changes from the details view back to the selected rule object."""
-        selected_items = self.rules_list_widget.selectedItems()
-        if not selected_items:
-            QMessageBox.warning(self, "Save Rule Details", "No rule selected.")
-            return
-
-        # Get the selected rule object
-        selected_rule = selected_items[0].data(Qt.UserRole)
-
-        # --- Update General Properties ---
-        # Here you would collect data from the detail fields and update the selected_rule
-        # For example:
-        # selected_rule.name = self.name_edit.text()
-        # ... update other properties
-
-        # --- Update Rule Type Specific Properties ---
-        if isinstance(selected_rule, ClearanceRule):
-            # Update ClearanceRule specific fields
-            # selected_rule.min_clearance = self.min_clearance_edit.value()
-            # selected_rule.max_clearance = self.max_clearance_edit.value()
-            pass
-        # Add elif blocks for other rule types
-
-        # Update the list item text
-        selected_items[0].setText(f"{selected_rule.name} ({selected_rule.rule_type.value})")
-        self._set_unsaved_changes(True)
-        logger.info(f"Updated rule details for: {selected_rule.name}")
-
     def _add_rule(self):
         """Add a new default rule."""
         # For now, add a default ClearanceRule
@@ -236,16 +211,54 @@ class RulesManagerWidget(QWidget):
         logger.info(f"Added new rule: {new_rule_name}")
 
     def _edit_rule(self):
-        """Placeholder for potentially opening a dedicated rule editor dialog."""
-        # Currently, editing happens directly in the details pane
-        # This button could open a more complex editor if needed
+        """Open the RuleEditDialog for the selected rule."""
         selected_items = self.rules_list_widget.selectedItems()
         if not selected_items:
             QMessageBox.warning(self, "Edit Rule", "Please select a rule to edit.")
             return
-        # For now, just ensure details are saved if changed
-        self._save_rule_details() # Save any pending changes in the details view
-        QMessageBox.information(self, "Edit Rule", "Edit rule properties in the details pane and click 'Save Details'.")
+
+        selected_item = selected_items[0]
+        rule_to_edit = selected_item.data(Qt.UserRole)
+
+        if not isinstance(rule_to_edit, BaseRule):
+            logger.error(f"Invalid data found for selected item: {rule_to_edit}")
+            QMessageBox.critical(self, "Error", "Could not retrieve rule data for editing.")
+            return
+
+        # Create and show the dialog
+        dialog = RuleEditDialog(rule_to_edit, self)
+        if dialog.exec_() == QDialog.Accepted:
+            updated_data = dialog.get_updated_data()
+            logger.info(f"Applying updated data for rule '{rule_to_edit.name}': {updated_data}")
+
+            # Update the original rule object directly
+            try:
+                rule_to_edit.name = updated_data.get('name', rule_to_edit.name)
+                rule_to_edit.enabled = updated_data.get('enabled', rule_to_edit.enabled)
+                rule_to_edit.priority = updated_data.get('priority', rule_to_edit.priority)
+                rule_to_edit.comment = updated_data.get('comment', rule_to_edit.comment)
+
+                if isinstance(rule_to_edit, ClearanceRule):
+                    rule_to_edit.min_clearance = updated_data.get('min_clearance', rule_to_edit.min_clearance)
+                    rule_to_edit.unit = updated_data.get('unit', rule_to_edit.unit)
+                    rule_to_edit.source_scope = updated_data.get('source_scope', rule_to_edit.source_scope)
+                    rule_to_edit.target_scope = updated_data.get('target_scope', rule_to_edit.target_scope)
+                elif isinstance(rule_to_edit, SingleScopeRule):
+                    rule_to_edit.scope = updated_data.get('scope', rule_to_edit.scope)
+                # Add elif blocks for other specific rule types if they exist
+
+                # Update the list widget item text
+                selected_item.setText(f"{rule_to_edit.name} ({rule_to_edit.rule_type.value})")
+                # Update the details view if this item is still selected
+                self._update_rule_details(rule_to_edit)
+                # Mark changes as unsaved
+                self._set_unsaved_changes(True)
+                logger.info(f"Rule '{rule_to_edit.name}' updated successfully.")
+            except Exception as e:
+                logger.error(f"Error applying updated rule data: {e}", exc_info=True)
+                QMessageBox.critical(self, "Update Error", f"Failed to apply rule changes: {e}")
+        else:
+            logger.info(f"Edit cancelled for rule '{rule_to_edit.name}'.")
 
     def _delete_rule(self):
         """Delete the selected rule(s)."""
@@ -320,30 +333,40 @@ class RulesManagerWidget(QWidget):
                 QMessageBox.critical(self, "Save Error", f"Failed to save rules: {e}")
 
     def _export_rules(self):
-        """Export the current rules to an Altium *.RUL file."""
+        """Export the current rules to a .RUL file."""
         if not self._rules:
-            QMessageBox.warning(self, "Export Rules", "There are no rules to export.")
+            QMessageBox.warning(self, "Export Error", "No rules to export.")
             return
 
-        # Use self._rules directly
         rules_to_export = self._rules
         file_path, _ = QFileDialog.getSaveFileName(
             self, "Export Rules As", "", "Altium Rule Files (*.RUL);;All Files (*)"
         )
         if file_path:
             try:
-                # Use RuleGenerator to format and export
-                RuleGenerator.export_rules(rules_to_export, file_path)
+                # Create a RuleManager instance to handle export
+                rule_manager = RuleManager()
+                for rule in rules_to_export:
+                    rule_manager.add_rule(rule) # Add rules to the manager
+
+                # Use the RuleManager's export method
+                rule_manager.export_rules_to_file(file_path)
+
                 logger.info(f"Exported {len(rules_to_export)} rules to {file_path}")
                 # Exporting doesn't necessarily mean changes are 'saved' internally
                 # self._set_unsaved_changes(False) # Decide if export should reset this
                 QMessageBox.information(self, "Export Successful", f"Rules exported to:\n{file_path}")
-            except RuleGeneratorError as rge:
+            except RuleGeneratorError as rge: # Keep this catch if RuleManager raises it indirectly or for other potential errors
                 logger.error(f"Rule Generator Error during export: {rge}", exc_info=True)
                 QMessageBox.critical(self, "Export Error", f"Rule Generation Error: {rge}")
             except Exception as e:
                 logger.error(f"Error exporting rules to {file_path}: {e}", exc_info=True)
-                QMessageBox.critical(self, "Export Error", f"Failed to export rules: {e}")
+                QMessageBox.critical(self, "Export Error", f"An unexpected error occurred during export: {str(e)}")
+
+    def _import_rules(self):
+        """Import rules from a .RUL file."""
+        # TODO: Implement import functionality
+        pass
 
     def _set_unsaved_changes(self, changed: bool):
         """Set the unsaved changes flag and emit signal if state changes."""

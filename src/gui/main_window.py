@@ -162,9 +162,10 @@ class MainWindow(QMainWindow):
             # Use renamed variable
             elif widget == self.rules_manager_tab:
                 try:
-                    # Use correct signal names from RulesManagerWidget
-                    self.rules_manager_tab.rules_changed.disconnect(self._on_data_changed)
-                    self.rules_manager_tab.pivot_data_updated.disconnect(self._on_rule_pivot_updated)
+                    # Use correct signal name from RulesManagerWidget
+                    self.rules_manager_tab.rules_updated.disconnect(self._on_data_changed)
+                    # Remove disconnection for non-existent signal
+                    # self.rules_manager_tab.pivot_data_updated.disconnect(self._on_rule_pivot_updated)
                 except TypeError:
                     pass
                 # Use renamed variable

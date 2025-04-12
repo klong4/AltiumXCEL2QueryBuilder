@@ -4397,3 +4397,276 @@ ValueError: Shape of passed values is (11, 12), indices imply (11, 11)
 2025-04-12 12:33:41,498 - gui.pivot_table_widget - INFO - Rule generation resulted in an empty list.
 2025-04-12 12:33:42,795 - gui.main_window - INFO - Saved window geometry and state
 2025-04-12 12:33:42,795 - gui.main_window - INFO - Application closing.
+2025-04-12 12:53:07,008 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-12 12:53:07,053 - root - INFO - Applied theme: dark
+2025-04-12 12:53:07,055 - root - INFO - Applied theme: dark
+2025-04-12 12:53:07,592 - gui.main_window - INFO - Restored window geometry and state
+2025-04-12 12:53:07,593 - gui.main_window - INFO - Main window initialized
+2025-04-12 12:53:41,096 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-12 12:53:41,151 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-12 12:53:41,151 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-12 12:53:41,152 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-12 12:53:53,034 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-12 12:54:03,424 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-12 12:54:03,426 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-12 12:54:03,426 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-12 12:54:03,427 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-12 12:54:03,427 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-12 12:54:03,428 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-12 12:54:03,454 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-12 12:54:03,454 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-12 12:54:05,916 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-12 12:54:05,917 - gui.pivot_table_widget - WARNING - Data shape (11, 12) has more columns than headers (11). Slicing data.
+2025-04-12 12:54:05,918 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mil, Prefix: 'Clearance_'
+2025-04-12 12:54:05,920 - models.excel_data - INFO - Created 65 clearance rules from pivot data
+2025-04-12 12:54:05,920 - gui.pivot_table_widget - INFO - Successfully generated 65 rules.
+2025-04-12 12:54:05,921 - gui.main_window - INFO - Received 65 generated rules from pivot table.
+2025-04-12 12:54:05,921 - gui.main_window - INFO - Creating Rule Manager tab.
+2025-04-12 12:54:05,924 - gui.main_window - INFO - Rule Manager tab created at index 1.
+2025-04-12 12:54:05,926 - gui.rule_editor_widget - INFO - Loading 65 rules into the editor view.
+2025-04-12 12:54:05,927 - gui.main_window - INFO - Loaded generated rules into Rule Manager tab and switched view.
+2025-04-12 12:54:13,717 - gui.rule_editor_widget - INFO - Updated rule details for: Clearance_MAINS_BUS_to_MAINS_BUS
+2025-04-12 12:54:19,967 - gui.rule_editor_widget - INFO - Updated rule details for: Clearance_MAINS_BUS_to_MAINS_BUS
+2025-04-12 12:59:46,644 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-12 12:59:46,685 - root - INFO - Applied theme: dark
+2025-04-12 12:59:46,687 - root - INFO - Applied theme: dark
+2025-04-12 12:59:47,198 - gui.main_window - INFO - Restored window geometry and state
+2025-04-12 12:59:47,198 - gui.main_window - INFO - Main window initialized
+2025-04-12 13:01:35,324 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-12 13:01:35,369 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-12 13:01:35,369 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-12 13:01:35,369 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-12 13:01:40,359 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-12 13:01:45,761 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-12 13:01:45,763 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-12 13:01:45,763 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-12 13:01:45,763 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-12 13:01:45,764 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-12 13:01:45,765 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-12 13:01:45,793 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-12 13:01:45,794 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-12 13:01:52,019 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-12 13:01:52,019 - gui.pivot_table_widget - WARNING - Data shape (11, 12) has more columns than headers (11). Slicing data.
+2025-04-12 13:01:52,020 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mm, Prefix: 'Clearance_'
+2025-04-12 13:01:52,022 - models.excel_data - INFO - Created 65 clearance rules from pivot data
+2025-04-12 13:01:52,022 - gui.pivot_table_widget - INFO - Successfully generated 65 rules.
+2025-04-12 13:01:52,023 - gui.main_window - INFO - Received 65 generated rules from pivot table.
+2025-04-12 13:01:52,023 - gui.main_window - INFO - Creating Rule Manager tab.
+2025-04-12 13:01:52,027 - gui.main_window - INFO - Rule Manager tab created at index 1.
+2025-04-12 13:01:52,029 - gui.rule_editor_widget - INFO - Loading 65 rules into the editor view.
+2025-04-12 13:01:52,030 - gui.main_window - INFO - Loaded generated rules into Rule Manager tab and switched view.
+2025-04-12 13:02:14,034 - gui.rule_editor_widget - INFO - Updated rule details for: Clearance_CHSGND_to_MAINS_LowVoltage
+2025-04-12 13:02:36,694 - gui.rule_editor_widget - INFO - Cleared all rules.
+2025-04-12 13:02:40,178 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-12 13:02:40,179 - gui.pivot_table_widget - WARNING - Data shape (11, 12) has more columns than headers (11). Slicing data.
+2025-04-12 13:02:40,180 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mm, Prefix: 'Clearance_'
+2025-04-12 13:02:40,183 - models.excel_data - INFO - Created 65 clearance rules from pivot data
+2025-04-12 13:02:40,183 - gui.pivot_table_widget - INFO - Successfully generated 65 rules.
+2025-04-12 13:02:40,184 - gui.main_window - INFO - Received 65 generated rules from pivot table.
+2025-04-12 13:02:40,185 - gui.rule_editor_widget - INFO - Loading 65 rules into the editor view.
+2025-04-12 13:02:40,187 - gui.main_window - INFO - Loaded generated rules into Rule Manager tab and switched view.
+2025-04-12 13:05:08,430 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-12 13:05:08,472 - root - INFO - Applied theme: dark
+2025-04-12 13:05:08,473 - root - INFO - Applied theme: dark
+2025-04-12 13:05:08,923 - gui.main_window - INFO - Restored window geometry and state
+2025-04-12 13:05:08,924 - gui.main_window - INFO - Main window initialized
+2025-04-12 13:05:16,616 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-12 13:05:16,668 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-12 13:05:16,668 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-12 13:05:16,668 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-12 13:05:21,899 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-12 13:05:27,891 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-12 13:05:27,893 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-12 13:05:27,893 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-12 13:05:27,893 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-12 13:05:27,894 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-12 13:05:27,895 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-12 13:05:27,925 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-12 13:05:27,926 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-12 13:05:35,245 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-12 13:05:35,246 - gui.pivot_table_widget - WARNING - Data shape (11, 12) has more columns than headers (11). Slicing data.
+2025-04-12 13:05:35,247 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mm, Prefix: 'Clearance_'
+2025-04-12 13:05:35,250 - models.excel_data - INFO - Created 65 clearance rules from pivot data
+2025-04-12 13:05:35,250 - gui.pivot_table_widget - INFO - Successfully generated 65 rules.
+2025-04-12 13:05:35,251 - gui.main_window - INFO - Received 65 generated rules from pivot table.
+2025-04-12 13:05:35,251 - gui.main_window - INFO - Creating Rule Manager tab.
+2025-04-12 13:05:35,255 - gui.main_window - INFO - Rule Manager tab created at index 1.
+2025-04-12 13:05:35,257 - gui.rule_editor_widget - INFO - Loading 65 rules into the editor view.
+2025-04-12 13:05:35,258 - gui.main_window - INFO - Loaded generated rules into Rule Manager tab and switched view.
+2025-04-12 13:05:50,317 - gui.rule_editor_widget - ERROR - Error exporting rules to C:/code/AltiumXCEL2QueryBuilder/output/test.RUL: type object 'RuleGenerator' has no attribute 'export_rules'
+Traceback (most recent call last):
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\rule_editor_widget.py", line 338, in _export_rules
+    RuleGenerator.export_rules(rules_to_export, file_path)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'RuleGenerator' has no attribute 'export_rules'
+2025-04-12 13:05:54,484 - gui.main_window - INFO - Saved window geometry and state
+2025-04-12 13:05:54,484 - gui.main_window - INFO - Application closing.
+2025-04-12 13:08:20,488 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-12 13:08:20,522 - root - INFO - Applied theme: dark
+2025-04-12 13:08:20,524 - root - INFO - Applied theme: dark
+2025-04-12 13:08:20,947 - gui.main_window - INFO - Restored window geometry and state
+2025-04-12 13:08:20,947 - gui.main_window - INFO - Main window initialized
+2025-04-12 13:08:26,495 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-12 13:08:26,537 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-12 13:08:26,538 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-12 13:08:26,538 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-12 13:08:32,571 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-12 13:08:39,904 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-12 13:08:39,906 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-12 13:08:39,906 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-12 13:08:39,907 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-12 13:08:39,907 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-12 13:08:39,908 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-12 13:08:39,943 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-12 13:08:39,943 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-12 13:08:43,969 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-12 13:08:43,969 - gui.pivot_table_widget - WARNING - Data shape (11, 12) has more columns than headers (11). Slicing data.
+2025-04-12 13:08:43,970 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mm, Prefix: 'Clearance_'
+2025-04-12 13:08:43,972 - models.excel_data - INFO - Created 65 clearance rules from pivot data
+2025-04-12 13:08:43,972 - gui.pivot_table_widget - INFO - Successfully generated 65 rules.
+2025-04-12 13:08:43,972 - gui.main_window - INFO - Received 65 generated rules from pivot table.
+2025-04-12 13:08:43,973 - gui.main_window - INFO - Creating Rule Manager tab.
+2025-04-12 13:08:43,976 - gui.main_window - INFO - Rule Manager tab created at index 1.
+2025-04-12 13:08:43,978 - gui.rule_editor_widget - INFO - Loading 65 rules into the editor view.
+2025-04-12 13:08:43,979 - gui.main_window - INFO - Loaded generated rules into Rule Manager tab and switched view.
+2025-04-12 13:09:01,514 - gui.rule_editor_widget - ERROR - Error exporting rules to C:/code/AltiumXCEL2QueryBuilder/output/test.RUL: type object 'RuleGenerator' has no attribute 'export_rules'
+Traceback (most recent call last):
+  File "C:\code\AltiumXCEL2QueryBuilder\src\gui\rule_editor_widget.py", line 338, in _export_rules
+    RuleGenerator.export_rules(rules_to_export, file_path)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: type object 'RuleGenerator' has no attribute 'export_rules'
+2025-04-12 13:09:04,970 - gui.main_window - INFO - Saved window geometry and state
+2025-04-12 13:09:04,971 - gui.main_window - INFO - Application closing.
+2025-04-12 13:18:42,897 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-12 13:18:42,938 - root - INFO - Applied theme: dark
+2025-04-12 13:18:42,940 - root - INFO - Applied theme: dark
+2025-04-12 13:18:43,422 - gui.main_window - INFO - Restored window geometry and state
+2025-04-12 13:18:43,422 - gui.main_window - INFO - Main window initialized
+2025-04-12 13:18:48,586 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-12 13:18:48,635 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-12 13:18:48,636 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-12 13:18:48,636 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-12 13:18:54,274 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-12 13:18:58,823 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-12 13:18:58,825 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-12 13:18:58,825 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-12 13:18:58,825 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-12 13:18:58,826 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-12 13:18:58,827 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-12 13:18:58,857 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-12 13:18:58,857 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-12 13:19:01,709 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-12 13:19:01,709 - gui.pivot_table_widget - WARNING - Data shape (11, 12) has more columns than headers (11). Slicing data.
+2025-04-12 13:19:01,710 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mil, Prefix: 'Clearance_'
+2025-04-12 13:19:01,712 - models.excel_data - INFO - Created 65 clearance rules from pivot data
+2025-04-12 13:19:01,712 - gui.pivot_table_widget - INFO - Successfully generated 65 rules.
+2025-04-12 13:19:01,713 - gui.main_window - INFO - Received 65 generated rules from pivot table.
+2025-04-12 13:19:01,713 - gui.main_window - INFO - Creating Rule Manager tab.
+2025-04-12 13:19:01,716 - gui.main_window - INFO - Rule Manager tab created at index 1.
+2025-04-12 13:19:01,718 - gui.rule_editor_widget - INFO - Loading 65 rules into the editor view.
+2025-04-12 13:19:01,719 - gui.main_window - INFO - Loaded generated rules into Rule Manager tab and switched view.
+2025-04-12 13:21:57,854 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-12 13:21:57,893 - root - INFO - Applied theme: dark
+2025-04-12 13:21:57,895 - root - INFO - Applied theme: dark
+2025-04-12 13:21:58,341 - gui.main_window - INFO - Restored window geometry and state
+2025-04-12 13:21:58,342 - gui.main_window - INFO - Main window initialized
+2025-04-12 13:22:03,835 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-12 13:22:03,877 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-12 13:22:03,878 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-12 13:22:03,878 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-12 13:22:09,986 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-12 13:22:14,795 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-12 13:22:14,796 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-12 13:22:14,797 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-12 13:22:14,797 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-12 13:22:14,797 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-12 13:22:14,798 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-12 13:22:14,823 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-12 13:22:14,824 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-12 13:22:18,609 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-12 13:22:18,610 - gui.pivot_table_widget - WARNING - Data shape (11, 12) has more columns than headers (11). Slicing data.
+2025-04-12 13:22:18,610 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mm, Prefix: 'Clearance_'
+2025-04-12 13:22:18,612 - models.excel_data - INFO - Created 65 clearance rules from pivot data
+2025-04-12 13:22:18,612 - gui.pivot_table_widget - INFO - Successfully generated 65 rules.
+2025-04-12 13:22:18,613 - gui.main_window - INFO - Received 65 generated rules from pivot table.
+2025-04-12 13:22:18,613 - gui.main_window - INFO - Creating Rule Manager tab.
+2025-04-12 13:22:18,616 - gui.main_window - INFO - Rule Manager tab created at index 1.
+2025-04-12 13:22:18,617 - gui.rule_editor_widget - INFO - Loading 65 rules into the editor view.
+2025-04-12 13:22:18,618 - gui.main_window - INFO - Loaded generated rules into Rule Manager tab and switched view.
+2025-04-12 13:22:26,771 - gui.rule_editor_widget - INFO - Updated rule details for: Clearance_MAINS_HB_B_to_MAINS_Neutral
+2025-04-12 13:22:32,346 - gui.main_window - INFO - Saved window geometry and state
+2025-04-12 13:22:32,346 - gui.main_window - INFO - Application closing.
+2025-04-12 13:26:16,845 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-12 13:26:16,882 - root - INFO - Applied theme: dark
+2025-04-12 13:26:16,883 - root - INFO - Applied theme: dark
+2025-04-12 13:26:17,289 - gui.main_window - INFO - Restored window geometry and state
+2025-04-12 13:26:17,289 - gui.main_window - INFO - Main window initialized
+2025-04-12 13:26:23,473 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-12 13:26:23,523 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-12 13:26:23,524 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-12 13:26:23,525 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-12 13:26:29,793 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-12 13:26:34,254 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-12 13:26:34,255 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-12 13:26:34,255 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-12 13:26:34,255 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-12 13:26:34,256 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-12 13:26:34,256 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-12 13:26:34,285 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-12 13:26:34,286 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-12 13:26:48,669 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-12 13:26:48,669 - gui.pivot_table_widget - WARNING - Data shape (11, 12) has more columns than headers (11). Slicing data.
+2025-04-12 13:26:48,670 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mm, Prefix: 'Clearance_'
+2025-04-12 13:26:48,672 - models.excel_data - INFO - Created 65 clearance rules from pivot data
+2025-04-12 13:26:48,672 - gui.pivot_table_widget - INFO - Successfully generated 65 rules.
+2025-04-12 13:26:48,673 - gui.main_window - INFO - Received 65 generated rules from pivot table.
+2025-04-12 13:26:48,673 - gui.main_window - INFO - Creating Rule Manager tab.
+2025-04-12 13:26:48,677 - gui.main_window - INFO - Rule Manager tab created at index 1.
+2025-04-12 13:26:48,679 - gui.rule_editor_widget - INFO - Loading 65 rules into the editor view.
+2025-04-12 13:26:48,680 - gui.main_window - INFO - Loaded generated rules into Rule Manager tab and switched view.
+2025-04-12 13:29:40,755 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-12 13:29:40,795 - root - INFO - Applied theme: dark
+2025-04-12 13:29:40,797 - root - INFO - Applied theme: dark
+2025-04-12 13:29:41,332 - gui.main_window - INFO - Restored window geometry and state
+2025-04-12 13:29:41,332 - gui.main_window - INFO - Main window initialized
+2025-04-12 13:29:43,842 - gui.main_window - INFO - Creating Rule Manager tab.
+2025-04-12 13:29:43,849 - gui.main_window - INFO - Rule Manager tab created at index 0.
+2025-04-12 13:34:34,875 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-12 13:34:34,913 - root - INFO - Applied theme: dark
+2025-04-12 13:34:34,914 - root - INFO - Applied theme: dark
+2025-04-12 13:34:35,370 - gui.main_window - INFO - Restored window geometry and state
+2025-04-12 13:34:35,370 - gui.main_window - INFO - Main window initialized
+2025-04-12 13:34:41,043 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-12 13:34:41,097 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-12 13:34:41,098 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-12 13:34:41,098 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-12 13:34:45,925 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-12 13:34:52,446 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-12 13:34:52,448 - models.excel_data - INFO - Loaded DataFrame with 11 rows and 11 columns
+2025-04-12 13:34:52,448 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-12 13:34:52,449 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-12 13:34:52,449 - models.excel_data - INFO - Values shape: (11, 11)
+2025-04-12 13:34:52,450 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-12 13:34:52,477 - gui.pivot_table_widget - INFO - Pivot table model updated with 11 rows and 11 columns
+2025-04-12 13:34:52,477 - gui.main_window - INFO - Loaded data (11x12) into Pivot Table tab.
+2025-04-12 13:35:05,632 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-12 13:35:05,632 - gui.pivot_table_widget - WARNING - Data shape (11, 12) has more columns than headers (11). Slicing data.
+2025-04-12 13:35:05,633 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mm, Prefix: 'Clearance_'
+2025-04-12 13:35:05,635 - models.excel_data - INFO - Created 65 clearance rules from pivot data
+2025-04-12 13:35:05,635 - gui.pivot_table_widget - INFO - Successfully generated 65 rules.
+2025-04-12 13:35:05,635 - gui.main_window - INFO - Received 65 generated rules from pivot table.
+2025-04-12 13:35:05,636 - gui.main_window - INFO - Creating Rule Manager tab.
+2025-04-12 13:35:05,639 - gui.main_window - INFO - Rule Manager tab created at index 1.
+2025-04-12 13:35:05,641 - gui.rule_editor_widget - INFO - Loading 65 rules into the editor view.
+2025-04-12 13:35:05,642 - gui.main_window - INFO - Loaded generated rules into Rule Manager tab and switched view.
+2025-04-12 13:35:33,471 - gui.rule_editor_widget - INFO - Edit cancelled for rule 'Clearance_MAINS_LowVoltage_to_MAINS_Neutral'.
+2025-04-12 13:35:35,479 - gui.main_window - INFO - Saved window geometry and state
+2025-04-12 13:35:35,480 - gui.main_window - INFO - Application closing.

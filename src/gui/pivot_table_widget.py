@@ -311,7 +311,27 @@ class PivotTableModel(QAbstractTableModel):
         # Reconstruct DataFrame (optional but good for consistency)
         try:
             # Use the index_column as the DataFrame index
-            df = pd.DataFrame(updated_pivot_data.values, index=self.index_column, columns=self.headers)
+            # Ensure data shape matches headers and index
+            num_rows = len(self.index_column)
+            num_cols = len(self.headers)
+            current_data_shape = updated_pivot_data.values.shape
+
+            if current_data_shape == (num_rows, num_cols):
+                df = pd.DataFrame(updated_pivot_data.values, index=self.index_column, columns=self.headers)
+            elif current_data_shape[0] == num_rows and current_data_shape[1] > num_cols:
+                 # If data has more columns than headers, slice the data
+                 logger.warning(f"Data shape {current_data_shape} has more columns than headers ({num_cols}). Slicing data.")
+                 df = pd.DataFrame(updated_pivot_data.values[:, :num_cols], index=self.index_column, columns=self.headers)
+            elif current_data_shape[0] > num_rows and current_data_shape[1] == num_cols:
+                 # If data has more rows than index, slice the data
+                 logger.warning(f"Data shape {current_data_shape} has more rows than index ({num_rows}). Slicing data.")
+                 df = pd.DataFrame(updated_pivot_data.values[:num_rows, :], index=self.index_column, columns=self.headers)
+            else:
+                # If shapes don't match in a way we can't easily fix, raise the original error after logging
+                logger.error(f"Shape mismatch: Data shape {current_data_shape}, Index length {num_rows}, Headers length {num_cols}")
+                # Re-raise the original error or a more specific one
+                raise ValueError(f"Shape of passed values is {current_data_shape}, indices imply ({num_rows}, {num_cols})")
+
             # Assign the index name if available
             index_name = "Index"
             if self.pivot_data.pivot_df is not None and self.pivot_data.pivot_df.index.name:
