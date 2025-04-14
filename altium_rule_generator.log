@@ -5067,3 +5067,95 @@ AttributeError: type object 'RuleGenerator' has no attribute 'export_rules'
 2025-04-12 13:56:10,803 - gui.rule_editor_widget - INFO - Exported 54 rules to C:/code/AltiumXCEL2QueryBuilder/output/test.RUL
 2025-04-12 13:56:14,288 - gui.main_window - INFO - Saved window geometry and state
 2025-04-12 13:56:14,289 - gui.main_window - INFO - Application closing.
+2025-04-14 08:40:50,688 - __main__ - INFO - Starting Altium Rule Generator application
+2025-04-14 08:40:50,738 - root - INFO - Applied theme: dark
+2025-04-14 08:40:50,740 - root - INFO - Applied theme: dark
+2025-04-14 08:40:51,243 - gui.main_window - INFO - Restored window geometry and state
+2025-04-14 08:40:51,244 - gui.main_window - INFO - Main window initialized
+2025-04-14 08:41:14,898 - services.excel_importer - INFO - Imported Excel file: C:/code/AltiumXCEL2QueryBuilder/samples/BOSS_Charger Creepage_Clearances.xlsx, sheet: Surface Layer Clearance_Creep
+2025-04-14 08:41:14,950 - gui.excel_preview_dialog - INFO - Excel preview model updated with 11 rows and 12 columns
+2025-04-14 08:41:14,951 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-14 08:41:14,951 - gui.excel_preview_dialog - INFO - Excel preview dialog initialized for sheet: Surface Layer Clearance_Creep
+2025-04-14 08:41:20,016 - gui.excel_preview_dialog - INFO - Excel preview model updated with 1 rows and 12 columns
+2025-04-14 08:41:20,016 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-14 08:41:20,081 - gui.excel_preview_dialog - INFO - Excel preview model updated with 10 rows and 12 columns
+2025-04-14 08:41:20,082 - gui.excel_preview_dialog - INFO - Preview data reloaded with current options.
+2025-04-14 08:41:42,487 - gui.excel_preview_dialog - INFO - Excel preview model updated with 10 rows and 12 columns
+2025-04-14 08:41:49,630 - gui.main_window - INFO - Pivot Table tab created.
+2025-04-14 08:41:49,631 - models.excel_data - INFO - Loaded DataFrame with 10 rows and 11 columns
+2025-04-14 08:41:49,632 - models.excel_data - INFO - Column index: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage', 'MAINS_HB_A', 'MAINS_HB_B', 'MAINS_FlyBackSwNode', 'CHSGND', 'ISO_LowVoltage', 'Other Net Class']
+2025-04-14 08:41:49,632 - models.excel_data - INFO - Row index first few: ['MAINS_Line', 'MAINS_Neutral', 'MAINS_BoostSwNode', 'MAINS_BUS', 'MAINS_LowVoltage']
+2025-04-14 08:41:49,632 - models.excel_data - INFO - Values shape: (10, 11)
+2025-04-14 08:41:49,633 - models.excel_data - INFO - Values sample: [[0.295   nan]
+ [2.    0.295]]
+2025-04-14 08:41:49,658 - gui.pivot_table_widget - INFO - Pivot table model updated with 10 rows and 11 columns
+2025-04-14 08:41:49,658 - gui.main_window - INFO - Loaded data (10x12) into Pivot Table tab.
+2025-04-14 08:42:10,064 - gui.pivot_table_widget - INFO - Generate Rules button clicked.
+2025-04-14 08:42:10,064 - gui.pivot_table_widget - WARNING - Data shape (10, 12) has more columns than headers (11). Slicing data.
+2025-04-14 08:42:10,065 - gui.pivot_table_widget - INFO - Generating rules of type: Clearance, Unit: mm, Prefix: 'Clearance_'
+2025-04-14 08:42:10,067 - models.excel_data - INFO - Created 55 clearance rules from pivot data
+2025-04-14 08:42:10,067 - gui.pivot_table_widget - INFO - Successfully generated 55 rules.
+2025-04-14 08:42:10,068 - gui.main_window - INFO - Received 55 generated rules from pivot table.
+2025-04-14 08:42:10,068 - gui.main_window - INFO - Creating Rule Manager tab.
+2025-04-14 08:42:10,072 - gui.main_window - INFO - Rule Manager tab created at index 1.
+2025-04-14 08:42:10,073 - gui.rule_editor_widget - INFO - Loading 55 rules into the editor view.
+2025-04-14 08:42:10,075 - gui.main_window - INFO - Loaded generated rules into Rule Manager tab and switched view.
+2025-04-14 08:42:28,215 - models.rule_model - INFO - Added rule: Clearance_MAINS_Line_to_MAINS_Neutral (Clearance)
+2025-04-14 08:42:28,215 - models.rule_model - INFO - Added rule: Clearance_MAINS_Neutral_to_MAINS_Neutral (Clearance)
+2025-04-14 08:42:28,216 - models.rule_model - INFO - Added rule: Clearance_MAINS_Neutral_to_MAINS_BoostSwNode (Clearance)
+2025-04-14 08:42:28,216 - models.rule_model - INFO - Added rule: Clearance_MAINS_BoostSwNode_to_MAINS_Neutral (Clearance)
+2025-04-14 08:42:28,216 - models.rule_model - INFO - Added rule: Clearance_MAINS_BoostSwNode_to_MAINS_BoostSwNode (Clearance)
+2025-04-14 08:42:28,217 - models.rule_model - INFO - Added rule: Clearance_MAINS_BoostSwNode_to_MAINS_BUS (Clearance)
+2025-04-14 08:42:28,217 - models.rule_model - INFO - Added rule: Clearance_MAINS_BUS_to_MAINS_Neutral (Clearance)
+2025-04-14 08:42:28,217 - models.rule_model - INFO - Added rule: Clearance_MAINS_BUS_to_MAINS_BoostSwNode (Clearance)
+2025-04-14 08:42:28,217 - models.rule_model - INFO - Added rule: Clearance_MAINS_BUS_to_MAINS_BUS (Clearance)
+2025-04-14 08:42:28,218 - models.rule_model - INFO - Added rule: Clearance_MAINS_BUS_to_MAINS_LowVoltage (Clearance)
+2025-04-14 08:42:28,218 - models.rule_model - INFO - Added rule: Clearance_MAINS_LowVoltage_to_MAINS_Neutral (Clearance)
+2025-04-14 08:42:28,218 - models.rule_model - INFO - Added rule: Clearance_MAINS_LowVoltage_to_MAINS_BoostSwNode (Clearance)
+2025-04-14 08:42:28,218 - models.rule_model - INFO - Added rule: Clearance_MAINS_LowVoltage_to_MAINS_BUS (Clearance)
+2025-04-14 08:42:28,218 - models.rule_model - INFO - Added rule: Clearance_MAINS_LowVoltage_to_MAINS_LowVoltage (Clearance)
+2025-04-14 08:42:28,219 - models.rule_model - INFO - Added rule: Clearance_MAINS_LowVoltage_to_MAINS_HB_A (Clearance)
+2025-04-14 08:42:28,219 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_A_to_MAINS_Neutral (Clearance)
+2025-04-14 08:42:28,219 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_A_to_MAINS_BoostSwNode (Clearance)
+2025-04-14 08:42:28,219 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_A_to_MAINS_BUS (Clearance)
+2025-04-14 08:42:28,220 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_A_to_MAINS_LowVoltage (Clearance)
+2025-04-14 08:42:28,220 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_A_to_MAINS_HB_A (Clearance)
+2025-04-14 08:42:28,220 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_A_to_MAINS_HB_B (Clearance)
+2025-04-14 08:42:28,220 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_B_to_MAINS_Neutral (Clearance)
+2025-04-14 08:42:28,221 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_B_to_MAINS_BoostSwNode (Clearance)
+2025-04-14 08:42:28,221 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_B_to_MAINS_BUS (Clearance)
+2025-04-14 08:42:28,221 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_B_to_MAINS_LowVoltage (Clearance)
+2025-04-14 08:42:28,221 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_B_to_MAINS_HB_A (Clearance)
+2025-04-14 08:42:28,221 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_B_to_MAINS_HB_B (Clearance)
+2025-04-14 08:42:28,222 - models.rule_model - INFO - Added rule: Clearance_MAINS_HB_B_to_MAINS_FlyBackSwNode (Clearance)
+2025-04-14 08:42:28,222 - models.rule_model - INFO - Added rule: Clearance_MAINS_FlyBackSwNode_to_MAINS_Neutral (Clearance)
+2025-04-14 08:42:28,222 - models.rule_model - INFO - Added rule: Clearance_MAINS_FlyBackSwNode_to_MAINS_BoostSwNode (Clearance)
+2025-04-14 08:42:28,222 - models.rule_model - INFO - Added rule: Clearance_MAINS_FlyBackSwNode_to_MAINS_BUS (Clearance)
+2025-04-14 08:42:28,223 - models.rule_model - INFO - Added rule: Clearance_MAINS_FlyBackSwNode_to_MAINS_LowVoltage (Clearance)
+2025-04-14 08:42:28,223 - models.rule_model - INFO - Added rule: Clearance_MAINS_FlyBackSwNode_to_MAINS_HB_A (Clearance)
+2025-04-14 08:42:28,223 - models.rule_model - INFO - Added rule: Clearance_MAINS_FlyBackSwNode_to_MAINS_HB_B (Clearance)
+2025-04-14 08:42:28,224 - models.rule_model - INFO - Added rule: Clearance_MAINS_FlyBackSwNode_to_MAINS_FlyBackSwNode (Clearance)
+2025-04-14 08:42:28,224 - models.rule_model - INFO - Added rule: Clearance_MAINS_FlyBackSwNode_to_CHSGND (Clearance)
+2025-04-14 08:42:28,224 - models.rule_model - INFO - Added rule: Clearance_CHSGND_to_MAINS_Neutral (Clearance)
+2025-04-14 08:42:28,224 - models.rule_model - INFO - Added rule: Clearance_CHSGND_to_MAINS_BoostSwNode (Clearance)
+2025-04-14 08:42:28,225 - models.rule_model - INFO - Added rule: Clearance_CHSGND_to_MAINS_BUS (Clearance)
+2025-04-14 08:42:28,225 - models.rule_model - INFO - Added rule: Clearance_CHSGND_to_MAINS_LowVoltage (Clearance)
+2025-04-14 08:42:28,225 - models.rule_model - INFO - Added rule: Clearance_CHSGND_to_MAINS_HB_A (Clearance)
+2025-04-14 08:42:28,226 - models.rule_model - INFO - Added rule: Clearance_CHSGND_to_MAINS_HB_B (Clearance)
+2025-04-14 08:42:28,226 - models.rule_model - INFO - Added rule: Clearance_CHSGND_to_MAINS_FlyBackSwNode (Clearance)
+2025-04-14 08:42:28,226 - models.rule_model - INFO - Added rule: Clearance_CHSGND_to_CHSGND (Clearance)
+2025-04-14 08:42:28,227 - models.rule_model - INFO - Added rule: Clearance_CHSGND_to_ISO_LowVoltage (Clearance)
+2025-04-14 08:42:28,227 - models.rule_model - INFO - Added rule: Clearance_ISO_LowVoltage_to_MAINS_Neutral (Clearance)
+2025-04-14 08:42:28,227 - models.rule_model - INFO - Added rule: Clearance_ISO_LowVoltage_to_MAINS_BoostSwNode (Clearance)
+2025-04-14 08:42:28,227 - models.rule_model - INFO - Added rule: Clearance_ISO_LowVoltage_to_MAINS_BUS (Clearance)
+2025-04-14 08:42:28,228 - models.rule_model - INFO - Added rule: Clearance_ISO_LowVoltage_to_MAINS_LowVoltage (Clearance)
+2025-04-14 08:42:28,228 - models.rule_model - INFO - Added rule: Clearance_ISO_LowVoltage_to_MAINS_HB_A (Clearance)
+2025-04-14 08:42:28,228 - models.rule_model - INFO - Added rule: Clearance_ISO_LowVoltage_to_MAINS_HB_B (Clearance)
+2025-04-14 08:42:28,228 - models.rule_model - INFO - Added rule: Clearance_ISO_LowVoltage_to_MAINS_FlyBackSwNode (Clearance)
+2025-04-14 08:42:28,228 - models.rule_model - INFO - Added rule: Clearance_ISO_LowVoltage_to_CHSGND (Clearance)
+2025-04-14 08:42:28,229 - models.rule_model - INFO - Added rule: Clearance_ISO_LowVoltage_to_ISO_LowVoltage (Clearance)
+2025-04-14 08:42:28,229 - models.rule_model - INFO - Added rule: Clearance_ISO_LowVoltage_to_Other_Net_Class (Clearance)
+2025-04-14 08:42:28,232 - models.rule_model - INFO - Successfully exported 55 rules to C:/code/AltiumXCEL2QueryBuilder/samples/test.RUL
+2025-04-14 08:42:28,233 - gui.rule_editor_widget - INFO - Exported 55 rules to C:/code/AltiumXCEL2QueryBuilder/samples/test.RUL
+2025-04-14 08:46:11,274 - gui.main_window - INFO - Saved window geometry and state
+2025-04-14 08:46:11,275 - gui.main_window - INFO - Application closing.

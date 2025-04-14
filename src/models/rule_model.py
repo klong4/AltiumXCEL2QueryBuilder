@@ -118,8 +118,8 @@ class RuleScope:
 
 class BaseRule:
     """Base class for all rules"""
-    
-    def __init__(self, rule_type: RuleType, name: str, enabled: bool = True, 
+
+    def __init__(self, rule_type: RuleType, name: str, enabled: bool = True,
                  comment: str = "", priority: int = 1):
         """Initialize base rule"""
         self.rule_type = rule_type
@@ -149,21 +149,47 @@ class BaseRule:
             priority=data.get("priority", 1)
         )
     
-    def to_rul_format(self) -> str:
-        """Convert to a single pipe-delimited RUL file line"""
-        properties = {
+    def get_base_rul_properties(self) -> Dict[str, Any]:
+        """Return a dictionary of base properties for RUL format."""
+        # Base properties common to most rules, using defaults from sample
+        return {
+            "SELECTION": "FALSE",
+            "LAYER": "UNKNOWN", # Default, can be overridden by specific rules if needed
+            "LOCKED": "FALSE",
+            "POLYGONOUTLINE": "FALSE",
+            "USERROUTED": "TRUE",
+            "KEEPOUT": "FALSE",
+            "UNIONINDEX": "0", # Use string '0' as seen in sample
+            "RULEKIND": self.rule_type.value,
+            "NETSCOPE": "DifferentNets", # Default, can be overridden
+            "LAYERKIND": "SameLayer", # Default, can be overridden
+            "SCOPE1EXPRESSION": "All", # Default, must be overridden by subclasses needing it
+            "SCOPE2EXPRESSION": "All", # Default, must be overridden by subclasses needing it
             "NAME": self.name,
             "ENABLED": str(self.enabled).upper(),
             "PRIORITY": str(self.priority),
             "COMMENT": self.comment,
-            "RULEKIND": self.rule_type.value,
-            "UNIQUEID": str(uuid.uuid4()).upper()
+            # Generate 8-char uppercase hex ID, closer to sample
+            "UNIQUEID": uuid.uuid4().hex[:8].upper(),
+            "DEFINEDBYLOGICALDOCUMENT": "FALSE"
         }
-        return self._build_rul_line(properties)
 
-    def _build_rul_line(self, properties: Dict[str, str]) -> str:
-        """Helper to build the pipe-delimited string from properties"""
-        line_parts = [f"{key}={value}" for key, value in properties.items() if value]
+    def to_rul_format(self) -> str:
+        """Convert to a single pipe-delimited RUL file line.
+        Subclasses should override this, call super().get_base_rul_properties(),
+        update the dictionary, and then call self._build_rul_line()."""
+        properties = self.get_base_rul_properties()
+        # Base rule itself doesn't have enough info, subclasses must implement fully
+        logger.warning(f"Direct call to BaseRule.to_rul_format for rule '{self.name}'. Subclass implementation missing?")
+        return self._build_rul_line(properties) # Return basic line for safety
+
+    def _build_rul_line(self, properties: Dict[str, Any]) -> str:
+        """Helper to build the pipe-delimited string from properties."""
+        # Convert all values to string before joining
+        # Filter out None or empty string values *after* potential overrides
+        line_parts = [f"{key}={str(value)}" for key, value in properties.items() if value is not None and str(value) != '']
+        # Sort alphabetically by key for consistency
+        line_parts.sort()
         return '|'.join(line_parts)
 
 
@@ -210,20 +236,20 @@ class ClearanceRule(BaseRule):
     
     def to_rul_format(self) -> str:
         """Convert to a single pipe-delimited RUL file line for Clearance"""
-        properties = {
-            "NAME": self.name,
-            "ENABLED": str(self.enabled).upper(),
-            "PRIORITY": str(self.priority),
-            "COMMENT": self.comment,
-            "RULEKIND": self.rule_type.value,
+        properties = self.get_base_rul_properties() # Get base properties dict
+        properties.update({
             "SCOPE1EXPRESSION": self.source_scope.to_rul_format(),
             "SCOPE2EXPRESSION": self.target_scope.to_rul_format(),
             "GAP": f"{self.min_clearance}{self.unit.value}",
-            "NETSCOPE": "DifferentNets",
-            "LAYERKIND": "SameLayer",
-            "UNIQUEID": str(uuid.uuid4()).upper()
-        }
-        return self._build_rul_line(properties)
+            "GENERICCLEARANCE": f"{self.min_clearance}{self.unit.value}", # Add missing
+            # Add other missing ones with defaults or from instance if available
+            # TODO: Consider adding these attributes to the class if they need to be configurable
+            "IGNOREPADTOPADCLEARANCEINFOOTPRINT": "FALSE", # Default based on sample majority
+            "OBJECTCLEARANCES": " ", # Default based on sample (space or empty)
+            # NETSCOPE and LAYERKIND use defaults from base, override if needed
+            # "NETSCOPE": "DifferentNets", # Example override if needed
+        })
+        return self._build_rul_line(properties) # Build the final string
 
 
 class SingleScopeRule(BaseRule):
@@ -267,17 +293,13 @@ class ShortCircuitRule(SingleScopeRule):
     
     def to_rul_format(self) -> str:
         """Convert to a single pipe-delimited RUL file line for ShortCircuit"""
-        properties = {
-            "NAME": self.name,
-            "ENABLED": str(self.enabled).upper(),
-            "PRIORITY": str(self.priority),
-            "COMMENT": self.comment,
-            "RULEKIND": self.rule_type.value,
+        properties = self.get_base_rul_properties() # Get base properties dict
+        properties.update({
             "SCOPE1EXPRESSION": self.scope.to_rul_format(),
-            "SCOPE2EXPRESSION": self.scope.to_rul_format(),
+            "SCOPE2EXPRESSION": self.scope.to_rul_format(), # Short circuit uses same scope twice
             "ALLOWED": "FALSE",
-            "UNIQUEID": str(uuid.uuid4()).upper()
-        }
+            # NETSCOPE and LAYERKIND use defaults from base
+        })
         return self._build_rul_line(properties)
 
 
@@ -304,16 +326,13 @@ class UnRoutedNetRule(SingleScopeRule):
     
     def to_rul_format(self) -> str:
         """Convert to a single pipe-delimited RUL file line for UnRoutedNet"""
-        properties = {
-            "NAME": self.name,
-            "ENABLED": str(self.enabled).upper(),
-            "PRIORITY": str(self.priority),
-            "COMMENT": self.comment,
-            "RULEKIND": self.rule_type.value,
+        properties = self.get_base_rul_properties() # Get base properties dict
+        properties.update({
             "SCOPE1EXPRESSION": self.scope.to_rul_format(),
+            "SCOPE2EXPRESSION": "All", # Use default 'All' for scope 2 in this rule type
             "CHECKBADCONNECTIONS": "TRUE",
-            "UNIQUEID": str(uuid.uuid4()).upper()
-        }
+            # NETSCOPE and LAYERKIND use defaults from base
+        })
         return self._build_rul_line(properties)
 
 
